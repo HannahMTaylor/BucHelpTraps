@@ -4,11 +4,6 @@ namespace BucHelp.DatabaseServices
 {
     public interface ITable
     {
-        public System.Collections.Generic.IEnumerator<ElementType> GetEnumerator()
-        {
-
-            throw new NotImplementedException();
-            yield return default(ElementType);
-        }
+        public Column[] Header { get; }
     }
 }

@@ -1,5 +1,8 @@
 ﻿namespace BucHelp.DatabaseServices
 {
+    /// <summary>
+    /// Represents a database column, with name and SQLite type affinity. Immutable.
+    /// </summary>
     public class Column
     {
         public enum Type
@@ -15,6 +18,21 @@
             if (name.Length == 0) throw new ArgumentException("name length is zero");
             Name = name;
             ValueType = type;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            Column other = (Column) obj;
+            return other.Name == Name && other.ValueType == ValueType;
+        }
+        
+        public override int GetHashCode()
+        {
+            return 31 * Name.GetHashCode() ^ ValueType.GetHashCode();
         }
     }
 }
