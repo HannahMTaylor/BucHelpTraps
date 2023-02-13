@@ -1,32 +1,27 @@
 ﻿@page "/questions"
-@using Syncfusion.Blazor
-@using Syncfusion.Blazor.Inputs
 
+<h3>Question</h3>
+<input @bind="Question.QuestionMessage"/>
 
-<PageTitle>Questions Submission</PageTitle>
+<p>Current Value: @Question.NewMessage</p>
 
-<p>
-    <label>Question</label>
-    <div class="multiline">
-        <SfTextBox Multiline=true FloatLabelType="@FloatLabelType.Always" CssClass="question-multiline"></SfTextBox>
-    </div>
-</p>
-
-<style>
-    .question-multiline textarea {
-        width: 750px !important;
-        height: 250px !important;
-    }
-
-    textarea.e-input,
-    .e-float-input textarea,
-    .e-float-input.e-control-wrapper textarea,
-    .e-input-group textarea,
-    .e-input-group.e-control-wrapper textarea {
-        resize: none;
-    }
-</style>
+<button class="btn btn-primary" @onclick="OnSubmit">Submit</button>
 
 @code{
+    public Question_Submit Question = new Question_Submit();
+
+    public class Question_Submit
+    {
+        public string QuestionMessage { get; set; }
+        public string NewMessage{ get; set; } //Debug
+
+        public List<String> QuestionList = new List<String>();
+    }
+
+    protected void OnSubmit(MouseEventArgs mouseEventArgs)
+    {
+        Question.NewMessage = Question.QuestionMessage;
+        Question.QuestionList.Add(Question.QuestionMessage);
+    }
 
 }
