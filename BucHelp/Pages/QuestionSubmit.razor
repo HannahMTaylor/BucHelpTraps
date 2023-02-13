@@ -1,0 +1,32 @@
+﻿@page "/questions"
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Inputs
+
+
+<PageTitle>Questions Submission</PageTitle>
+
+<p>
+    <label>Question</label>
+    <div class="multiline">
+        <SfTextBox Multiline=true FloatLabelType="@FloatLabelType.Always" CssClass="question-multiline"></SfTextBox>
+    </div>
+</p>
+
+<style>
+    .question-multiline textarea {
+        width: 750px !important;
+        height: 250px !important;
+    }
+
+    textarea.e-input,
+    .e-float-input textarea,
+    .e-float-input.e-control-wrapper textarea,
+    .e-input-group textarea,
+    .e-input-group.e-control-wrapper textarea {
+        resize: none;
+    }
+</style>
+
+@code{
+
+}
