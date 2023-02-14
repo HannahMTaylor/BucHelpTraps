@@ -1,27 +1,20 @@
 ﻿@page "/questions"
+@using Data/User.cs
 
 <h3>Question</h3>
-<input @bind="Question.QuestionMessage"/>
+<input @bind="user.Email"/>
 
-<p>Current Value: @Question.NewMessage</p>
+<p>Current Value: @user.Email</p>
 
 <button class="btn btn-primary" @onclick="OnSubmit">Submit</button>
 
 @code{
-    public Question_Submit Question = new Question_Submit();
+    public User user = new User();
 
-    public class Question_Submit
-    {
-        public string QuestionMessage { get; set; }
-        public string NewMessage{ get; set; } //Debug
-
-        public List<String> QuestionList = new List<String>();
-    }
 
     protected void OnSubmit(MouseEventArgs mouseEventArgs)
     {
-        Question.NewMessage = Question.QuestionMessage;
-        Question.QuestionList.Add(Question.QuestionMessage);
+        this.user.setEmail(user.Email);
     }
 
 }
