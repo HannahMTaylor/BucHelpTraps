@@ -1,7 +1,7 @@
 ﻿namespace BucHelp.DatabaseServices
 {
     /// <summary>
-    /// Represents a database column, with name and SQLite type affinity. Immutable.
+    /// Represents a database column, with name and SQLite type affinity. Immutable. Type affinities are ignored in CSV.
     /// </summary>
     public class Column
     {

@@ -18,5 +18,10 @@
         {
             get { return columns[i]; }
         }
+
+        public bool ContainsColumnType(Column col)
+        {
+            return columns.Contains(col);
+        }
     }
 }
