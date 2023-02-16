@@ -2,10 +2,11 @@
 {
     public class User
     {
-        public string UserName { get; set; } //Will be the email
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public string Affiliation { get; set; } //Student or Faculty
+        public string? UserName { get; set; } //Will be the email
+        public string? Password { get; set; }
+        public string? Email { get; set; }
+        public string? Affiliation { get; set; } //Student or Faculty
+        
 
         public void setEmail(string email)
         {

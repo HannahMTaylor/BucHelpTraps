@@ -1,20 +1,33 @@
 ﻿@page "/questions"
-@using Data/User.cs
+@inject NavigationManager navigationManager
+@using Data
 
 <h3>Question</h3>
-<input @bind="user.Email"/>
+<div>
+    <label for="qtitle">Title </label><br>
+    <input @bind="question.Title" />
+</div>
+<br>
+<div>
+    <textarea name="qdescription" rows="10" cols="50" @bind="question.Description"></textarea>
+</div>
 
-<p>Current Value: @user.Email</p>
-
-<button class="btn btn-primary" @onclick="OnSubmit">Submit</button>
+<button class="btn btn-primary"  @onclick="OnSubmit">Submit</button>
 
 @code{
-    public User user = new User();
 
+    Question question = new Question();
 
     protected void OnSubmit(MouseEventArgs mouseEventArgs)
     {
-        this.user.setEmail(user.Email);
+        this.question.Title = question.Title;
+        this.question.Description = question.Description;
+
+        //Logic for adding to storage goes here
+
+        
+
+        navigationManager.NavigateTo("/posthome");
     }
 
 }
