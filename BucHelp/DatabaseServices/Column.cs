@@ -31,6 +31,33 @@
             /// </summary>
             Blob
         }
+
+        public static Type? TypeFromString(string str)
+        {
+            switch (str.ToUpperInvariant())
+            {
+                case "TEXT": return Type.Text;
+                case "NUMERIC": return Type.Numeric;
+                case "INTEGER": return Type.Integer;
+                case "REAL": return Type.Real;
+                case "BLOB": return Type.Blob;
+                default: return null;
+            }
+        }
+
+        public string TypeToString(Type type)
+        {
+            switch (type)
+            {
+                case Type.Text: return "TEXT";
+                case Type.Numeric: return "NUMERIC";
+                case Type.Integer: return "INTEGER";
+                case Type.Real: return "REAL";
+                case Type.Blob: return "BLOB";
+            }
+            throw new Exception("unreachable");
+        }
+
         /// <summary>
         /// Get the name of this column.
         /// </summary>

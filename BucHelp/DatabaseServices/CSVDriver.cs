@@ -12,6 +12,7 @@ namespace BucHelp.DatabaseServices
     public class CSVDriver : IDatabaseDriver
     {
         private readonly string folderpath;
+        private readonly Dictionary<string, RowHeader> headers;
         private readonly Dictionary<string, List<Row>> tables;
 
         public CSVDriver(string folderpath)
@@ -19,6 +20,7 @@ namespace BucHelp.DatabaseServices
             if (folderpath == null) throw new ArgumentNullException("folderpath is null");
             if (!Directory.Exists(folderpath)) throw new ArgumentException("directory at " + folderpath + " does not exist");
             this.folderpath = folderpath;
+            headers = new Dictionary<string, RowHeader>();
             tables = new Dictionary<string, List<Row>>();
             // parse all CSVs in folder
             foreach (string path in Directory.EnumerateFiles(folderpath))
@@ -46,10 +48,62 @@ namespace BucHelp.DatabaseServices
         {
             StreamReader sr = new StreamReader(path);
             // Header reading process
-            // First line is column names
+            // First line is column names and determining row width
+            List<string> names = new List<string>();
+            int stop; // reason why ReadElement stopped, -1 if nothing read so far
+
+            // Read column names while elements can be read off the current line
+            stop = -1;
+            while (stop < 1) // only stop at line or EOF stops
+            {
+                string elem = ReadElement(sr, out stop);
+                if (elem.Length == 0)
+                {
+                    throw new Exception("zero length column name encountered");
+                }
+                names.Add(elem);
+            }
             // Second line is column types
+            List<string> types = new List<string>();
+            // Read column types
+            stop = -1;
+            while (stop < 1) // only stop at line or EOF stops
+            {
+                string elem = ReadElement(sr, out stop);
+                if (elem.Length == 0)
+                {
+                    throw new Exception("zero length type name encountered");
+                }
+                if (!(elem == "NUMERIC" || elem == "INTEGER" || elem == "REAL" || elem == "TEXT" || elem == "BLOB"))
+                {
+                    throw new Exception("type " + elem + " is not a valid type (expecting NUMERIC, INTEGER, REAL, TEXT, or BLOB)");
+                }
+                types.Add(elem);
+            }
+            // Check if columns have proper length, including hint on unexpected EOF
+            if (types.Count != names.Count)
+            {
+                string errorMessage = $"Mismatch between counts: names ({names.Count}), types ({types.Count}).";
+                if (stop == EOF_STOP)
+                {
+                    errorMessage += " (Unexpected end of file is likely cause)";
+                }
+                throw new Exception(errorMessage);
+            }
+            // Make RowHeader
+            Column[] columns = new Column[names.Count];
+            for (int i = 0; i < columns.Length; i++)
+            {
+                Column.Type? type = Column.TypeFromString(types[i]);
+                // this should not be null at this point
+                columns[i] = new Column(names[i], type.Value);
+            }
+            RowHeader header = new RowHeader(columns);
             // Third line on is data values
+
+            // close stream
             sr.Close();
+            // Install values
         }
 
         // how ReadElement terminates
@@ -113,6 +167,7 @@ namespace BucHelp.DatabaseServices
                 }
                 else
                 {
+                    // normal character
                     output.Append(c);
                 }
             }
