@@ -47,6 +47,10 @@ namespace BucHelp.DatabaseServices
         private void LoadCSV(string path)
         {
             StreamReader sr = new StreamReader(path);
+            // Determine table name
+            string tablename = Path.GetFileNameWithoutExtension(path);
+            List<Row> tablerows = new List<Row>();
+
             // Header reading process
             // First line is column names and determining row width
             List<string> names = new List<string>();
@@ -100,10 +104,94 @@ namespace BucHelp.DatabaseServices
             }
             RowHeader header = new RowHeader(columns);
             // Third line on is data values
-
+            // While not EOF... (this also considers EOF immediately after the header)
+            // read a row
+            while (stop != EOF_STOP)
+            {
+                // Make row object
+                Row row = new Row(header);
+                // Reset the stop
+                stop = -1;
+                List<string> values = new List<string>();
+                while (stop < 1) // stop at line or EOF
+                {
+                   values.Add(ReadElement(sr, out stop));
+                }
+                // Parse values according to the row header
+                // Check for mismatched lengths
+                if (values.Count != header.Length)
+                {
+                    throw new Exception($"row length mismatch: values ({values.Count}), expected ({header.Length})");
+                }
+                // Parse text values for each column
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    Column column = columns[i]; // expected column type and name
+                    switch (column.ValueType)
+                    {
+                        case Column.Type.Numeric:
+                            {
+                                // Try parsing as long, then double, or fail
+                                long longvalue;
+                                double doublevalue;
+                                if (long.TryParse(values[i], out longvalue))
+                                {
+                                    row.SetAsLong(column.Name, longvalue);
+                                }
+                                else if (double.TryParse(values[i], out doublevalue))
+                                {
+                                    row.SetAsDouble(column.Name, doublevalue);
+                                }
+                                else
+                                {
+                                    throw new Exception("Cannot parse " + values[i] + " as NUMERIC");
+                                }
+                            }
+                            break;
+                        case Column.Type.Integer:
+                            {
+                                // Try parsing as long, or fail
+                                long longvalue;
+                                if (long.TryParse(values[i], out longvalue))
+                                {
+                                    row.SetAsLong(column.Name, longvalue);
+                                }
+                                else
+                                {
+                                    throw new Exception("Cannot parse " + values[i] + " as INTEGER");
+                                }
+                            }
+                            break;
+                        case Column.Type.Real:
+                            {
+                                // Try parsing as double, or fail
+                                double doublevalue;
+                                if (double.TryParse(values[i], out doublevalue))
+                                {
+                                    row.SetAsDouble(column.Name, doublevalue);
+                                }
+                                else
+                                {
+                                    throw new Exception("Cannot parse " + values[i] + " as REAL");
+                                }
+                            }
+                            break;
+                        case Column.Type.Text:
+                            row.SetAsString(column.Name, values[i]);
+                            break;
+                        case Column.Type.Blob:
+                            // Base64 code
+                            throw new NotImplementedException();
+                            //break;
+                    }
+                }
+                // Install the row in the table
+                tablerows.Add(row);
+            }
             // close stream
             sr.Close();
-            // Install values
+            // Install table
+            tables[tablename] = tablerows;
         }
 
         // how ReadElement terminates
