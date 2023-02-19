@@ -1,4 +1,8 @@
-﻿namespace BucHelp.DatabaseServices
+﻿using System.Runtime.ConstrainedExecution;
+using System.Runtime.Serialization.Formatters;
+using System.Text;
+
+namespace BucHelp.DatabaseServices
 {
     // All driver code specific to CSVs is in this file.
 
@@ -40,7 +44,79 @@
 
         private void LoadCSV(string path)
         {
-            throw new NotImplementedException();
+            StreamReader sr = new StreamReader(path);
+            // Header reading process
+            // First line is column names
+            // Second line is column types
+            // Third line on is data values
+            sr.Close();
+        }
+
+        // how ReadElement terminates
+        private const int COMMA_STOP = 0;
+        private const int LINE_STOP = 1;
+        private const int EOF_STOP = 2;
+        private string ReadElement(StreamReader sr, out int stop)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool escaping = false; // has escape slash been read in last iteration
+            int ch;
+            // while not at stream EOF, read
+            while ((ch = sr.Read()) != -1)
+            {
+                if (escaping)
+                {
+                    // Escape flag was set so add character raw and clear flag
+                    sb.Append((char) ch);
+                    escaping = false;
+                }
+                else if (ch == '\\')
+                {
+                    // Escape flag not set, but backslash seen
+                    // Set escape flag and do nothing
+                    escaping = true;
+                }
+                else if (ch == ',')
+                {
+                    // Comma stop
+                    stop = COMMA_STOP;
+                    return sb.ToString();
+                }
+                else if (ch == '\r' || ch == '\n')
+                {
+                    // CRLF check
+                    // if '\r' and peeked '\n', drop it on the floor
+                    if (ch == '\r' && sr.Peek() == '\n') sr.Read();
+                    // Line stop
+                    stop = LINE_STOP;
+                    return sb.ToString();
+                }
+                else
+                {
+                    // Normal character
+                    sb.Append((char) ch);
+                }
+            }
+            stop = EOF_STOP;
+            return sb.ToString();
+        }
+
+        private string EscapeString(string input)
+        {
+            StringBuilder output = new StringBuilder();
+            foreach (char c in input)
+            {
+                // if the character is problematic, escape it with \
+                if (c == '\\' || c == ',' || c == '\r' || c == '\n')
+                {
+                    output.Append('\\').Append(c);
+                }
+                else
+                {
+                    output.Append(c);
+                }
+            }
+            return output.ToString();
         }
     }
 }
