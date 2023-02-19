@@ -1,7 +1,16 @@
 ﻿namespace BucHelp.DatabaseServices
 {
+    /// <summary>
+    /// Main entrypoint into the database API.
+    /// </summary>
     public class Drivers
     {
+        /// <summary>
+        /// Request the default database driver.
+        /// </summary>
+        /// <returns>
+        ///     an instance of the default database driver
+        /// </returns>
         public static IDatabaseDriver GetDefaultDriver()
         {
             return null;
@@ -11,6 +20,7 @@
         {
             IDatabaseDriver driver = Drivers.GetDefaultDriver();
             ITable questions = driver.GetTableForName("questions");
+
             foreach (Row row in questions.Select(row => row.GetAsString("questionAnswer").Contains("Duck")))
             {
                 Console.WriteLine(row.GetAsString("questionText"));
