@@ -61,5 +61,30 @@ namespace BucHelp.DatabaseServices
             if (sb[sb.Length - 1] == ',') sb.Length--;
             return sb.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            Column[] other = ((RowHeader)obj).columns;
+            if (other.Length != columns.Length) return false;
+            for (int i = 0; i < columns.Length; i++)
+            {
+                if (other[i] != columns[i]) return false;
+            }
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 0;
+            for (int i = 0; i < columns.Length; i++)
+            {
+                hash = 31 * hash + columns[i].GetHashCode();
+            }
+            return hash;
+        }
     }
 }

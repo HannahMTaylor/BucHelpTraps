@@ -15,6 +15,7 @@ namespace BucHelp.DatabaseServices
         private readonly string folderpath;
         private readonly Dictionary<string, RowHeader> headers;
         private readonly Dictionary<string, List<Row>> tables;
+        private readonly Dictionary<string, CSVTableHandle> tableHandles;
 
         public CSVDriver(string folderpath)
         {
@@ -23,6 +24,7 @@ namespace BucHelp.DatabaseServices
             this.folderpath = folderpath;
             headers = new Dictionary<string, RowHeader>();
             tables = new Dictionary<string, List<Row>>();
+            tableHandles = new Dictionary<string,CSVTableHandle>();
             // parse all CSVs in folder
             foreach (string path in Directory.EnumerateFiles(folderpath))
             {
@@ -38,7 +40,10 @@ namespace BucHelp.DatabaseServices
 
         public ITable GetTableForName(string name)
         {
-            throw new NotImplementedException();
+            RowHeader rowHeader = headers[name];
+            List<Row> rows = tables[name];
+            if (rows == null || rowHeader == null) return null;
+            return tableHandles.GetValueOrDefault(name, new CSVTableHandle(rowHeader, rows));
         }
 
         public void Dispose()
@@ -265,6 +270,55 @@ namespace BucHelp.DatabaseServices
                 }
             }
             return output.ToString();
+        }
+    }
+
+    class CSVTableHandle : ITable
+    {
+        private readonly RowHeader rowHeader;
+        private readonly List<Row> rows;
+
+        public CSVTableHandle(RowHeader rowHeader, List<Row> rows) 
+        {
+            this.rowHeader = rowHeader;
+            this.rows = rows;
+        }
+        public RowHeader Header { get { return rowHeader; } }
+
+        public void Delete(Predicate<Row> where)
+        {
+            rows.RemoveAll(where);
+        }
+
+        public void Insert(params Row[] inrows)
+        {
+            foreach (Row inrow in inrows)
+            {
+                if (!rows.Contains(inrow))
+                {
+                    rows.Add(new Row(inrow));
+                }
+            }
+        }
+
+        public IEnumerable<Row> Select(Predicate<Row> where)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Row> SelectAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Predicate<Row> where, string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateMultiple(Predicate<Row> where, IDictionary<string, object> keyValues)
+        {
+            throw new NotImplementedException();
         }
     }
 }

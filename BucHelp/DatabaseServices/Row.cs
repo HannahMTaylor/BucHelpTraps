@@ -29,6 +29,17 @@ namespace BucHelp.DatabaseServices
         }
 
         /// <summary>
+        /// Construct a row that is a copy of another.
+        /// </summary>
+        /// <param name="other">other row</param>
+        public Row(Row other)
+        {
+            if (other == null) throw new ArgumentNullException(nameof(other));
+            this.rowHeader = other.rowHeader;
+            values = new Dictionary<string, object>(other.values);
+        }
+
+        /// <summary>
         /// Throw if the column is not compatible with integers.
         /// </summary>
         /// <param name="column">target</param>
@@ -230,6 +241,22 @@ namespace BucHelp.DatabaseServices
         public override string ToString()
         {
             return "ROW " + values.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Row other = (Row)obj;
+            return other.Header == Header && other.values == values;
+        }
+
+        public override int GetHashCode()
+        {
+            return 31 * values.GetHashCode() + rowHeader.GetHashCode();
         }
     }
 }
