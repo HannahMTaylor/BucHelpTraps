@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
@@ -12,9 +13,13 @@ namespace BucHelp.DatabaseServices
     /// </summary>
     public class CSVDriver : IDatabaseDriver
     {
+        // Folder for CSVs
         private readonly string folderpath;
+        // Table headers. Safe to expose.
         private readonly Dictionary<string, RowHeader> headers;
+        // Table rows. Rows are internal and must be copied before being handed to user API
         private readonly Dictionary<string, List<Row>> tables;
+        // Table handles. Created on use.
         private readonly Dictionary<string, CSVTableHandle> tableHandles;
 
         public CSVDriver(string folderpath)
@@ -275,8 +280,8 @@ namespace BucHelp.DatabaseServices
 
     class CSVTableHandle : ITable
     {
-        private readonly RowHeader rowHeader;
-        private readonly List<Row> rows;
+        private readonly RowHeader rowHeader; // Safe
+        private readonly List<Row> rows; // Unsafe
 
         public CSVTableHandle(RowHeader rowHeader, List<Row> rows) 
         {
@@ -313,12 +318,27 @@ namespace BucHelp.DatabaseServices
 
         public void Update(Predicate<Row> where, string key, object value)
         {
-            throw new NotImplementedException();
+            foreach (Row row in rows)
+            {
+                if (where.Invoke(row))
+                {
+                    row.SetColumn(key, value);
+                }
+            }
         }
 
         public void UpdateMultiple(Predicate<Row> where, IDictionary<string, object> keyValues)
         {
-            throw new NotImplementedException();
+            foreach (Row row in rows)
+            {
+                if (where.Invoke(row))
+                {
+                    foreach (KeyValuePair<string, object> v in keyValues)
+                    {
+                        row.SetColumn(v.Key, v.Value);
+                    }
+                }
+            }
         }
     }
 }

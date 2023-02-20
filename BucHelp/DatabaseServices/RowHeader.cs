@@ -50,6 +50,18 @@ namespace BucHelp.DatabaseServices
             return columns.Contains(col);
         }
 
+        /// <summary>
+        /// Return the column for the given name.
+        /// </summary>
+        /// <param name="name">the column name</param>
+        /// <returns>
+        ///     the column or null if not present
+        /// </returns>
+        public Column FindColumnForName(string name)
+        {
+            return columns.FirstOrDefault(col => col.Name == name, null);
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

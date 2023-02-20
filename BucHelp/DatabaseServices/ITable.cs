@@ -48,7 +48,7 @@ namespace BucHelp.DatabaseServices
         /// </summary>
         /// <param name="where">predicate to match</param>
         /// <param name="keyValues">dictionary of columns to affect, along with their new values</param>
-        public void UpdateMultiple(Predicate<Row> where, IDictionary<string,object> keyValues);
+        public void UpdateMultiple(Predicate<Row> where, IDictionary<string, object> keyValues);
 
         /// <summary>
         /// Delete rows where the predicate matches.

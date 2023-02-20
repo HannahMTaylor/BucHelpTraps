@@ -68,6 +68,46 @@ namespace BucHelp.DatabaseServices
         }
 
         /// <summary>
+        /// Set column for an arbitrary input. An exception will be thrown if the type is not compatible
+        /// with the target column.
+        /// </summary>
+        /// <param name="key">target column</param>
+        /// <param name="value">value</param>
+        /// <exception cref="ArgumentException">if the type is invalid for the target</exception>
+        public void SetColumn(string key, object value)
+        {
+            Type type = value.GetType();
+            if (type == typeof(int))
+            {
+                SetAsInt(key, (int)value);
+            }
+            else if (type == typeof(long))
+            {
+                SetAsLong(key, (long)value);
+            }
+            else if (type == typeof(float))
+            {
+                SetAsFloat(key, (float)value);
+            }
+            else if (type == typeof(double))
+            {
+                SetAsDouble(key, (double)value);
+            }
+            else if (type == typeof(string))
+            {
+                SetAsString(key, (string)value);
+            }
+            else if (type == typeof(byte[]))
+            {
+                SetAsBlob(key, (byte[])value);
+            }
+            else
+            {
+                throw new ArgumentException("Illegal type");
+            }
+        }
+
+        /// <summary>
         /// Get the specified column as an integer (NUMERIC, INTEGER)
         /// </summary>
         /// <param name="column">target</param>
