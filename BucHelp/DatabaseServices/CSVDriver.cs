@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using System;
+using System.Collections;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
@@ -318,12 +319,25 @@ namespace BucHelp.DatabaseServices
 
         public IEnumerable<Row> Select(Predicate<Row> where)
         {
-            throw new NotImplementedException();
+            List<Row> outrows = new List<Row>();
+            foreach (Row row in rows)
+            {
+                if (where.Invoke(row))
+                {
+                    outrows.Add(new Row(row)); // if matching, clone rows in list for API safety
+                }
+            }
+            return outrows;
         }
 
         public IEnumerable<Row> SelectAll()
         {
-            throw new NotImplementedException();
+            List<Row> outrows = new List<Row>();
+            foreach (Row row in rows)
+            {
+                outrows.Add(new Row(row)); // clone rows in list for API safety
+            }
+            return outrows;
         }
 
         public void Update(Predicate<Row> where, string key, object value)
