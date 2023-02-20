@@ -15,7 +15,7 @@
                 <label asp-for="Credential.Email">Email</label>
             </div>
             <div class="col-5">
-                <input type="email" pattern="[a-zA-Z0-9._%-+]+@("@")[a-zA-Z]+\.[a-z]{2,3}$" asp-for="Credential.Email" class="form-control" required/>
+                <input type="email" pattern="[a-zA-Z0-9._%-+]+@("@")[a-zA-Z]+\.[a-z]{2,3}$" maxlength="100" asp-for="Credential.Email" class="form-control" required/>
                 <span class ="error">Please provide a valid email address</span>
             </div>
             <span class="text-danger" asp-validation-for="Credential.UserName"></span>
@@ -25,10 +25,11 @@
                 <label asp-for="Credential.Password">Password</label>
             </div>
             <div class="col-5">
-                <input type="password" asp-for="Credential.Password" class="form-control" required @autocomplete="off" />
+                <input type="password" maxlength="100" minlength="8" asp-for="Credential.Password" class="form-control" required @autocomplete="off" />
             </div>
             <span class="text-danger" asp-validation-for="Credential.UserName"></span>
         </div>
+        <br />
         <div class="form-group row">
             <div calss="col-2">
                 <input type="Log In" class="btn btn-primary" value="Login" />
