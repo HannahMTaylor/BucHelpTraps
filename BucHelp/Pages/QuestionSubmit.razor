@@ -1,5 +1,6 @@
 ﻿@page "/questions"
 @inject NavigationManager navigationManager
+@inject Question questions
 @using Data
 
 <h3>Question</h3>
@@ -18,14 +19,16 @@
 
     Question question = new Question();
 
-    protected void OnSubmit(MouseEventArgs mouseEventArgs)
+    protected async void OnSubmit(MouseEventArgs mouseEventArgs)
     {
         this.question.Title = question.Title;
         this.question.Description = question.Description;
 
         //Logic for adding to storage goes here
+        //Resource used to do this below 
+        //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
+        questions.QuestionsList.Add(question);
 
-        
 
         navigationManager.NavigateTo("/posthome");
     }
