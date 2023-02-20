@@ -27,10 +27,11 @@
         //Logic for adding to storage goes here
         //Resource used to do this below 
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
-        questions.QuestionsList.Add(question);
-
-
-        navigationManager.NavigateTo("/posthome");
+        if(!string.IsNullOrWhiteSpace(question.Title) && !string.IsNullOrWhiteSpace(question.Description))
+        {
+            questions.QuestionsList.Add(question);
+            navigationManager.NavigateTo("/posthome");
+        }   
     }
 
 }
