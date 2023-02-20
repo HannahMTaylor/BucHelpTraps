@@ -51,6 +51,16 @@ namespace BucHelp.DatabaseServices
             return tableHandles.GetValueOrDefault(name, new CSVTableHandle(rowHeader, rows));
         }
 
+        public ITable CreateTable(string name, RowHeader header)
+        {
+            if (tables.ContainsKey(name)) return null;
+            tables[name] = new List<Row>();
+            headers[name] = header;
+            CSVTableHandle handle = new CSVTableHandle(headers[name], tables[name]);
+            tableHandles[name] = handle;
+            return handle;
+        }
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);
