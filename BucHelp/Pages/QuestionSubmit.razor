@@ -6,11 +6,11 @@
 <h3>Question</h3>
 <div>
     <label for="qtitle">Title </label><br>
-    <input @bind="question.Title" />
+    <input maxlength="20" @bind="question.Title" />
 </div>
-<br>
 <div>
-    <textarea name="qdescription" rows="10" cols="50" @bind="question.Description"></textarea>
+    <label for="qdescription">Description</label><br>
+    <textarea name="qdescription" rows="10" cols="50" maxlength="5000" @bind="question.Description"></textarea>
 </div>
 
 <button class="btn btn-primary"  @onclick="OnSubmit">Submit</button>
