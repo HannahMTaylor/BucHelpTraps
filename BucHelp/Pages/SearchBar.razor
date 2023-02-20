@@ -1,0 +1,154 @@
+﻿@page "/searchbar"
+
+
+
+
+<PageTitle>Search Bar</PageTitle>
+
+<!--<input id="txtWord" name="txtWord" placeholder="Search.."  value="@SearchInput" @onchange="onChange" @onkeyup="Enter" /> -->
+
+
+
+<input @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
+<button class="btn btn-primary" type="button" onclick="@ClearClick">Clear</button>
+
+<br>
+
+<span class="text-muted ml-5">
+    Showing @FilteredSearch.Count Results
+</span>
+
+<br>
+<br>
+
+<ul>
+    @foreach (var search in FilteredSearch)
+    {
+        <li>@search.Name</li>
+    }
+</ul>
+
+@code {
+
+    List<SearchItem> FilteredSearch2 = new List<SearchItem> { };
+
+    public class SearchItem
+    {
+        public string? Name { get; set; }
+    }
+
+    // Initialize SearchTerm to "" to prevent null's
+    string SearchTerm { get; set; } = "";
+
+    // Imagine this was retrieved from an API, just hardcoding for demo purposes
+    List<SearchItem> SearchItems => new List<SearchItem>
+    {
+        new SearchItem { Name = "Dorms and Housing" },
+        new SearchItem { Name = "Class Schedule" },
+        new SearchItem { Name = "Dorm Laundry" },
+        new SearchItem { Name = "Professor Office Hours" }
+    };
+
+    private void ClearClick()
+    {
+        SearchTerm = "";
+        this.FilteredSearch2 = new List<SearchItem> { };
+    }
+
+    List<SearchItem> FilteredSearch => SearchItems.Where(i => i.Name.ToLower().Contains(SearchTerm.ToLower())).ToList();
+
+}
+
+
+<!--
+
+<input @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
+
+<button class="btn btn-primary" type="button" onclick="@SearchClick">Search</button>
+<button class="btn btn-primary" type="button" onclick="@ClearClick">Clear</button>
+
+
+<br>
+<span class="text-muted ml-5">
+    // Showing @FilteredSearch.Count out of @SearchItems.Count 
+</span>
+<br>
+<br>
+
+<ul>
+    @if (this.FilteredSearch2.Count == 0)
+    {
+
+        @foreach (var search in @SearchItems)
+        {
+            <li>@search.Title</li>
+        }
+    }
+    else
+    {
+        @foreach (var search in @FilteredSearch2)
+        {
+            <li>@search.Title</li>
+        }
+    }
+
+</ul>
+
+
+@code {
+    List<SearchItem> FilteredSearch2 = new List<SearchItem> { };
+
+    public class SearchItem
+    {
+        public string? Title { get; set; }
+    }
+
+    // Initialize SearchTerm to "" to prevent null's
+    string SearchTerm { get; set; } = "";
+
+    // Imagine this was retrieved from an API, just hardcoding for demo purposes
+    List<SearchItem> SearchItems => new List<SearchItem>
+    {
+        new SearchItem { Title = "Dorms and Housing" },
+        new SearchItem { Title = "Class Schedule" },
+        new SearchItem { Title = "Dorm Laundry" },
+        new SearchItem { Title = "Professor Office Hours" }
+    };
+
+
+    private void onChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        SearchTerm = (string)args.Value;
+    }
+
+    public void Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+
+        }
+    }
+
+    protected void SearchClick()
+    {
+        this.FilteredSearch2 = SearchItems.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
+
+    }
+
+    private void ClearClick()
+    {
+        SearchTerm = "";
+        this.FilteredSearch2 = new List<SearchItem> { };
+    }
+
+    public int Count(string search)
+    {
+        //potentially helpful query for sql later on
+        //"SELECT COUNT(*) FROM [TABLE] WHERE [Title] LIKE '%{search}%'"
+        return 0;
+    }
+
+
+
+}
+-->
