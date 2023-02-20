@@ -41,7 +41,10 @@ namespace BucHelp.DatabaseServices
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            foreach (string table in tables.Keys)
+            {
+                SaveCSV(table);
+            }
         }
 
         public ITable GetTableForName(string name)
@@ -267,6 +270,64 @@ namespace BucHelp.DatabaseServices
             }
             stop = EOF_STOP;
             return sb.ToString();
+        }
+
+        private void SaveCSV(string tablename)
+        {
+            RowHeader header = headers[tablename];
+            List<Row> rows = tables[tablename];
+            string filename = Path.Combine(folderpath, tablename + ".csv");
+            StreamWriter sw = new StreamWriter(filename);
+            StringBuilder linebuffer = new StringBuilder();
+            // Write table names
+            linebuffer.Clear();
+            for (int i = 0; i < header.Length; i++)
+            {
+                Column col = header[i];
+                linebuffer.Append(col.Name);
+                linebuffer.Append(',');
+            }
+            if (linebuffer[linebuffer.Length - 1] == ',') linebuffer.Length--;
+            sw.WriteLine(linebuffer.ToString());
+            // Write table types
+            linebuffer.Clear();
+            for (int i = 0; i < header.Length; i++)
+            {
+                Column col = header[i];
+                linebuffer.Append(Column.TypeToString(col.ValueType));
+                linebuffer.Append(',');
+            }
+            if (linebuffer[linebuffer.Length - 1] == ',') linebuffer.Length--;
+            sw.WriteLine(linebuffer.ToString());
+            // Write rows
+            foreach (Row row in rows)
+            {
+                linebuffer.Clear();
+                for (int i = 0; i < header.Length; i++)
+                {
+                    Column col = header[i];
+                    switch (col.ValueType)
+                    {
+                        case Column.Type.Text:
+                            string stringvalue = EscapeString(row.GetAsString(col.Name));
+                            linebuffer.Append(stringvalue);
+                            break;
+                        case Column.Type.Numeric:
+                        case Column.Type.Integer:
+                        case Column.Type.Real:
+                            string numvalue = row.GetKeyValues()[col.Name].ToString();
+                            linebuffer.Append(numvalue);
+                            break;
+                        case Column.Type.Blob;
+                            throw new NotImplementedException();
+                    }
+                    linebuffer.Append(',');
+                }
+
+                if (linebuffer[linebuffer.Length - 1] == ',') linebuffer.Length--;
+                sw.WriteLine(linebuffer.ToString());
+            }
+            sw.Close();
         }
 
         private string EscapeString(string input)
