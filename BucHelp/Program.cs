@@ -28,4 +28,6 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
+//BucHelp.DatabaseServices.Drivers.GetDefaultDriver(); // test
+
 app.Run();

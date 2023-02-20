@@ -1,4 +1,6 @@
-﻿namespace BucHelp.DatabaseServices
+﻿using System.Text;
+
+namespace BucHelp.DatabaseServices
 {
     /// <summary>
     /// A mutable row. Note that changes made here are not persisted. Use the methods on ITable
@@ -33,8 +35,8 @@
         /// <exception cref="ArgumentException"></exception>
         private void ThrowIfNotNumericInteger(string column)
         {
-            if (!rowHeader.ContainsColumnType(new Column(column, Column.Type.Numeric)) || 
-                !rowHeader.ContainsColumnType(new Column(column, Column.Type.Integer)))
+            if (!(rowHeader.ContainsColumnType(new Column(column, Column.Type.Numeric)) || 
+                rowHeader.ContainsColumnType(new Column(column, Column.Type.Integer))))
             {
                 throw new ArgumentException("Column not present or not of INTEGER or NUMERIC type");
             }
@@ -47,10 +49,10 @@
         /// <exception cref="ArgumentException"></exception>
         private void ThrowIfNotNumericReal(string column)
         {
-            if (!rowHeader.ContainsColumnType(new Column(column, Column.Type.Numeric)) ||
-                !rowHeader.ContainsColumnType(new Column(column, Column.Type.Integer)))
+            if (!(rowHeader.ContainsColumnType(new Column(column, Column.Type.Numeric)) ||
+                rowHeader.ContainsColumnType(new Column(column, Column.Type.Real))))
             {
-                throw new ArgumentException("Column not present or not of INTEGER or REAL type");
+                throw new ArgumentException("Column not present or not of REAL or NUMERIC type");
             }
         }
 
@@ -223,6 +225,11 @@
         internal IDictionary<string,object> GetKeyValues()
         {
             return values;
+        }
+
+        public override string ToString()
+        {
+            return "ROW " + values.ToString();
         }
     }
 }

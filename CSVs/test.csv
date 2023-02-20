@@ -1,0 +1,5 @@
+id,question,answer,solved,score,username
+INTEGER,TEXT,TEXT,INTEGER,NUMERIC,TEXT
+0,If I want to go to ETSU\, how do I driver?,Use a car.,0,256.0,Funny string\
+
+1,Ouch,Oof,2,3,Normal

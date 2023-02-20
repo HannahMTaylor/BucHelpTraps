@@ -45,7 +45,7 @@
             }
         }
 
-        public string TypeToString(Type type)
+        public static string TypeToString(Type type)
         {
             switch (type)
             {
@@ -107,6 +107,11 @@
         public override int GetHashCode()
         {
             return 31 * Name.GetHashCode() ^ ValueType.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Name + " " + TypeToString(ValueType);
         }
     }
 }

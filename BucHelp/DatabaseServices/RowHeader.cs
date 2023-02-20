@@ -1,4 +1,6 @@
-﻿namespace BucHelp.DatabaseServices
+﻿using System.Text;
+
+namespace BucHelp.DatabaseServices
 {
     /// <summary>
     /// An object containing a read-only array of columns.
@@ -46,6 +48,18 @@
         public bool ContainsColumnType(Column col)
         {
             return columns.Contains(col);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (Column col in columns)
+            {
+                sb.Append(col.ToString());
+                sb.Append(',');
+            }
+            if (sb[sb.Length - 1] == ',') sb.Length--;
+            return sb.ToString();
         }
     }
 }

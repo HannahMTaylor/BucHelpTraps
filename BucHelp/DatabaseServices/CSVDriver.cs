@@ -1,4 +1,5 @@
-﻿using System.Runtime.ConstrainedExecution;
+﻿using System;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 
@@ -25,6 +26,7 @@ namespace BucHelp.DatabaseServices
             // parse all CSVs in folder
             foreach (string path in Directory.EnumerateFiles(folderpath))
             {
+                if (!path.EndsWith(".csv")) continue;
                 LoadCSV(path);
             }
         }
@@ -103,6 +105,7 @@ namespace BucHelp.DatabaseServices
                 columns[i] = new Column(names[i], type.Value);
             }
             RowHeader header = new RowHeader(columns);
+            Console.WriteLine(header.ToString());
             // Third line on is data values
             // While not EOF... (this also considers EOF immediately after the header)
             // read a row
@@ -127,6 +130,7 @@ namespace BucHelp.DatabaseServices
                 for (int i = 0; i < columns.Length; i++)
                 {
                     Column column = columns[i]; // expected column type and name
+                    Console.WriteLine("Have: " + values[i] + " Col " + column.ToString());
                     switch (column.ValueType)
                     {
                         case Column.Type.Numeric:
@@ -186,6 +190,7 @@ namespace BucHelp.DatabaseServices
                     }
                 }
                 // Install the row in the table
+                Console.WriteLine(row.ToString());
                 tablerows.Add(row);
             }
             // close stream
