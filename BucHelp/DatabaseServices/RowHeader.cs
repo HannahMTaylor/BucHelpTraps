@@ -74,6 +74,16 @@ namespace BucHelp.DatabaseServices
             return sb.ToString();
         }
 
+        public static bool operator ==(RowHeader left, RowHeader right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(RowHeader left, RowHeader right)
+        {
+            return !left.Equals(right);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())

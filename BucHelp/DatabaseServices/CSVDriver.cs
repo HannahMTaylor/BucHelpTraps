@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using System;
 using System.Collections;
+using System.Data.SqlTypes;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
@@ -135,6 +136,9 @@ namespace BucHelp.DatabaseServices
             // read a row
             while (stop != EOF_STOP)
             {
+                // Peek for EOF just in case
+                // Situation: EOF following a line stop
+                if (sr.Peek() == -1) break;
                 // Make row object
                 Row row = new Row(header);
                 // Reset the stop
@@ -220,6 +224,7 @@ namespace BucHelp.DatabaseServices
             // close stream
             sr.Close();
             // Install table
+            headers[tablename] = header;
             tables[tablename] = tablerows;
         }
 
@@ -288,7 +293,8 @@ namespace BucHelp.DatabaseServices
                 linebuffer.Append(',');
             }
             if (linebuffer[linebuffer.Length - 1] == ',') linebuffer.Length--;
-            sw.WriteLine(linebuffer.ToString());
+            sw.Write(linebuffer.ToString());
+            sw.Write('\n');
             // Write table types
             linebuffer.Clear();
             for (int i = 0; i < header.Length; i++)
@@ -298,7 +304,8 @@ namespace BucHelp.DatabaseServices
                 linebuffer.Append(',');
             }
             if (linebuffer[linebuffer.Length - 1] == ',') linebuffer.Length--;
-            sw.WriteLine(linebuffer.ToString());
+            sw.Write(linebuffer.ToString());
+            sw.Write('\n');
             // Write rows
             foreach (Row row in rows)
             {
@@ -318,14 +325,15 @@ namespace BucHelp.DatabaseServices
                             string numvalue = row.GetKeyValues()[col.Name].ToString();
                             linebuffer.Append(numvalue);
                             break;
-                        case Column.Type.Blob;
+                        case Column.Type.Blob:
                             throw new NotImplementedException();
                     }
                     linebuffer.Append(',');
                 }
 
                 if (linebuffer[linebuffer.Length - 1] == ',') linebuffer.Length--;
-                sw.WriteLine(linebuffer.ToString());
+                sw.Write(linebuffer.ToString());
+                sw.Write('\n');
             }
             sw.Close();
         }
@@ -373,6 +381,7 @@ namespace BucHelp.DatabaseServices
             {
                 if (!rows.Contains(inrow))
                 {
+                    Console.WriteLine("not equal!");
                     rows.Add(new Row(inrow));
                 }
             }

@@ -76,28 +76,27 @@ namespace BucHelp.DatabaseServices
         /// <exception cref="ArgumentException">if the type is invalid for the target</exception>
         public void SetColumn(string key, object value)
         {
-            Type type = value.GetType();
-            if (type == typeof(int))
+            if (value is int)
             {
                 SetAsInt(key, (int)value);
             }
-            else if (type == typeof(long))
+            else if (value is long)
             {
                 SetAsLong(key, (long)value);
             }
-            else if (type == typeof(float))
+            else if (value is float)
             {
                 SetAsFloat(key, (float)value);
             }
-            else if (type == typeof(double))
+            else if (value is double)
             {
                 SetAsDouble(key, (double)value);
             }
-            else if (type == typeof(string))
+            else if (value is string)
             {
                 SetAsString(key, (string)value);
             }
-            else if (type == typeof(byte[]))
+            else if (value is byte[])
             {
                 SetAsBlob(key, (byte[])value);
             }
@@ -117,7 +116,7 @@ namespace BucHelp.DatabaseServices
         public int GetAsInt(string column)
         {
             ThrowIfNotNumericInteger(column);
-            return (int) values[column];
+            return Convert.ToInt32(values[column]);
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace BucHelp.DatabaseServices
         public long GetAsLong(string column)
         {
             ThrowIfNotNumericInteger(column);
-            return (long) values[column];
+            return Convert.ToInt64(values[column]);
         }
 
         /// <summary>
@@ -143,7 +142,7 @@ namespace BucHelp.DatabaseServices
         public float GetAsFloat(string column)
         {
             ThrowIfNotNumericReal(column);
-            return (float) values[column];
+            return Convert.ToSingle(values[column]);
         }
 
         /// <summary>
@@ -156,7 +155,7 @@ namespace BucHelp.DatabaseServices
         public double GetAsDouble(string column)
         {
             ThrowIfNotNumericReal(column);
-            return (double) values[column];
+            return Convert.ToDouble(values[column]);
         }
 
         /// <summary>
@@ -201,7 +200,7 @@ namespace BucHelp.DatabaseServices
         public void SetAsInt(string column, int value)
         {
             ThrowIfNotNumericInteger(column);
-            values[column] = value;
+            values[column] = (long) value;
         }
 
         /// <summary>
@@ -223,7 +222,7 @@ namespace BucHelp.DatabaseServices
         public void SetAsFloat(string column, float value)
         {
             ThrowIfNotNumericReal(column);
-            values[column] = value;
+            values[column] = (double) value;
         }
 
         /// <summary>
@@ -283,6 +282,16 @@ namespace BucHelp.DatabaseServices
             return "ROW " + values.ToString();
         }
 
+        public static bool operator ==(Row left, Row right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Row left, Row right)
+        {
+            return !left.Equals(right);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -291,7 +300,21 @@ namespace BucHelp.DatabaseServices
             }
 
             Row other = (Row)obj;
-            return other.Header == Header && other.values == values;
+            if (other.Header != Header)
+            {
+                Console.WriteLine("headers not equal");
+                return false;
+            }
+            for (int i = 0; i < Header.Length; i++)
+            {
+                Column col = Header[i];
+                if (!values[col.Name].Equals(other.values[col.Name]))
+                {
+                    Console.WriteLine("item " + i + " not equal");
+                    return false;
+                }
+            }
+            return true;
         }
 
         public override int GetHashCode()

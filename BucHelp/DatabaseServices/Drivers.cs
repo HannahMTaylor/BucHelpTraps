@@ -18,25 +18,49 @@
             return csvd;
         }
 
-        private static void APIUseTest()
+        public static void APIUseTest()
         {
             IDatabaseDriver driver = Drivers.GetDefaultDriver();
-            ITable questions = driver.GetTableForName("questions");
+            Console.WriteLine("Creating table");
+            driver.CreateTable("duck",new RowHeader(
+                new Column("colt",Column.Type.Text),
+                new Column("coln",Column.Type.Numeric),
+                new Column("coli", Column.Type.Integer),
+                new Column("colr", Column.Type.Real)
+            ));
+            ITable duck = driver.GetTableForName("duck");
 
-            foreach (Row row in questions.Select(row => row.GetAsString("questionAnswer").Contains("Duck")))
+            Console.WriteLine("Row 1");
+            Row row = new Row(duck.Header);
+            row.SetAsString("colt", "foo, bar, \nbaz");
+            row.SetAsInt("coln", 1);
+            row.SetAsDouble("coln", 3.14);
+            row.SetAsFloat("colr", 42.0f);
+            row.SetAsLong("coli", long.MaxValue);
+            duck.Insert(row);
+            Console.WriteLine("Mod row 2");
+            row.SetAsString("colt", "second row");
+            duck.Insert(row);
+
+            Console.WriteLine("Select where coln == 1");
+            foreach (Row r in duck.Select(row => row.GetAsInt("coln") == 3))
             {
-                Console.WriteLine(row.GetAsString("questionText"));
-                Console.WriteLine(row.GetAsString("questionAnswer"));
+                Console.WriteLine(row.GetAsString("colt"));
+                Console.WriteLine(row.GetAsLong("coln"));
+                Console.WriteLine(row.GetAsLong("coli"));
+                Console.WriteLine(row.GetAsDouble("colr"));
             }
 
-            Row newQuestion = new Row(questions.Header);
-            newQuestion.SetAsString("questionText","What is the duck?");
-            newQuestion.SetAsString("questionAnswer", "life");
-            questions.Insert(newQuestion);
+            Console.WriteLine("Select all");
+            foreach (Row r in duck.SelectAll())
+            {
+                Console.WriteLine(row.GetAsString("colt"));
+                Console.WriteLine(row.GetAsLong("coln"));
+                Console.WriteLine(row.GetAsLong("coli"));
+                Console.WriteLine(row.GetAsDouble("colr"));
+            }
 
-            questions.Delete(row => row.GetAsString("questionAnswer").Contains("Duck"));
-            questions.Update(row => row.GetAsString("questionAnswer").Contains("Duck"), "questionAnswer", "yes");
-
+            Console.WriteLine("Commit");
             driver.Commit();
             driver.Dispose();
         }

@@ -1,4 +1,6 @@
-﻿namespace BucHelp.DatabaseServices
+﻿using System.Data.Common;
+
+namespace BucHelp.DatabaseServices
 {
     /// <summary>
     /// Represents information about a database column, with name and SQLite type affinity. Immutable. Type affinities are ignored in CSV, but still enforced.
@@ -79,6 +81,16 @@
             if (name.Length == 0) throw new ArgumentException("name length is zero");
             Name = name;
             ValueType = type;
+        }
+
+        public static bool operator ==(Column left, Column right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Column left, Column right)
+        {
+            return !left.Equals(right);
         }
 
         /// <summary>
