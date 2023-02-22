@@ -1,0 +1,62 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BucHelp</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+       
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="searchbar">
+                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Search Bar
+            </NavLink>
+        </div>
+       
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="posthome">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Posts
+            </NavLink>
+        </div>
+        <!--Added the Question Submission Page - Ethan-->
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="questions">
+                <span class="oi oi-aperture" aria-hidden="true"></span> Question Submission 
+            </NavLink>
+        </div>
+        <!--Added the Question Submission Page - Ethan-->
+        <!--Nav item for login page -->
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="login">
+                <span class="oi oi-plus" aria-hidden="true"></span> Login Page
+            </NavLink>
+        </div>
+        <!--End of log in page-->
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="faq">
+
+                @* This line inserts the question mark symbol on the  *@
+                <span class="oi oi-question-mark" aria-hidden="true"></span> FAQ
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
