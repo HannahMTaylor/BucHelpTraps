@@ -9,7 +9,7 @@
         public string? Description { get; set; }
         public string? UserName { get; set; }
 //Feature/questionPostPage
-        public string Answer { get; set; }
+        public string? Answer { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
  //Feature/Question_Submit_Button
