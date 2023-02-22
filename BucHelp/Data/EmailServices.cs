@@ -2,6 +2,9 @@
 using System.Net.Mail;
 namespace BucHelp.Data
 {
+    /// <summary>
+    /// Email services for future use so users may have information sent to their emails.
+    /// </summary>
     public class EmailServices
     {
         SmtpClient Client;

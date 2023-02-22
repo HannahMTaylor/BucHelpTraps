@@ -1,5 +1,8 @@
 ﻿namespace BucHelp.Data
 {
+    /// <summary>
+    /// User class 
+    /// </summary>
     public class User
     {
         public string? UserName { get; set; } //Will be the email
@@ -7,7 +10,10 @@
         public string? Email { get; set; }
         public string? Affiliation { get; set; } //Student or Faculty
         
-
+        /// <summary>
+        /// Set the user email and will also generate the user's display name
+        /// </summary>
+        /// <param name="email"></param>
         public void setEmail(string email)
         {
             Email = email;
@@ -16,6 +22,12 @@
             UserName = username;
         }
 
+        /// <summary>
+        /// Constructor for User
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <param name="affiliation"></param>
         public User(string password, string email, string affiliation)
         {
             Password = password;
@@ -23,6 +35,9 @@
             Affiliation = affiliation;
         }
 
+        /// <summary>
+        /// Base constructor for User
+        /// </summary>
         public User()
         {
 

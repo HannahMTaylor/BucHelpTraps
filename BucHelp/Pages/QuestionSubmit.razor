@@ -1,4 +1,5 @@
-﻿@page "/questions"
+﻿<!--Page for the question submission form will store into a local list to be used later-->
+@page "/questions"
 @inject NavigationManager navigationManager
 @inject Question questions
 @using Data
@@ -15,14 +16,15 @@
 
 <button class="btn btn-primary"  @onclick="OnSubmit">Submit</button>
 
+<!--Code for page logic belw-->
 @code{
 
-    Question question = new Question();
+    Question question = new Question(); //Making a new question object when entering the page
 
     protected async void OnSubmit(MouseEventArgs mouseEventArgs)
     {
-        this.question.Title = question.Title;
-        this.question.Description = question.Description;
+        this.question.Title = question.Title;               //Set the title to info in title input box
+        this.question.Description = question.Description;   //Set the description to the info in the description box
 
         //Logic for adding to storage goes here
         //Resource used to do this below 
@@ -30,7 +32,7 @@
         if(!string.IsNullOrWhiteSpace(question.Title) && !string.IsNullOrWhiteSpace(question.Description))
         {
             questions.QuestionsList.Add(question);
-            navigationManager.NavigateTo("/posthome");
+            navigationManager.NavigateTo("/posthome"); //navigate to the post page once submitted
         }   
     }
 
