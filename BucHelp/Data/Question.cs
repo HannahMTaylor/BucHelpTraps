@@ -1,5 +1,6 @@
 ﻿namespace BucHelp.Data
 {
+    //question object to be used as a template for posts on the question forum
     public class Question
     {
         public int QuestionID { get; set; }
