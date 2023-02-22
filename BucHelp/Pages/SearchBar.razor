@@ -1,19 +1,20 @@
-﻿@page "/searchbar"
-
-
-
+﻿<!--URL page name-->
+@page "/searchbar" 
 
 <PageTitle>Search Bar</PageTitle>
 
+<!--Old attempt, ignore but keeping incase I need it later-->
 <!--<input id="txtWord" name="txtWord" placeholder="Search.."  value="@SearchInput" @onchange="onChange" @onkeyup="Enter" /> -->
 
-
-
+<!--This is the acutal search box, variable name 'SearchTerm'-->
 <input @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
+
+<!--This is the search box clear button, trigger 'ClearClick' method-->
 <button class="btn btn-primary" type="button" onclick="@ClearClick">Clear</button>
 
 <br>
 
+<!--Shows the total returned number of results by counting the number in the FilteredSearch List-->
 <span class="text-muted ml-5">
     Showing @FilteredSearch.Count Results
 </span>
@@ -21,6 +22,7 @@
 <br>
 <br>
 
+<!--Lists each object name from the FilteredSearch list on the page in a list-->
 <ul>
     @foreach (var search in FilteredSearch)
     {
@@ -30,8 +32,10 @@
 
 @code {
 
+    //creates a new list of SearchItem objects
     List<SearchItem> FilteredSearch2 = new List<SearchItem> { };
 
+    //creates a SearchItem object with Name only as of now (update later)
     public class SearchItem
     {
         public string? Name { get; set; }
@@ -40,7 +44,7 @@
     // Initialize SearchTerm to "" to prevent null's
     string SearchTerm { get; set; } = "";
 
-    // Imagine this was retrieved from an API, just hardcoding for demo purposes
+    // Will list objects with data, this will be read in from csv file later
     List<SearchItem> SearchItems => new List<SearchItem>
     {
         new SearchItem { Name = "Dorms and Housing" },
@@ -49,16 +53,24 @@
         new SearchItem { Name = "Professor Office Hours" }
     };
 
+    //clears the search bar after clear button is pressed
     private void ClearClick()
     {
         SearchTerm = "";
-        this.FilteredSearch2 = new List<SearchItem> { };
+        this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
     }
 
+    //filtering stored in new FilteredSearch variable where SearchItem is in listed object
     List<SearchItem> FilteredSearch => SearchItems.Where(i => i.Name.ToLower().Contains(SearchTerm.ToLower())).ToList();
 
 }
 
+
+
+<!--
+This is just the other UI I was working with before the dev team decided on the way to display it
+Leave it here in case I need some of it later
+-->
 
 <!--
 
