@@ -42,22 +42,36 @@
             row.SetAsString("colt", "second row");
             duck.Insert(row);
 
-            Console.WriteLine("Select where coln == 1");
-            foreach (Row r in duck.Select(row => row.GetAsInt("coln") == 3))
+            Console.WriteLine("Select where coln == 3");
+            foreach (Row r in duck.Select(qr => qr.GetAsInt("coln") == 3))
             {
-                Console.WriteLine(row.GetAsString("colt"));
-                Console.WriteLine(row.GetAsLong("coln"));
-                Console.WriteLine(row.GetAsLong("coli"));
-                Console.WriteLine(row.GetAsDouble("colr"));
+                Console.WriteLine(r.GetAsString("colt"));
+                Console.WriteLine(r.GetAsLong("coln"));
+                Console.WriteLine(r.GetAsLong("coli"));
+                Console.WriteLine(r.GetAsDouble("colr"));
             }
 
             Console.WriteLine("Select all");
             foreach (Row r in duck.SelectAll())
             {
-                Console.WriteLine(row.GetAsString("colt"));
-                Console.WriteLine(row.GetAsLong("coln"));
-                Console.WriteLine(row.GetAsLong("coli"));
-                Console.WriteLine(row.GetAsDouble("colr"));
+                Console.WriteLine(r.GetAsString("colt"));
+                Console.WriteLine(r.GetAsLong("coln"));
+                Console.WriteLine(r.GetAsLong("coli"));
+                Console.WriteLine(r.GetAsDouble("colr"));
+            }
+
+            Console.WriteLine("Update");
+            duck.Update(qr => qr.GetAsString("colt").Equals("second row"),"colt","updated");
+
+            // note: update can cause duplicate rows - will backlog as needed
+
+            Console.WriteLine("Select all");
+            foreach (Row r in duck.SelectAll())
+            {
+                Console.WriteLine(r.GetAsString("colt"));
+                Console.WriteLine(r.GetAsLong("coln"));
+                Console.WriteLine(r.GetAsLong("coli"));
+                Console.WriteLine(r.GetAsDouble("colr"));
             }
 
             Console.WriteLine("Commit");
