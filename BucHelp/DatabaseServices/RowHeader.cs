@@ -15,6 +15,7 @@ namespace BucHelp.DatabaseServices
         /// <param name="columns">array to copy</param>
         public RowHeader(params Column[] columns)
         {
+            ThrowIfNonuniqueNames(columns);
             this.columns = (Column[]) columns.Clone();
         }
 
@@ -107,6 +108,17 @@ namespace BucHelp.DatabaseServices
                 hash = 31 * hash + columns[i].GetHashCode();
             }
             return hash;
+        }
+
+        private static void ThrowIfNonuniqueNames(params Column[] columns)
+        {
+            for (int i = 0; i < columns.Length - 1; i++)
+            {
+                for (int j = i + 1; j < columns.Length; j++)
+                {
+                    if (columns[i].Name.Equals(columns[j].Name)) throw new ArgumentException("Multiple columns with same name: " + columns[i].Name);
+                }
+            }
         }
     }
 }

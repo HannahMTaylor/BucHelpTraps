@@ -377,6 +377,11 @@ namespace BucHelp.DatabaseServices
 
         public void Insert(params Row[] inrows)
         {
+            // test compatibility
+            foreach (Row inrow in inrows)
+            {
+                if (!inrow.Header.Equals(rowHeader)) throw new ArgumentException("Row handle does not match");
+            }
             foreach (Row inrow in inrows)
             {
                 if (!rows.Contains(inrow))
