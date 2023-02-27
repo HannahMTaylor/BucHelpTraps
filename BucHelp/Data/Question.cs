@@ -8,6 +8,7 @@
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? UserName { get; set; }
+        public string? Category { get; set; }
 //Feature/questionPostPage
         public string? Answer { get; set; }
         public DateTime Created { get; set; }
@@ -18,6 +19,15 @@
         public Question()
         {
 
+        }
+        //Featrue/Question_Categories
+        public enum Categories
+        {
+            CSCI,
+            MATH,
+            ENGL,
+            DORM,
+            CAMPUS
         }
     }
 }
