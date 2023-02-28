@@ -1,5 +1,6 @@
 ﻿@page "/posthome"
 @using BucHelp.Data
+@inject Question question
 
 
 <PageTitle>PostHome</PageTitle>
@@ -24,12 +25,17 @@ else
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
     private List<Question>? questions;
 
+    
+
     QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
 
     <!-- On page initialization asynchronously get the list of posted questions and save it to local variable questions-->
     protected override async Task OnInitializedAsync() 
-    { 
-        questions = await QuestionService.GetPostedQuestionsAsync(); 
+    {
+
+        questions = question.QuestionsList;
+
+        //questions = await QuestionService.GetPostedQuestionsAsync();
     }
 
 }

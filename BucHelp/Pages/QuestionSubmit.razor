@@ -20,12 +20,12 @@
 @code{
 
     Question question = new Question(); //Making a new question object when entering the page
-
+    
     protected async void OnSubmit(MouseEventArgs mouseEventArgs)
     {
         this.question.Title = question.Title;               //Set the title to info in title input box
         this.question.Description = question.Description;   //Set the description to the info in the description box
-
+        
         //Logic for adding to storage goes here
         //Resource used to do this below 
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
