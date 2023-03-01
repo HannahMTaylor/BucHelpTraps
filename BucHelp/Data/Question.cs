@@ -23,6 +23,7 @@
         //Featrue/Question_Categories
         public enum Categories
         {
+            UNCATEGORIZED,
             CSCI,
             MATH,
             ENGL,
