@@ -75,15 +75,18 @@
 
 <!--numbered page buttons at the end of the page-->
 <div id="buttonstuff">
-    @if (PageNumber == 0)
+    @if (PageNumber == 0 && (@FilteredSearch.Count) > 0)
     {
         <span style="position: relative; top: 80%; left: 50%;">
             <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> @(PageNumber + 1) </a> -->
             <u>@(PageNumber+1)</u>
+            @if (@FilteredSearch.Count() > 10)
+            {
             <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+2)"> Next </a>
+            }
         </span>
     }
-    else
+    else if(FilteredSearch.Count() > 0)
     {
         if ((@FilteredSearch.Count / pageSize) >= PageNumber)
         {
