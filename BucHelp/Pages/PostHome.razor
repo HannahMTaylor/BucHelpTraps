@@ -1,7 +1,6 @@
 ﻿@page "/posthome"
 @using BucHelp.Data
-
-
+@inject NavigationManager navigationManager
 <PageTitle>PostHome</PageTitle>
 
 <h3>Posts</h3>
@@ -14,22 +13,46 @@ else
 {
     @foreach(var q in questions)
     {
-        <p>@q.Title</p>
-        <p style="margin-left: 25px;">@q.Description</p>
-        <p style="margin-left: 25px;">@q.Answer</p>
+        int Index = currentQuestion;
+        <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
+            <p>@q.Title</p>
+            <p style="margin-left: 25px;">@q.Description</p>
+            <p style="margin-left: 25px;">@q.Answer</p>
+        </div>
+        <br/>
+        <br/>
     }
 }
 
 @code {
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
-    private List<Question>? questions;
+    private static  List<Question>? questions;
+    Question selected = new Question();
+    private string text = "Test";
+    public RenderFragment fragment { get; set; }
+
+    int currentQuestion;
 
     QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
 
+  
+    private RenderFragment AddContent() => builder =>
+    {
+        builder.AddContent(1, text);
+    };
+
+
     <!-- On page initialization asynchronously get the list of posted questions and save it to local variable questions-->
     protected override async Task OnInitializedAsync() 
-    { 
+    {
+
         questions = await QuestionService.GetPostedQuestionsAsync(); 
+    }
+
+    protected async void OnClick(Question question)
+    {
+        selected = question;
+        navigationManager.NavigateTo($"/navigatetopage/{selected}");
     }
 
 }

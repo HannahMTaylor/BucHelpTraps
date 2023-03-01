@@ -1,0 +1,17 @@
+﻿<!--Page to display question along with answers to the question-->
+@page "/QuestionView/{selected}"
+@using Data
+
+<div class="col-10 card card-body">
+    <p>@selected.Title</p>
+    <p style="margin-left: 25px;">@selected.Description</p>
+    <p style="margin-left: 25px;">@selected.Answer</p>
+</div>
+
+
+@code{
+    new Question selected;
+
+}
+
+
