@@ -72,6 +72,19 @@ namespace BucHelp.Data
             return questions;
         }
 
+        // get next available ID, based on database
+        public static int GenerateID()
+        {
+            IEnumerator<Row> enumerator = GetQuestionTable().SelectAll().GetEnumerator();
+            int nextId = -1;
+            while (enumerator.MoveNext())
+            {
+                Row row = enumerator.Current;
+                nextId = Math.Max(nextId, row.GetAsInt("id"));
+            }
+            return nextId + 1;
+        }
+
         // row -> obj conversion
         private static Question FromRow(Row row)
         {
