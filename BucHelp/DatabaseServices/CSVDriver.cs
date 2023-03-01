@@ -50,9 +50,9 @@ namespace BucHelp.DatabaseServices
 
         public ITable GetTableForName(string name)
         {
+            if (!tables.ContainsKey(name) || !headers.ContainsKey(name)) return null;
             RowHeader rowHeader = headers[name];
             List<Row> rows = tables[name];
-            if (rows == null || rowHeader == null) return null;
             return tableHandles.GetValueOrDefault(name, new CSVTableHandle(rowHeader, rows));
         }
 
