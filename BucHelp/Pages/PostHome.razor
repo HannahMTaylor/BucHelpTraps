@@ -1,5 +1,6 @@
 ﻿@page "/posthome"
 @using BucHelp.Data
+<!--Need to inject the Question singleton-->
 @inject Question question
 
 
@@ -33,9 +34,8 @@ else
     protected override async Task OnInitializedAsync() 
     {
 
-        questions = question.QuestionsList;
+        questions = question.QuestionsList; // Gets the singalton question list and sets the questionslist on that page to this list for now.
 
-        //questions = await QuestionService.GetPostedQuestionsAsync();
     }
 
 }
