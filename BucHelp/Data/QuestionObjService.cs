@@ -28,7 +28,7 @@ namespace BucHelp.Data
             string name = "question";
             ITable table = driver.GetTableForName(name);
             if (table != null) return table;
-            // table not present
+            // table not present, so create it
             RowHeader rowHeader = new RowHeader(
                 new Column("id", Column.Type.Integer),
                 new Column("title",Column.Type.Text),
