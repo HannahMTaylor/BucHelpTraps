@@ -9,16 +9,18 @@
     <label for="qtitle">Title </label><br>
     <input maxlength="20" @bind="question.Title" />
 </div>
-<select id="Category" name="Category" cols="50" @bind="question.Category">
-    <option value="0">Select a category</option>
-    <option value="1">CSCI</option>
-    <option value="2">Math</option>
-    <option value="3">ENGL</option>
-    <option value="4">Dorm</option>
-    <option value="5">Campus</option>
-    <option value="0">Uncategorized</option>
-</select>
-<br />
+<div class="col-md-6" style="padding:6px">
+    
+    <select id="Category" name="Category" cols="50" @bind="question.Category">
+        <option value="0">Select a category</option>
+        <option value="1">CSCI</option>
+        <option value="2">Math</option>
+        <option value="3">ENGL</option>
+        <option value="4">Dorm</option>
+        <option value="5">Campus</option>
+        <option value="0">Uncategorized</option>
+    </select>
+</div>
 <div>
     <label for="qdescription">Description</label><br>
     <textarea name="qdescription" rows="10" cols="50" maxlength="5000" @bind="question.Description"></textarea>
