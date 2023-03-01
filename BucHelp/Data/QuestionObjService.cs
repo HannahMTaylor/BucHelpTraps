@@ -38,7 +38,9 @@ namespace BucHelp.Data
                 new Column("created",Column.Type.Text),
                 new Column("lastupdated",Column.Type.Text)
             );
-            return driver.CreateTable(name, rowHeader);
+            table = driver.CreateTable(name, rowHeader);
+            driver.Commit();
+            return table;
         }
 
         // return question for ID

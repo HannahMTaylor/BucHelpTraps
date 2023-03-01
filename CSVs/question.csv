@@ -1,0 +1,2 @@
+id,title,description,username,answer,created,lastupdated
+INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT
