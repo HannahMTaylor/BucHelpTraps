@@ -1,0 +1,15 @@
+﻿
+@model List<string> 
+@{
+    //this doesn't have the shared navbar
+    <h1>Posts partial - testing display of partial page</h1>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>@item</li>
+        }
+    </ul>
+}
+
+
+

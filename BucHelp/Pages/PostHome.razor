@@ -1,4 +1,25 @@
-﻿@page "/posthome"
+﻿<!-- testing the integration of search bar and posts page-->
+@page "/posthome"
+@using BucHelp.Pages
+@*@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers*@
+
+<div class="page">
+
+    @*<partial name="_Posts.cshtml" />*@
+    <partial name="_Posts" model="Model.Animals" />
+</div>
+<!-- this isn't working -->
+
+
+
+
+
+
+
+
+
+<!-- original code-->
+@*@page "/posthome"
 @using BucHelp.Data
 
 
@@ -32,4 +53,4 @@ else
         questions = await QuestionService.GetPostedQuestionsAsync(); 
     }
 
-}
+}*@
