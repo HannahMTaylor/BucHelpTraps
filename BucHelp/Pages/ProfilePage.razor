@@ -1,0 +1,16 @@
+﻿@page "/profile"
+@using BucHelp.Data
+
+<h3>Profile</h3>
+<p>@profileUserDetails.UserName<br />
+   Email Address: @profileUserDetails.Email<br />
+   Affiliation: @profileUserDetails.Affiliation</p>
+
+<!--Brandon: This code is to demonstrate how to store variables, the above shows how to print them-->
+@code {
+    private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
+                                             //(One of which does not exist at the moment), the password is being stored here to make a user object possible to make
+                          address = "yofullname@google.com",
+                          affiliation = "Student";
+    private User profileUserDetails = new User(password, address, affiliation);
+}
