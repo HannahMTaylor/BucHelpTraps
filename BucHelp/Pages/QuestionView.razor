@@ -1,16 +1,41 @@
 ﻿<!--Page to display question along with answers to the question-->
-@page "/QuestionView/{selected}"
+@page "/QuestionView/{title}"
+@inject Question question
 @using Data
 
 <div class="col-10 card card-body">
     <p>@selected.Title</p>
     <p style="margin-left: 25px;">@selected.Description</p>
-    <p style="margin-left: 25px;">@selected.Answer</p>
+    <br/>
+    @foreach(var answer in selected.Answers)
+    {
+        <p style="margin-left: 25px;">@answer.Title</p>
+        <p style="margin-left: 25px;">@answer.Description</p>
+        <br/>
+    }
 </div>
 
 
 @code{
-    new Question selected;
+    new Question selected = new Question();
+
+    [Parameter]
+    public string title { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        for(int i = 0; i < question.QuestionsList.Count(); ++i)
+        {
+            string extraction = title;
+
+            if (question.QuestionsList[i].Title == extraction)
+            {
+                selected.Title = extraction;
+                selected.Description = question.QuestionsList[i].Description;
+            }
+        }
+        
+    }
 
 }
 

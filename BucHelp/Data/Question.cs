@@ -13,11 +13,18 @@
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
  //Feature/Question_Submit_Button
-        public List<Question> QuestionsList = new List<Question>();
+        public List<Question> QuestionsList = new List<Question>(); //Temp list for questions until DB connections are created
+
+        public List<Answer> Answers = new List<Answer>(); //List that holds the answer responces can be replaced when DB connections are created
 
         public Question()
         {
-
+            //The Below is a Stub to be removed later
+            for(int i =0; i < 5; i++)
+            {
+                Answers.Add(new Answer(1, 1, 1, "Answer", "This is a test", 0, Created, LastUpdated));
+            }
+            
         }
     }
 }
