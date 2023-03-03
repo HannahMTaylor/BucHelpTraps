@@ -1,7 +1,10 @@
 ﻿@page "/posthome"
 @using BucHelp.Data
+@using System.Web
+@using System.Text.RegularExpressions;
 <!--Need to inject the Question singleton-->
 @inject Question question
+
 
 
 <PageTitle>PostHome</PageTitle>
@@ -16,9 +19,15 @@ else
 {
     @foreach(var q in questions)
     {
-        <p>@q.Title</p>
-        <p style="margin-left: 25px;">@q.Description</p>
-        <p style="margin-left: 25px;">@q.Answer</p>
+        <di>
+            <p>@q.Title</p>
+
+            <!--Used a MarkupString with a regex pattern to read /n characters-->
+            <p style="margin-left: 25px;">@((MarkupString)Regex.Replace(
+                HttpUtility.HtmlEncode(q.Description), "\r?\n|\r", "<br />"))</p>
+            <p style="margin-left: 25px;">@q.Answer</p>
+        </di>
+       
     }
 }
 
