@@ -1,5 +1,6 @@
 ﻿<!--Page to display question along with answers to the question-->
-@page "/QuestionView/{title}"
+<!--Parameter view page that will display the question title-->
+@page "/QuestionView/{title}" 
 @inject Question question
 @using Data
 
@@ -7,6 +8,7 @@
     <p>@selected.Title</p>
     <p style="margin-left: 25px;">@selected.Description</p>
     <br/>
+    <!--Each question will have a list of answers with it so the loop below grabs these-->
     @foreach(var answer in selected.Answers)
     {
         <p style="margin-left: 25px;">@answer.Title</p>
@@ -17,16 +19,16 @@
 
 
 @code{
-    new Question selected = new Question();
+    Question selected = new Question(); //need question object on page
 
     [Parameter]
-    public string title { get; set; }
+    public string? title { get; set; } 
 
     protected override async Task OnInitializedAsync()
     {
         for(int i = 0; i < question.QuestionsList.Count(); ++i)
         {
-            string extraction = title;
+            string extraction = title; //extraction string for the title
 
             if (question.QuestionsList[i].Title == extraction)
             {

@@ -14,6 +14,10 @@ else
 {
     @foreach(var q in questions)
     {
+        <!--
+            Added a temp card body to test onclick features and to make sure 
+            answers are attached to the questions when moving to another page
+        -->
         <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
             <p>@q.Title</p>
             <p style="margin-left: 25px;">@q.Description</p>
@@ -37,13 +41,20 @@ else
     {
 
         questions = question.QuestionsList; // Gets the question list and sets the questionslist on that page to this list for now.    
-        
+
     }
 
+    /// <summary>
+    /// Once card is clicked will take the question object and use its title
+    /// to set the new page, but if two questions have the same title they will
+    /// both display.  Once DB connections are made this could be the ID
+    /// </summary>
+    /// <param name="question"></param>
     protected async void OnClick(Question question)
     {
         selected = question;
         navigationManager.NavigateTo($"/QuestionView/{selected.Title}");
+        //navigationManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
     }
 
 }
