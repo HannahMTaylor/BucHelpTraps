@@ -7,7 +7,12 @@
     <button @onclick="thing">Reply</button>
 </div>
 
+<div>
+    <label for="qdescription">Reply</label><br>
+    <textarea name="qdescription" rows="10" cols="50" maxlength="5000" </textarea>
+</div>
 
+<button @onclick="thing">Post</button>
 
 @code {
     public void thing() { }
