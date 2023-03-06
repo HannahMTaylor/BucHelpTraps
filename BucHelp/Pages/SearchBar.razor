@@ -1,8 +1,12 @@
 ﻿<!--URL page name-->
 @page "/searchbar/1" 
 @page "/searchbar/{PageNumber:int}"
+@inject NavigationManager NavManager
 
 <PageTitle>Search Bar</PageTitle>
+
+
+
 
 <!--Old attempt, ignore but keeping incase I need it later-->
 <!--<input id="txtWord" name="txtWord" placeholder="Search.."  value="@SearchInput" @onchange="onChange" @onkeyup="Enter" /> -->
@@ -37,6 +41,13 @@
 
 <!--Lists each object name from the FilteredSearch list on the page in a list-->
 <ul>
+    @if (@FilteredSearch.Count() != OldFilteredCount)
+    {
+        
+            NavManager.NavigateTo("/searchbar/1");
+      
+        OldFilteredCount = @FilteredSearch.Count();
+    }
 
     @if (PageNumber == 0)
     { 
@@ -94,7 +105,10 @@
                 <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber-1)"> Back </a>
                 <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
                 <u>@PageNumber</u>
-                <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> Next </a>
+                @if (@FilteredSearch.Count() > (10*@PageNumber + 1))
+                {
+                    <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> Next </a>
+                }
             </span>
         }
         else
@@ -125,8 +139,10 @@
         public string? Name { get; set; }
     }
 
+    private int OldFilteredCount = 0;
+
     // Initialize SearchTerm to "" to prevent null's
-    string SearchTerm { get; set; } = "";
+    private string SearchTerm { get; set; } = "";
 
     // Will list objects with data, this will be read in from csv file later
     List<SearchItem> SearchItems => new List<SearchItem>
@@ -187,34 +203,14 @@
         this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
     }
 
+    protected void OnChange()
+    {
+        NavManager.NavigateTo("/searchbar/1");
+    }
+
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
     List<SearchItem> FilteredSearch => SearchItems.Where(i => i.Name.ToLower().Contains(SearchTerm.ToLower())).ToList();
 
-    //dont use this
-    /*private string HandleChangePage(int p)
-        {
-        PageNumber = p;
-        var page = FilteredSearch.Skip((p - 1) * pageSize).Take(pageSize);
-    return "";
-    }
-    */
+
 }
-
-
-
-
-
-<!--
-This is just the other UI I was working with before the dev team decided on the way to display it
-Leave it here in case I need some of it later
--->
-
-<!--
-
-<input @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
-
-<button class="btn btn-primary" type="button" onclick="@SearchClick">Search</button>
-<button class="btn btn-primary" type="button" onclick="@ClearClick">Clear</button>
-
-
 
