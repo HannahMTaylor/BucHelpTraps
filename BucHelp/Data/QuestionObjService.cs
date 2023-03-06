@@ -22,32 +22,11 @@ namespace BucHelp.Data
             return Task.FromResult(questions);
         }
 
-        private static ITable GetQuestionTable()
-        {
-            IDatabaseDriver driver = Drivers.GetDefaultDriver();
-            string name = "question";
-            ITable table = driver.GetTableForName(name);
-            if (table != null) return table;
-            // table not present, so create it
-            RowHeader rowHeader = new RowHeader(
-                new Column("id", Column.Type.Integer),
-                new Column("title",Column.Type.Text),
-                new Column("description",Column.Type.Text),
-                new Column("username",Column.Type.Text),
-                new Column("answer",Column.Type.Text),
-                new Column("created",Column.Type.Text),
-                new Column("lastupdated",Column.Type.Text)
-            );
-            table = driver.CreateTable(name, rowHeader);
-            driver.Commit();
-            return table;
-        }
-
         // return question for ID
-        public static Question GetForId(int qid)
+        public static Question GetForID(int qid)
         {
             
-            IEnumerator<Row> enumerator = GetQuestionTable().Select(row => row.GetAsInt("id") == qid).GetEnumerator();
+            IEnumerator<Row> enumerator = GetTable().Select(row => row.GetAsInt("id") == qid).GetEnumerator();
             if (enumerator.MoveNext())
             {
                 Row row = enumerator.Current;
@@ -62,7 +41,7 @@ namespace BucHelp.Data
         // return all
         public static List<Question> GetAll()
         {
-            IEnumerator<Row> enumerator = GetQuestionTable().SelectAll().GetEnumerator();
+            IEnumerator<Row> enumerator = GetTable().SelectAll().GetEnumerator();
             List<Question> questions = new List<Question>();
             while (enumerator.MoveNext())
             {
@@ -75,7 +54,7 @@ namespace BucHelp.Data
         // get next available ID, based on database
         public static int GenerateID()
         {
-            IEnumerator<Row> enumerator = GetQuestionTable().SelectAll().GetEnumerator();
+            IEnumerator<Row> enumerator = GetTable().SelectAll().GetEnumerator();
             int nextId = -1;
             while (enumerator.MoveNext())
             {
@@ -83,6 +62,29 @@ namespace BucHelp.Data
                 nextId = Math.Max(nextId, row.GetAsInt("id"));
             }
             return nextId + 1;
+        }
+
+        // private below here
+        // get or create table
+        private static ITable GetTable()
+        {
+            IDatabaseDriver driver = Drivers.GetDefaultDriver();
+            string name = "question";
+            ITable table = driver.GetTableForName(name);
+            if (table != null) return table;
+            // table not present, so create it
+            RowHeader rowHeader = new RowHeader(
+                new Column("id", Column.Type.Integer),
+                new Column("title", Column.Type.Text),
+                new Column("description", Column.Type.Text),
+                new Column("username", Column.Type.Text),
+                new Column("answer", Column.Type.Text),
+                new Column("created", Column.Type.Text),
+                new Column("lastupdated", Column.Type.Text)
+            );
+            table = driver.CreateTable(name, rowHeader);
+            driver.Commit();
+            return table;
         }
 
         // row -> obj conversion
@@ -97,6 +99,13 @@ namespace BucHelp.Data
             question.Created = DateTime.Parse(row.GetAsString("created"));
             question.LastUpdated = DateTime.Parse(row.GetAsString("lastupdated"));
             return question;
+        }
+
+        // obj -> row conversion
+        private static Row ToRow(Question question)
+        {
+            Row row = new Row(GetTable().Header);
+            return row;
         }
     }
 }
