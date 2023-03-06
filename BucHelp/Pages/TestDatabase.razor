@@ -1,0 +1,43 @@
+﻿@page "/lwtest"
+@using System.Text
+@using Data
+@using DatabaseServices
+
+
+<h3>TestDatabase</h3>
+
+@code {
+	List<Question> all = QuestionObjService.GetAll();
+	Question template = new Question();
+
+	protected async void OnSubmit(MouseEventArgs args)
+	{
+		template.QuestionID = QuestionObjService.GenerateID();
+		template.UserName = "lwhitelaw";
+		QuestionObjService.Write(template);
+		Drivers.GetDefaultDriver().Commit();
+	}
+}
+
+@foreach (Question q in all)
+{
+	<p>QuestionID: @q.QuestionID</p>
+	<p>Title: @q.Title</p>
+	<p>Username: @q.UserName</p>
+	<p>Desc: @q.Description</p>
+	<p>Answer: @q.Answer</p>
+	<p>Created/Updated: @q.Created / @q.LastUpdated</p>
+	<br \>
+}
+
+<div>
+	<label for="qtitle">Title </label><br>
+	<input maxlength="20" @bind="template.Title" />
+</div>
+<div>
+	<label for="qdescription">Description</label><br>
+	<textarea name="qdescription" rows="10" cols="50" maxlength="5000" @bind="template.Description"></textarea>
+</div>
+
+<button class="btn btn-primary"  @onclick="OnSubmit">Submit</button>
+
