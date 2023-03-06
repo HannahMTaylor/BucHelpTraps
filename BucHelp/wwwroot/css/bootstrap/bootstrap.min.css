@@ -3021,6 +3021,26 @@ textarea.form-control-lg {
     }
 
 
+form {
+    
+    margin: 0 auto;
+}
+
+div {
+    margin-bottom: 10px;
+}
+
+fieldset {
+    background: white;
+    border: 5px solid #041E42;
+}
+
+legend {
+    padding: 10px;
+    background: #041E42;
+    color: white;
+}
+
 
 
 .btn-primary {
