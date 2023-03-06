@@ -5,10 +5,10 @@ namespace BucHelp.Data
     public class UserObjService
     {
         // return user for ID
-        public static User GetForID(int qid)
+        public static User GetForID(int uid)
         {
 
-            IEnumerator<Row> enumerator = GetTable().Select(row => row.GetAsInt("id") == qid).GetEnumerator();
+            IEnumerator<Row> enumerator = GetTable().Select(row => row.GetAsInt("id") == uid).GetEnumerator();
             if (enumerator.MoveNext())
             {
                 Row row = enumerator.Current;
@@ -51,17 +51,15 @@ namespace BucHelp.Data
         {
             // Remove the row if it is already there and reinsert
             // not as efficient but the update would be painful to write
-            //GetTable().Delete(row => row.GetAsInt("id") == user.UserName);
-            //GetTable().Insert(ToRow(user));
+            GetTable().Delete(row => row.GetAsInt("id") == user.UserId);
+            GetTable().Insert(ToRow(user));
         }
 
         // private below here
         // null bits
         // a set bit indicates that field is null
         // 1 = null, 0 = present!
-        private const int NULL_USERNAME = 0x01;
-        private const int NULL_EMAIL = 0x02;
-        private const int NULL_PASSWORD = 0x04;
+        private const int NULL_AFFILIATION = 0x01;
 
         // get or create table
         private static ITable GetTable()
@@ -74,10 +72,12 @@ namespace BucHelp.Data
             RowHeader rowHeader = new RowHeader(
                 new Column("id", Column.Type.Integer),
                 new Column("nulls", Column.Type.Integer),
-                // nullable
+                // not null
                 new Column("username", Column.Type.Text),
                 new Column("email", Column.Type.Text),
-                new Column("password", Column.Type.Text)
+                new Column("password", Column.Type.Text),
+                // nullable
+                new Column("affiliation", Column.Type.Text)
             );
             table = driver.CreateTable(name, rowHeader);
             driver.Commit();
@@ -92,26 +92,25 @@ namespace BucHelp.Data
             // get nulls
             int nulls = row.GetAsInt("nulls");
             // if null bit is zero, then field is present- get it
-            if ((nulls & NULL_USERNAME) == 0) user.UserName = row.GetAsString("username");
-            if ((nulls & NULL_EMAIL) == 0) user.Email = row.GetAsString("email");
-            if ((nulls & NULL_PASSWORD) == 0) user.Password = row.GetAsString("password");
+            if ((nulls & NULL_AFFILIATION) == 0) user.Affiliation = row.GetAsString("affiliation");
+            user.UserName = row.GetAsString("username");
+            user.Email = row.GetAsString("email");
+            user.Password = row.GetAsString("password");
             return user;
         }
 
         // obj -> row conversion, updates do not use this
-        private static Row ToRow(Question question)
+        private static Row ToRow(User user)
         {
             Row row = new Row(GetTable().Header);
-            //row.SetAsInt("id", question.QuestionID);
-            //// build nulls
-            //int nulls = 0;
-            //SetAsStringNullable(row, "title", question.Title, NULL_TITLE, ref nulls);
-            //SetAsStringNullable(row, "description", question.Description, NULL_DESCRIPTION, ref nulls);
-            //SetAsStringNullable(row, "username", question.UserName, NULL_USERNAME, ref nulls);
-            //SetAsStringNullable(row, "answer", question.Answer, NULL_ANSWER, ref nulls);
-            //row.SetAsString("created", question.Created.ToString());
-            //row.SetAsString("lastupdated", question.LastUpdated.ToString());
-            //row.SetAsInt("nulls", nulls);
+            row.SetAsInt("id", user.UserId);
+            // build nulls
+            int nulls = 0;
+            row.SetAsString("username", user.UserName);
+            row.SetAsString("email", user.Email);
+            row.SetAsString("password", user.Password);
+            SetAsStringNullable(row, "affiliation", user.Affiliation, NULL_AFFILIATION, ref nulls);
+            row.SetAsInt("nulls", nulls);
             return row;
         }
 

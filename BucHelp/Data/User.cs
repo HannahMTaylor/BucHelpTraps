@@ -5,6 +5,7 @@
     /// </summary>
     public class User
     {
+        public int UserId { get; set; }
         public string? UserName { get; set; } //Will be the email
         public string? Password { get; set; }
         public string? Email { get; set; }
