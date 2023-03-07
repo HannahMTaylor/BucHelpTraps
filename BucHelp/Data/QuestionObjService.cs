@@ -81,9 +81,10 @@ namespace BucHelp.Data
         private const int NULL_DESCRIPTION = 0x02;
         private const int NULL_USERNAME = 0x04;
         private const int NULL_ANSWER = 0x08;
+		private const int NULL_CATEGORY = 0x10;
 
-        // get or create table
-        private static ITable GetTable()
+		// get or create table
+		private static ITable GetTable()
         {
             IDatabaseDriver driver = Drivers.GetDefaultDriver();
             string name = "question";
@@ -98,8 +99,9 @@ namespace BucHelp.Data
                 new Column("description", Column.Type.Text),
                 new Column("username", Column.Type.Text),
                 new Column("answer", Column.Type.Text),
-                // nonnull
-                new Column("created", Column.Type.Text),
+				new Column("category", Column.Type.Text),
+				// nonnull
+				new Column("created", Column.Type.Text),
                 new Column("lastupdated", Column.Type.Text)
             );
             table = driver.CreateTable(name, rowHeader);
@@ -119,8 +121,9 @@ namespace BucHelp.Data
             if ((nulls & NULL_DESCRIPTION) == 0) question.Description = row.GetAsString("description");
             if ((nulls & NULL_USERNAME) == 0) question.UserName = row.GetAsString("username");
             if ((nulls & NULL_ANSWER) == 0) question.Answer = row.GetAsString("answer");
-            // these are never null
-            question.Created = DateTime.Parse(row.GetAsString("created"));
+			if ((nulls & NULL_CATEGORY) == 0) question.Category = row.GetAsString("category");
+			// these are never null
+			question.Created = DateTime.Parse(row.GetAsString("created"));
             question.LastUpdated = DateTime.Parse(row.GetAsString("lastupdated"));
             return question;
         }
@@ -136,7 +139,8 @@ namespace BucHelp.Data
             SetAsStringNullable(row, "description", question.Description, NULL_DESCRIPTION, ref nulls);
             SetAsStringNullable(row, "username", question.UserName, NULL_USERNAME, ref nulls);
             SetAsStringNullable(row, "answer", question.Answer, NULL_ANSWER, ref nulls);
-            row.SetAsString("created", question.Created.ToString());
+			SetAsStringNullable(row, "category", question.Category, NULL_CATEGORY, ref nulls);
+			row.SetAsString("created", question.Created.ToString());
             row.SetAsString("lastupdated", question.LastUpdated.ToString());
             row.SetAsInt("nulls", nulls);
             return row;
