@@ -2,14 +2,19 @@
 @page "/posthome/{PageNumber:int}"
 @using BucHelp.Data
 @using BucHelp.Pages
-@inject NavigationManager NavManager
+@inject NavigationManager navigationManager
+@inject Question question
+<PageTitle>PostHome</PageTitle>
+
+
+
 
 
 
 <h3>Posts</h3>
 
 
-
+@if (questions.Count() == 0)
 @if (questions == null)
 {
     <p>No questions posted yet... </p>
@@ -34,12 +39,25 @@ else //could make this an else if to display the list of posted questions if the
     <br>
 
     <!-- display the list of posted questions -->
-    @*@foreach (var q in questions)
+    @foreach (var q in questions)
     {
+
+        <!-- feature/answers-page card addition ---> move this to the FilterSearch results parts later
+            Added a temp card body to test onclick features and to make sure 
+            answers are attached to the questions when moving to another page
+        -->
+        <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
+            <p>@q.Title</p>
+            <p style="margin-left: 25px;">@q.Description</p>
+            <p style="margin-left: 25px;">@q.Answer</p>
+        </div>
+        <br/>
+        <br/>
+ <!-- combinationPostSearch code including the searchBar features -->
         <p>@q.Title</p>
         <p style="margin-left: 25px;">@q.Description</p>
         <p style="margin-left: 25px;">@q.Answer</p>
-    }*@
+    }
 
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
@@ -85,6 +103,7 @@ else //could make this an else if to display the list of posted questions if the
             @*<span style="position: relative; top: 90%; left: 50%;">
                 <a class="btn btn-SearchPageBtn" href="searchbar/@(i+1)"> @(i+1) </a>
             </span>*@
+
     }
     </div>
     -->
@@ -148,14 +167,32 @@ else //could make this an else if to display the list of posted questions if the
 
 @code {
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
-    private List<Question>? questions;
-
+    private static  List<Question>? questions;
+    Question selected = new Question();
+   
     QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
 
+  
     <!-- On page initialization asynchronously get the list of posted questions and save it to local variable questions-->
     protected override async Task OnInitializedAsync() 
     {
-        questions = await QuestionService.GetPostedQuestionsAsync(); 
+
+        questions = question.QuestionsList; // Gets the question list and sets the questionslist on that page to this list for now.    
+
+    }
+
+    /// <summary>
+    /// Once card is clicked will take the question object and use its title
+    /// to set the new page, but if two questions have the same title they will
+    /// both display.  Once DB connections are made this could be the ID
+    /// </summary>
+    /// <param name="question"></param>
+    protected async void OnClick(Question question)
+    {
+        selected = question;
+        navigationManager.NavigateTo($"/QuestionView/{selected.Title}");
+        //navigationManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
+
     }
 
 
