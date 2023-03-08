@@ -16,12 +16,15 @@
 <h3>Posts</h3>
 
 
-@if (questions.Count() == 0)
-@if (questions == null)
+@if (questions.Count() == 0) //is this really needed???? -Hannah
 {
     <p>No questions posted yet... </p>
 }
-else //could make this an else if to display the list of posted questions if the search bar isn't active or use a while active loop inside else to display the search bar items??
+else if (questions == null)
+{
+    <p>No questions posted yet... </p>
+}
+else //could make this an else if to display the list of posted questions if the search bar isn't active or use a while active loop inside else to display the search bar items?? -Hannah's brainstorming for later
 {
     <!--This is the acutal search box, variable name 'SearchTerm'-->
     <input style="width: 30rem; height: 2.1rem; position: absolute; top: 20%; left: 42.5%; margin: -25px 0 0 -25px;" @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
@@ -41,21 +44,20 @@ else //could make this an else if to display the list of posted questions if the
     <br>
 
     <!-- display the list of posted questions -->
-    @foreach (var q in questions)
+   @* @foreach (var q in questions)
     {
 
-        <!-- <di>   //commenting this out until I figure out what it does -- hannah
-            <p>@q.Title</p> -->
+        <div>   <!--commenting this out until I figure out what it does -- hannah-->
+            <p>@q.Title</p>
 
             <!--Used a MarkupString with a regex pattern to read /n characters-->
-            <!-- <p style="margin-left: 25px;">@((MarkupString)Regex.Replace(
-                HttpUtility.HtmlEncode(q.Description), "\r?\n|\r", "<br />"))</p>
+            <p style="margin-left: 25px;">@((MarkupString)Regex.Replace(HttpUtility.HtmlEncode(q.Description), "\r?\n|\r", "<br />"))</p>
             <p style="margin-left: 25px;">@q.Answer</p>
-        </di> -->
+        </div> 
        
 
 
-        <!-- feature/answers-page card addition  move this to the FilterSearch results parts later
+        <!-- feature/answers-page card addition  move this to the FilterSearch results parts later --H
             Added a temp card body to test onclick features and to make sure 
             answers are attached to the questions when moving to another page
         -->
@@ -66,11 +68,9 @@ else //could make this an else if to display the list of posted questions if the
         </div>
         <br/>
         <br/>
- <!-- combinationPostSearch code including the searchBar features -->
-        <p>@q.Title</p>
-        <p style="margin-left: 25px;">@q.Description</p>
-        <p style="margin-left: 25px;">@q.Answer</p>
-    }
+ 
+
+    }//end foreach*@
 
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
@@ -86,11 +86,15 @@ else //could make this an else if to display the list of posted questions if the
         {
             @for (int j = 0; j < PageNumber + pageSize; j++) //displays a specific number of objects per page
             {
+                //var q = FilteredSearch[j]; //out of bounds exception being thrown
                 @if (j < @FilteredSearch.Count())
                 {
-                    <p>@FilteredSearch[j].Title</p>
-                    <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
-                    <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
+                    var q = FilteredSearch[j];
+                    <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
+                        <p>@FilteredSearch[j].Title</p>
+                        <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
+                        <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
+                    </div>
                 }
             }
         }
@@ -98,11 +102,15 @@ else //could make this an else if to display the list of posted questions if the
         {
             @for (int j = (PageNumber - 1) * pageSize; j < PageNumber * pageSize; j++) //displays a specific number of objects per page
             {
+                
                 @if (j < @FilteredSearch.Count())
                 {
-                    <p>@FilteredSearch[j].Title</p>
-                    <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
-                    <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
+                    var q = FilteredSearch[j];
+                    <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
+                        <p>@FilteredSearch[j].Title</p>
+                        <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
+                        <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
+                    </div>
                 }
             }
         }
@@ -187,7 +195,7 @@ else //could make this an else if to display the list of posted questions if the
 
     <!-- keeping this for debugging sake -- from either questionsOnPostpage or answers-page -->
     //private static  List<Question>? questions;
-    //Question selected = new Question();
+    Question selected = new Question();
    
 
     QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
