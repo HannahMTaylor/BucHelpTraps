@@ -2,7 +2,7 @@
 @page "/posthome/{PageNumber:int}"
 @using BucHelp.Data
 @using BucHelp.Pages
-@inject NavigationManager navigationManager
+@inject NavigationManager NavManager
 @inject Question question
 <PageTitle>PostHome</PageTitle>
 
@@ -39,10 +39,10 @@ else //could make this an else if to display the list of posted questions if the
     <br>
 
     <!-- display the list of posted questions -->
-    @foreach (var q in questions)
+    @*@foreach (var q in questions)
     {
 
-        <!-- feature/answers-page card addition ---> move this to the FilterSearch results parts later
+        <!-- feature/answers-page card addition  move this to the FilterSearch results parts later
             Added a temp card body to test onclick features and to make sure 
             answers are attached to the questions when moving to another page
         -->
@@ -57,7 +57,7 @@ else //could make this an else if to display the list of posted questions if the
         <p>@q.Title</p>
         <p style="margin-left: 25px;">@q.Description</p>
         <p style="margin-left: 25px;">@q.Answer</p>
-    }
+    }*@
 
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
@@ -190,7 +190,7 @@ else //could make this an else if to display the list of posted questions if the
     protected async void OnClick(Question question)
     {
         selected = question;
-        navigationManager.NavigateTo($"/QuestionView/{selected.Title}");
+        NavManager.NavigateTo($"/QuestionView/{selected.Title}");
         //navigationManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
 
     }
