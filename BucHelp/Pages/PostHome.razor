@@ -16,11 +16,11 @@
 <h3>Posts</h3>
 
 
-@if (questions.Count() == 0) //is this really needed???? -Hannah
+@if (questions == null) //is this really needed???? -Hannah
 {
     <p>No questions posted yet... </p>
 }
-else if (questions == null)
+else if (questions.Count() == 0)
 {
     <p>No questions posted yet... </p>
 }
