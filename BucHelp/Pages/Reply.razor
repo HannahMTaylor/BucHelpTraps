@@ -1,19 +1,35 @@
 ﻿@page "/Reply"
 
 <PageTitle>Reply</PageTitle>
-<h3>Reply</h3>
 
-<div>
-    <button @onclick="thing">Reply</button>
-</div>
+@if(!showReply)
+{
+    <div>
+        <button class="btn btn-primary" @onclick="reply" id="btnReply">Reply</button>
+    </div>
+    <br />
+}
 
-<div>
-    <label for="qdescription">Reply</label><br>
-    <textarea name="qdescription" rows="10" cols="50" maxlength="5000" </textarea>
-</div>
+@if (showReply)
+{
+    <div>
+        <label for="qdescription">Reply</label><br>
+        <textarea name="qreply" rows="10" cols="50" maxlength="5000"></textarea>
+    </div>
 
-<button @onclick="thing">Post</button>
+    <button class="btn-primary" @onclick="submit">Post</button>
+    
+}
 
 @code {
-    public void thing() { }
+    bool showReply = false;
+    public void reply()
+    {
+        showReply = true;
+        
+    }
+    public void submit()
+    {
+        
+    }
 }
