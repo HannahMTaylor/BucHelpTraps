@@ -4,10 +4,11 @@
 @inject Question questions
 @using Data
 
+
 <h3>Question</h3>
 <div>
-    <label for="qtitle">Title </label><br>
-    <input maxlength="20" @bind="question.Title" />
+    <label for="qtitle"><sup class="star" style="color:red">*</sup>Title</label><br>
+    <input maxlength="20" @bind-value="question.Title" />
 </div>
 <div class="col-md-6" style="padding:6px">
     
@@ -22,8 +23,26 @@
     </select>
 </div>
 <div>
-    <label for="qdescription">Description</label><br>
-    <textarea name="qdescription" rows="10" cols="50" maxlength="5000" @bind="question.Description"></textarea>
+    <label for="qdescription"><sup class="star" style="color:red">*</sup>
+        Description</label><br>
+    <textarea name="qdescription" rows="10" cols="50" maxlength="@descMaxCharacters"
+        @bind-value:event="oninput" @bind-value="question.Description"></textarea>
+
+    <!--If the string is null auto display 0 until the user starts to type-->    
+    @if (question.Description == null)
+    {
+        <div>
+            Character Count: 0 / @descMaxCharacters
+        </div>
+    }
+    else
+    {
+        <div>
+            Character Count: @question.Description.Count() / @descMaxCharacters
+        </div>
+    }
+
+        
 </div>
 
 <button class="btn btn-primary"  @onclick="OnSubmit">Submit</button>
@@ -33,6 +52,9 @@
 @code{
 
     Question question = new Question(); //Making a new question object when entering the page
+
+    string descriptioninput = "";
+    int descMaxCharacters = 5000;
 
     protected async void OnSubmit(MouseEventArgs mouseEventArgs)
     {
@@ -46,7 +68,7 @@
         if(!string.IsNullOrWhiteSpace(question.Title) && !string.IsNullOrWhiteSpace(question.Description))
         {
             questions.QuestionsList.Add(question);
-            navigationManager.NavigateTo("/posthome"); //navigate to the post page once submitted
+            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
         }   
     }
 
