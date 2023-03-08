@@ -1,11 +1,13 @@
 ﻿@page "/posthome/1"
 @page "/posthome/{PageNumber:int}"
 @using BucHelp.Data
+@using System.Web
+@using System.Text.RegularExpressions;
+<!--Need to inject the Question singleton-->
+@inject Question question
 @using BucHelp.Pages
 @inject NavigationManager NavManager
-@inject Question question
 <PageTitle>PostHome</PageTitle>
-
 
 
 
@@ -39,8 +41,19 @@ else //could make this an else if to display the list of posted questions if the
     <br>
 
     <!-- display the list of posted questions -->
-    @*@foreach (var q in questions)
+    @foreach (var q in questions)
     {
+
+        <!-- <di>   //commenting this out until I figure out what it does -- hannah
+            <p>@q.Title</p> -->
+
+            <!--Used a MarkupString with a regex pattern to read /n characters-->
+            <!-- <p style="margin-left: 25px;">@((MarkupString)Regex.Replace(
+                HttpUtility.HtmlEncode(q.Description), "\r?\n|\r", "<br />"))</p>
+            <p style="margin-left: 25px;">@q.Answer</p>
+        </di> -->
+       
+
 
         <!-- feature/answers-page card addition  move this to the FilterSearch results parts later
             Added a temp card body to test onclick features and to make sure 
@@ -57,7 +70,7 @@ else //could make this an else if to display the list of posted questions if the
         <p>@q.Title</p>
         <p style="margin-left: 25px;">@q.Description</p>
         <p style="margin-left: 25px;">@q.Answer</p>
-    }*@
+    }
 
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
@@ -167,15 +180,23 @@ else //could make this an else if to display the list of posted questions if the
 
 @code {
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
-    private static  List<Question>? questions;
-    Question selected = new Question();
+
+    private List<Question>? questions;
+
+    
+
+    <!-- keeping this for debugging sake -- from either questionsOnPostpage or answers-page -->
+    //private static  List<Question>? questions;
+    //Question selected = new Question();
    
+
     QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
 
   
     <!-- On page initialization asynchronously get the list of posted questions and save it to local variable questions-->
     protected override async Task OnInitializedAsync() 
     {
+
 
         questions = question.QuestionsList; // Gets the question list and sets the questionslist on that page to this list for now.    
 
@@ -232,6 +253,7 @@ else //could make this an else if to display the list of posted questions if the
     protected void OnChange()
     {
         NavManager.NavigateTo("/posthome/1"); //trying to change the navigation to redirect to the posthome page since we are moving the search bar and list of posted questions pages into a single page
+
     }
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object

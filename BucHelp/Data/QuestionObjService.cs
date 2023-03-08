@@ -26,6 +26,10 @@
         //method to retrieve posted questions -- should be able to access the persistent storage as is
         public Task<List<Question>> GetPostedQuestionsAsync()
         {
+
+            //questions.Add(q1);
+            //questions.Add(q2);
+
             questions.Add(q1);
             questions.Add(q2);
             questions.Add(q1);
@@ -40,6 +44,7 @@
             questions.Add(q2);
             questions.Add(q1);
             questions.Add(q2);
+
             return Task.FromResult(questions);
         }
     }

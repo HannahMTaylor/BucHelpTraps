@@ -1,11 +1,16 @@
-﻿namespace BucHelp.Data
+﻿using System.ComponentModel.DataAnnotations;
+namespace BucHelp.Data
 {
     //question object to be used as a template for posts on the question forum
     public class Question
     {
         public int QuestionID { get; set; }
- //Feature/Question_Submit_Button
+        //Feature/Question_Submit_Button
+
+        [Required]
         public string? Title { get; set; }
+
+        [Required]
         public string? Description { get; set; }
         public string? UserName { get; set; }
         public string? Category { get; set; }
