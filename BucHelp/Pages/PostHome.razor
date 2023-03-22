@@ -43,35 +43,6 @@ else //could make this an else if to display the list of posted questions if the
     <br>
     <br>
 
-    <!-- display the list of posted questions -->
-   @* @foreach (var q in questions)
-    {
-
-        <div>   <!--commenting this out until I figure out what it does -- hannah-->
-            <p>@q.Title</p>
-
-            <!--Used a MarkupString with a regex pattern to read /n characters-->
-            <p style="margin-left: 25px;">@((MarkupString)Regex.Replace(HttpUtility.HtmlEncode(q.Description), "\r?\n|\r", "<br />"))</p>
-            <p style="margin-left: 25px;">@q.Answer</p>
-        </div> 
-       
-
-
-        <!-- feature/answers-page card addition  move this to the FilterSearch results parts later --H
-            Added a temp card body to test onclick features and to make sure 
-            answers are attached to the questions when moving to another page
-        -->
-        <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
-            <p>@q.Title</p>
-            <p style="margin-left: 25px;">@q.Description</p>
-            <p style="margin-left: 25px;">@q.Answer</p>
-        </div>
-        <br/>
-        <br/>
- 
-
-    }//end foreach*@
-
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
         @if (@FilteredSearch.Count() != OldFilteredCount)
@@ -118,17 +89,6 @@ else //could make this an else if to display the list of posted questions if the
     
 
     <!--numbered page buttons at the end of the page-->
-    <!--<div id="buttonstuff">
-    @for (int i = 0; i <= (@FilteredSearch.Count / pageSize); i++)
-    {
-            @*<span style="position: relative; top: 90%; left: 50%;">
-                <a class="btn btn-SearchPageBtn" href="searchbar/@(i+1)"> @(i+1) </a>
-            </span>*@
-
-    }
-    </div>
-    -->
-    <!--numbered page buttons at the end of the page-->
     <div id="buttonstuff">
         @if (PageNumber == 0 && (@FilteredSearch.Count) > 0)
         {
@@ -168,21 +128,6 @@ else //could make this an else if to display the list of posted questions if the
 
 }
 
-
-<!-- Search Bar Page Output -->
-    
-
-
-<!--Lists each object name from the FilteredSearch list on the page in a list
-<ul>
-   
-    @* @foreach (var search in FilteredSearch)
-    {
-        <li>@search.Name</li>
-    }*@
-</ul>
--->
-
     
 
 
@@ -198,7 +143,7 @@ else //could make this an else if to display the list of posted questions if the
     Question selected = new Question();
    
 
-    QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
+    //QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
 
   
     <!-- On page initialization asynchronously get the list of posted questions and save it to local variable questions-->
@@ -206,7 +151,7 @@ else //could make this an else if to display the list of posted questions if the
     {
 
 
-        questions = question.QuestionsList; // Gets the question list and sets the questionslist on that page to this list for now.    
+        questions = await QuestionObjService.GetPostedQuestionsAsync(); // Gets the question list and sets the questionslist on that page to this list for now.    
 
     }
 
@@ -267,4 +212,4 @@ else //could make this an else if to display the list of posted questions if the
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
     //changed this to search on the list of posted questions -- hannah
     List<Question> FilteredSearch => questions.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
-}
+} <!-- end code section -->
