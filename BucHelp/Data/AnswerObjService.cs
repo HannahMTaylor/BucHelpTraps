@@ -68,6 +68,18 @@ namespace BucHelp.Data
 			GetTable().Insert(ToRow(answer));
 		}
 
+		// write a list of answers for a question
+		public static void WriteQuestionAnswerList(int questionId, List<Answer> answers)
+		{
+			// remove existing answers for question (to be overwritten by list)
+			AnswerObjService.GetTable().Delete(row => row.GetAsInt("questionid") == questionId);
+			// write each answer in the list
+			foreach (Answer a in answers)
+			{
+				Write(a);
+			}
+		}
+
 		// private below here
 		// null bits
 		// no null fields in this class

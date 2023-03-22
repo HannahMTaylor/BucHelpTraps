@@ -18,6 +18,17 @@ namespace BucHelp.Data
         public string? Answer { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
+
+        public List<Answer> GetAnswers()
+        {
+            return AnswerObjService.GetAllForQuestionId(QuestionID);
+        }
+
+        public void WriteQuestionAnswerList(List<Answer> answers)
+        {
+            AnswerObjService.WriteQuestionAnswerList(QuestionID, answers);
+        }
+
  //Feature/Question_Submit_Button
         public List<Question> QuestionsList = new List<Question>(); //Temp list for questions until DB connections are created
 
