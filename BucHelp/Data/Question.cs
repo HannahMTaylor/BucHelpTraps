@@ -28,7 +28,7 @@ namespace BucHelp.Data
             //The Below is a Stub to be removed later
             for(int i =0; i < 5; i++)
             {
-                Answers.Add(new Answer(1, 1, 1, "Answer", "This is a test", 0, Created, LastUpdated));
+                Answers.Add(new Answer(i, 1, 1, "This is a test", 0, Created, LastUpdated));
             }
             
         }
