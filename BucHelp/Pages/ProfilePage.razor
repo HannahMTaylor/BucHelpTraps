@@ -1,22 +1,35 @@
-﻿@page "/profile"
+﻿@page "/profile/"
 @using BucHelp.Data
 
 <h3>Profile</h3>
-<p>@currentUser.UserProfile.Name<br />
-   Email Address: @currentUser.Email<br />
-   Affiliation: @currentUser.Affiliation<br />
-   Major: @currentUser.UserProfile.Major<br />
-   Description: @currentUser.UserProfile.Description</p>
+<p> Username: @currentUser.UserProfile.Username<br />
+    Name: @currentUser.UserProfile.Name<br />
+    Major: @currentUser.UserProfile.Major<br />
+    Email Address: @currentUser.UserProfile.Email<br />
+    Description: @currentUser.UserProfile.Description<br />
+    Phone: @currentUser.UserProfile.Phone<br />
+    Social Media: @currentUser.UserProfile.SocialMedia<br />
+    Points: @currentUser.UserProfile.Points<br />
+    Starts: @currentUser.UserProfile.Stars<br />
+</p>
+
+
 
 <!--Brandon: This code is to demonstrate how to store variables, the above shows how to print them-->
 @code {
     private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
                                              //(One of which does not exist at the moment), the password is being stored here to make a user object possible to make
-                          address = "yofullname@google.com",
-                          affiliation = "Student",
+                          name = "WhatsYourFullName",
                           major = "Math",
+                          address = "yofullname@google.com",
                           description = "This is a test description for the profile.",
-                          overwrittenName = "Blank"; //There has to be a more efficient way of creating a Profile, I just don't know it
-    private static Profile profileDetails = new Profile(overwrittenName, major, description);
+                          phone = "123-555-7890",
+                          socialmedia = "yogabbagabba",
+                          affiliation = "Student";//There has to be a more efficient way of creating a Profile, I just don't know it
+
+    private static Profile profileDetails = new Profile(name, major, description, phone, socialmedia);
     private static User currentUser = new User(password, address, affiliation, profileDetails);
+
+    [Parameter]
+    public string? username { get; set;  }
 }

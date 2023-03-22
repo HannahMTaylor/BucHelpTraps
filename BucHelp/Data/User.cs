@@ -22,7 +22,6 @@
             //Set the username here as well
             string username = email.Substring(0, email.IndexOf("@")); //Removed the @xxx.xxx
             UserName = username;
-            UserProfile = new Profile(UserName);
         }
         /// <summary>
         /// (Brandon) The only way I figured out on how to generate a Profile with the current User in a Razor component
@@ -37,7 +36,8 @@
             setEmail(email);
             Affiliation = affiliation;
             UserProfile = userProfile;
-            UserProfile.Name = UserName;
+            UserProfile.Username = UserName;
+            UserProfile.Email = Email;
         }
 
         /// <summary>
