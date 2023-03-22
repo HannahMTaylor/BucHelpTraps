@@ -13,9 +13,9 @@
 
         public string Description{ get; set; }
 
-        public int votes { get; set; }
+        public int Votes { get; set; }
 
-        public DateTime Creeated = new DateTime();
+        public DateTime Created = new DateTime();
 
         public DateTime LastUpdated = new DateTime();
 
@@ -24,14 +24,14 @@
             
         }
 
-        public Answer(int answerId, int questionId, int userId, string description, int votes, DateTime creeated, DateTime lastUpdated)
+        public Answer(int answerId, int questionId, int userId, string description, int votes, DateTime created, DateTime lastUpdated)
         {
             AnswerId = answerId;
             QuestionId = questionId;
             UserId = userId;
             Description = description;
-            this.votes = votes;
-            Creeated = creeated;
+            Votes = votes;
+            Created = created;
             LastUpdated = lastUpdated;
         }
 
