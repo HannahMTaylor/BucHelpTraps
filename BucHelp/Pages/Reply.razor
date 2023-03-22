@@ -1,4 +1,6 @@
 ﻿@page "/Reply"
+@inject NavigationManager navigationManager
+@using Data
 
 <PageTitle>Reply</PageTitle>
 
@@ -12,10 +14,28 @@
 
 @if (showReply)
 {
-    <div>
-        <label for="qdescription">Reply</label><br>
-        <textarea name="qreply" rows="10" cols="50" maxlength="5000"></textarea>
-    </div>
+   <div>
+    <label for="qdescription"><sup class="star" style="color:red">*</sup>
+        Description</label><br>
+    <textarea name="qdescription" rows="10" cols="50" maxlength="@descMaxCharacters"
+        @bind-value:event="oninput" @bind-value="answer.Description"></textarea>
+
+    <!--If the string is null auto display 0 until the user starts to type-->    
+    @if (answer.Description == null)
+    {
+        <div>
+            Character Count: 0 / @descMaxCharacters
+        </div>
+    }
+    else
+    {
+        <div>
+            Character Count: @answer.Description.Count() / @descMaxCharacters
+        </div>
+    }
+
+        
+</div>
 
     <button class="btn-primary" @onclick="submit">Post</button>
     
@@ -28,8 +48,22 @@
         showReply = true;
         
     }
-    public void submit()
+
+    Answer answer = new Answer(); //Making a new answer object when entering the page
+
+    string descriptioninput = "";
+    int descMaxCharacters = 5000;
+
+    protected async void submit(MouseEventArgs mouseEventArgs)
     {
-        
+        this.answer.Description = answer.Description;   //Set the description to the info in the description box
+
+        //Logic for adding to storage goes here
+        //Resource used to do this below
+        //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
+        if (!string.IsNullOrWhiteSpace(answer.Description))
+        {
+            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
+        }
     }
 }
