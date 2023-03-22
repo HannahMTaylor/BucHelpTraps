@@ -99,7 +99,7 @@ namespace BucHelp.Data
             return user;
         }
 
-        // obj -> row conversion, updates do not use this
+        // obj -> row conversion
         private static Row ToRow(User user)
         {
             Row row = new Row(GetTable().Header);

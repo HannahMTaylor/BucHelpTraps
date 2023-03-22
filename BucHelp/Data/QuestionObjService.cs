@@ -129,7 +129,7 @@ namespace BucHelp.Data
             return question;
         }
 
-        // obj -> row conversion, updates do not use this
+        // obj -> row conversion
         private static Row ToRow(Question question)
         {
             Row row = new Row(GetTable().Header);
