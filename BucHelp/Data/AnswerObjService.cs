@@ -33,6 +33,19 @@ namespace BucHelp.Data
 			return answers;
 		}
 
+		// return all for given question ID
+		public static List<Answer> GetAllForQuestionId(int qid)
+		{
+			IEnumerator<Row> enumerator = GetTable().Select(row => row.GetAsInt("questionid") == qid).GetEnumerator();
+			List<Answer> answers = new List<Answer>();
+			while (enumerator.MoveNext())
+			{
+				Row row = enumerator.Current;
+				answers.Add(FromRow(row));
+			}
+			return answers;
+		}
+
 		// get next available ID, based on database
 		public static int GenerateID()
 		{
