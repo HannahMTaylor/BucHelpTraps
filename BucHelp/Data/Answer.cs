@@ -19,6 +19,8 @@
 
         public DateTime LastUpdated = new DateTime();
 
+        public List<Answer> Answers = new List<Answer>(); //List that holds the answer responces can be replaced when DB connections are created
+
         public Answer() 
         {
             
