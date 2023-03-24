@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.TryAddScoped<Question>();
+builder.Services.AddSingleton<AppState>();
 
 var app = builder.Build();
 
