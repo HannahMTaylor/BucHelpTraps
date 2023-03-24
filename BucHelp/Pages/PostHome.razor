@@ -61,7 +61,7 @@ else //could make this an else if to display the list of posted questions if the
                 @if (j < @FilteredSearch.Count())
                 {
                     var q = FilteredSearch[j];
-                    <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
+                <div class="card card-body" style="width: 60rem;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
