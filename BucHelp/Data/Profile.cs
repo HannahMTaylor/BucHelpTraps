@@ -1,4 +1,7 @@
-﻿namespace BucHelp.Data
+﻿using System.Numerics;
+using System.Xml.Linq;
+
+namespace BucHelp.Data
 {
     /// <summary>
     /// Profile attached to a user
@@ -52,7 +55,31 @@
             Reviews = reviews;
         }
         /// <summary>
-        /// Constructor for near default, all non-filled handled by User class
+        /// Constructor for a mostly filled profile where the remaining details are created by the User class. This one contains the numerical values
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="major"></param>
+        /// <param name="description"></param>
+        /// <param name="phone"></param>
+        /// <param name="socialmedia"></param>
+        /// <param name="points"></param>
+        /// <param name="stars"></param>
+        /// <param name="reviews"></param>
+        public Profile(string name, string major, string description, string phone, string socialmedia, int points, int stars, int reviews)
+        {
+            Username = "Blank";
+            Name = name;
+            Major = major;
+            Email = "Blank";
+            Description = description;
+            Phone = phone;
+            SocialMedia = socialmedia;
+            Points = points;
+            Stars = stars;
+            Reviews = reviews;
+        }
+        /// <summary>
+        /// Constructor for a mostly filled profile where the remaining details are created by the User class
         /// </summary>
         /// <param name="name"></param>
         /// <param name="major"></param>
@@ -72,25 +99,22 @@
             Stars = 0;
             Reviews = 0;
         }
-        /// <summary>
-        /// This constructor creates a new user.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="email"></param>
-        public Profile (string username, string email)
-        {
-            Username = username;
-            Email = email;
-            Points = 0;
-            Stars = 0;
-            Reviews = 0;
-        }
+
         /// <summary>
         /// Base constructor for Profile
         /// </summary>
         public Profile()
         {
-
+            Username = "Blank";
+            Name = "";
+            Major = "";
+            Email = "Blank";
+            Description = "";
+            Phone = "";
+            SocialMedia = "";
+            Points = 0;
+            Stars = 0;
+            Reviews = 0;
         }
     }
 }

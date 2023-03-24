@@ -11,7 +11,8 @@
         public string? Email { get; set; }
         public string? Affiliation { get; set; } //Student or Faculty
         public Profile? UserProfile { get; set; }
-        
+        public List<User> UsersList = new List<User>(); //Temp list for users until DB connections are created
+
         /// <summary>
         /// Set the user email and will also generate the user's display name
         /// </summary>

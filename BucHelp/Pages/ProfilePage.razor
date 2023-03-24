@@ -1,5 +1,7 @@
-﻿@page "/profile/"
+﻿@page "/profile/{username}"
 @using BucHelp.Data
+@inject User UserMenu
+
 
 <h3>Profile</h3>
 <p> Username: @currentUser.UserProfile.Username<br />
@@ -7,17 +9,33 @@
     Major: @currentUser.UserProfile.Major<br />
     Email Address: @currentUser.UserProfile.Email<br />
     Description: @currentUser.UserProfile.Description<br />
-    Phone: @currentUser.UserProfile.Phone<br />
-    Social Media: @currentUser.UserProfile.SocialMedia<br />
+    @if(!String.IsNullOrEmpty(currentUser.UserProfile.Phone))
+    {
+        <span>Phone: @currentUser.UserProfile.Phone</span><br />
+    }
+    @if(!String.IsNullOrEmpty(currentUser.UserProfile.SocialMedia))
+    {
+        <span>Social Media: @currentUser.UserProfile.SocialMedia</span><br />
+    }
     Points: @currentUser.UserProfile.Points<br />
-    Starts: @currentUser.UserProfile.Stars<br />
+    @if (currentUser.UserProfile.Reviews > 0) //If there are more than no reviews
+    {
+        <span>Stars: @averageStars</span>
+    }
+    else //else, default is 2.5
+    {
+        <span>Stars: 2.5</span>
+    }
 </p>
 
 
 
 <!--Brandon: This code is to demonstrate how to store variables, the above shows how to print them-->
 @code {
-    private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
+    [Parameter]
+    public string? username { get; set; }
+
+    /*private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
                                              //(One of which does not exist at the moment), the password is being stored here to make a user object possible to make
                           name = "WhatsYourFullName",
                           major = "Math",
@@ -28,8 +46,28 @@
                           affiliation = "Student";//There has to be a more efficient way of creating a Profile, I just don't know it
 
     private static Profile profileDetails = new Profile(name, major, description, phone, socialmedia);
-    private static User currentUser = new User(password, address, affiliation, profileDetails);
+    private static User funnyUser = new User(password, address, affiliation, profileDetails);
+    */
+    private static User currentUser = new User();
 
-    [Parameter]
-    public string? username { get; set;  }
+    private static int? averageStars = 0;
+
+    //Thanks Ethan for this code
+    protected override async Task OnInitializedAsync()
+    {
+        for (int i = 0; i < UserMenu.UsersList.Count(); ++i)
+        {
+            string extraction = username; //extraction string for the title
+
+            if (UserMenu.UsersList[i].UserName == extraction)
+            {
+                currentUser = UserMenu.UsersList[i];
+            }
+        }
+
+        if(currentUser.UserProfile.Reviews > 0)
+        {
+            averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+        }
+    }
 }
