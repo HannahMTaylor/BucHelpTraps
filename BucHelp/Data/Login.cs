@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Text.RegularExpressions;
+using System.Net.Mail;
 
 namespace BucHelp.Data
 {
@@ -17,6 +19,11 @@ namespace BucHelp.Data
     {
         [BindProperty]
         public Credential Credential { get; set; }
+        private bool loggedIn = false;
+        public void SetLogin() 
+        {
+            loggedIn = true; 
+        }
         public void OnGet()
         {
 
@@ -26,6 +33,16 @@ namespace BucHelp.Data
         {
 
         }
+
+        public LoginModel()
+        {
+            Credential = new Credential();
+        }
+
+        public bool IsLoggedIn()
+        {
+            return loggedIn;
+        }
     }
 
     /// <summary>
@@ -33,10 +50,51 @@ namespace BucHelp.Data
     /// </summary>
     public class Credential
     {
+
         [Required]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public Credential()
+        {
+            Email = "";
+            Password = "";
+        }
+
+        public bool isValidEmail()
+        {
+            try
+            {
+                MailAddress m = new MailAddress(Email);
+
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+    }
+
+    public class AppState
+    {
+        private bool _loggedIn;
+        public event Action OnChange;
+        public bool LoggedIn
+        {
+            get { return _loggedIn; }
+            set
+            {
+                if (_loggedIn != value)
+                {
+                    _loggedIn = value;
+                    NotifyStateChanged();
+                }
+            }
+        }
+
+        private void NotifyStateChanged() => OnChange?.Invoke();
     }
 }
