@@ -71,7 +71,7 @@ namespace BucHelp.Data
 
                 return true;
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 return false;
             }
