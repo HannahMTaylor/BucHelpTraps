@@ -1,0 +1,4 @@
+id,nulls,questionid,userid,description,votes,created,lastupdated
+INTEGER,INTEGER,INTEGER,INTEGER,TEXT,INTEGER,TEXT,TEXT
+0,0,1,0,itworks,1,1/1/0001 12:00:00 AM,1/1/0001 12:00:00 AM
+1,0,1,0,itworks2,1,1/1/0001 12:00:00 AM,1/1/0001 12:00:00 AM
