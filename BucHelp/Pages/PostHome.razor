@@ -27,50 +27,21 @@ else if (questions.Count() == 0)
 else //could make this an else if to display the list of posted questions if the search bar isn't active or use a while active loop inside else to display the search bar items?? -Hannah's brainstorming for later
 {
     <!--This is the acutal search box, variable name 'SearchTerm'-->
-    <input style="width: 30rem; height: 2.1rem; position: absolute; top: 20%; left: 42.5%; margin: -25px 0 0 -25px;" @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
+    <input style="width: 30rem; height: 2.1rem; position: relative; top: 20px; left: 375px; margin: -25px 0 0 -25px;" @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
 
     <!--This is the search box clear button, trigger 'ClearClick' method-->
-    <button class="btn btn-searchbar" type="button" onclick="@ClearClick" style="position: absolute; top: 20%; left: 74%; margin: -25px 0 0 -25px;">Clear</button>
+    <button class="btn btn-searchbar" type="button" onclick="@ClearClick" style="position: relative; top: 31px; left: 410px; margin: -25px 0 0 -25px;">Clear</button>
 
     <br>
 
     <!--Shows the total returned number of results by counting the number in the FilteredSearch List-->
-    <span class="text-muted ml-5" style=" position: absolute; top: 25%; left: 55%; margin: -25px 0 0 -25px;">
+    <span class="text-muted ml-5" style=" position: relative; top: 35px; left: 550px; margin: -25px 0 0 -25px;">
         Total @FilteredSearch.Count Results Returned
     </span>
 
     <br>
     <br>
     <br>
-
-    <!-- display the list of posted questions -->
-   @* @foreach (var q in questions)
-    {
-
-        <div>   <!--commenting this out until I figure out what it does -- hannah-->
-            <p>@q.Title</p>
-
-            <!--Used a MarkupString with a regex pattern to read /n characters-->
-            <p style="margin-left: 25px;">@((MarkupString)Regex.Replace(HttpUtility.HtmlEncode(q.Description), "\r?\n|\r", "<br />"))</p>
-            <p style="margin-left: 25px;">@q.Answer</p>
-        </div> 
-       
-
-
-        <!-- feature/answers-page card addition  move this to the FilterSearch results parts later --H
-            Added a temp card body to test onclick features and to make sure 
-            answers are attached to the questions when moving to another page
-        -->
-        <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
-            <p>@q.Title</p>
-            <p style="margin-left: 25px;">@q.Description</p>
-            <p style="margin-left: 25px;">@q.Answer</p>
-        </div>
-        <br/>
-        <br/>
- 
-
-    }//end foreach*@
 
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
@@ -90,7 +61,7 @@ else //could make this an else if to display the list of posted questions if the
                 @if (j < @FilteredSearch.Count())
                 {
                     var q = FilteredSearch[j];
-                    <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
+                <div class="card card-body" style="width: 60rem;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
@@ -118,21 +89,10 @@ else //could make this an else if to display the list of posted questions if the
     
 
     <!--numbered page buttons at the end of the page-->
-    <!--<div id="buttonstuff">
-    @for (int i = 0; i <= (@FilteredSearch.Count / pageSize); i++)
-    {
-            @*<span style="position: relative; top: 90%; left: 50%;">
-                <a class="btn btn-SearchPageBtn" href="searchbar/@(i+1)"> @(i+1) </a>
-            </span>*@
-
-    }
-    </div>
-    -->
-    <!--numbered page buttons at the end of the page-->
     <div id="buttonstuff">
         @if (PageNumber == 0 && (@FilteredSearch.Count) > 0)
         {
-            <span style="position: relative; top: 80%; left: 50%;">
+            <span style="position: relative; top: 80%; left: 300px;">
                 <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> @(PageNumber + 1) </a> -->
                 <u>@(PageNumber + 1)</u>
                 @if (@FilteredSearch.Count() > 10)
@@ -145,7 +105,7 @@ else //could make this an else if to display the list of posted questions if the
         {
             if ((@FilteredSearch.Count / pageSize) >= PageNumber)
             {
-                <span style="position: relative; top: 80%; left: 50%;">
+                <span style="position: relative; top: 80%; left: 250px;">
                     <a class="btn btn-SearchPageBtn" href="posthome/@(PageNumber-1)"> Back </a>
                     <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
                     <u>@PageNumber</u>
@@ -157,7 +117,7 @@ else //could make this an else if to display the list of posted questions if the
             }
             else
             {
-                <span style="position: relative; top: 80%; left: 50%;">
+                <span style="position: relative; top: 80%; left: 250px;">
                     <a class="btn btn-SearchPageBtn" href="posthome/@(PageNumber-1)"> Back </a>
                     <u>@PageNumber</u>
                 </span>
@@ -167,21 +127,6 @@ else //could make this an else if to display the list of posted questions if the
         
 
 }
-
-
-<!-- Search Bar Page Output -->
-    
-
-
-<!--Lists each object name from the FilteredSearch list on the page in a list
-<ul>
-   
-    @* @foreach (var search in FilteredSearch)
-    {
-        <li>@search.Name</li>
-    }*@
-</ul>
--->
 
     
 
@@ -198,7 +143,7 @@ else //could make this an else if to display the list of posted questions if the
     Question selected = new Question();
    
 
-    QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
+    //QuestionObjService QuestionService = new QuestionObjService();  //necessary to get rid of a static object reference error on the GetPostedQuestionsAsync() method
 
   
     <!-- On page initialization asynchronously get the list of posted questions and save it to local variable questions-->
@@ -206,7 +151,7 @@ else //could make this an else if to display the list of posted questions if the
     {
 
 
-        questions = question.QuestionsList; // Gets the question list and sets the questionslist on that page to this list for now.    
+        questions = await QuestionObjService.GetPostedQuestionsAsync(); // Gets the question list and sets the questionslist on that page to this list for now.    
 
     }
 
@@ -267,4 +212,4 @@ else //could make this an else if to display the list of posted questions if the
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
     //changed this to search on the list of posted questions -- hannah
     List<Question> FilteredSearch => questions.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
-}
+} <!-- end code section -->

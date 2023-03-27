@@ -2966,7 +2966,7 @@ textarea.form-control-lg {
     display: inline-block;
     font-size: 16px;
     font-size: 1rem;
-    margin: px;
+    margin: 10px;
 }
 
     .btn-SearchPageBtn:hover {
@@ -2976,8 +2976,9 @@ textarea.form-control-lg {
     }
 
 
-
-
+.containerSearchBar {
+    width: 1000px;
+}
 
 .btn-searchbar {
     color: #01053a;

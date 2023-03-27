@@ -4,14 +4,14 @@
 @inject Question question
 @using Data
 
-<div class="col-10 card card-body">
+<div class="card card-body" style="width: 60rem;">
     <p>@selected.Title</p>
     <p style="margin-left: 25px;">@selected.Description</p>
     <br/>
     <!--Each question will have a list of answers with it so the loop below grabs these-->
     @foreach(var answer in selected.Answers)
     {
-        <p style="margin-left: 25px;">@answer.Title</p>
+        @*<p style="margin-left: 25px;">@answer.Title</p>*@
         <p style="margin-left: 25px;">@answer.Description</p>
         <br/>
     }
