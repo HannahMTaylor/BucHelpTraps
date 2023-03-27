@@ -9,7 +9,7 @@
     <p style="margin-left: 25px;">@selected.Description</p>
     <br/>
     <!--Each question will have a list of answers with it so the loop below grabs these-->
-    @foreach(var answer in selected.Answers)
+    @foreach(var answer in selected.GetAnswers())
     {
         @*<p style="margin-left: 25px;">@answer.Title</p>*@
         <p style="margin-left: 25px;">@answer.Description</p>
