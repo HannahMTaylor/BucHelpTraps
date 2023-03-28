@@ -77,7 +77,7 @@
         {
             AppState.LoggedIn = true;
             canNavigate = true;
-            navUtil.SetID(newUser.UserId);
+            navUtil.SetID(newUser.UserId); //Once logged in set the ID
         }
         else if (!login.Credential.isValidEmail())
         {
