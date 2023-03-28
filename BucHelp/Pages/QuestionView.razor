@@ -46,4 +46,76 @@
 
 }
 
+<!-- copy pasted this out from the Reply page -->
+
+@if (!showReply)
+{
+    <div>
+        <button class="btn btn-primary" @onclick="reply" id="btnReply">Reply</button>
+    </div>
+    <br />
+}
+
+@if (showReply)
+{
+    <div>
+        <label for="adescription">
+            <sup class="star" style="color:red">*</sup>
+            Description
+        </label><br>
+        <textarea name="adescription" rows="10" cols="50" maxlength="@descMaxCharacters"
+              @bind-value:event="oninput" @bind-value="answer.Description"></textarea>
+
+        <!--If the string is null auto display 0 until the user starts to type-->
+        @if (answer.Description == null)
+        {
+            <div>
+                Character Count: 0 / @descMaxCharacters
+            </div>
+        }
+        else
+        {
+            <div>
+                Character Count: @answer.Description.Count() / @descMaxCharacters
+            </div>
+        }
+
+
+    </div>
+
+    <button class="btn-primary" @onclick="submit">Post</button>
+
+}
+
+@code {
+    bool showReply = false;
+    public void reply()
+    {
+        showReply = true;
+
+    }
+
+    Answer answer = new Answer(); //Making a new answer object when entering the page
+
+    string descriptioninput = "";
+    int descMaxCharacters = 5000;
+
+    protected async void submit(MouseEventArgs mouseEventArgs)
+    {
+        if (!string.IsNullOrWhiteSpace(answer.Description))
+        {
+            // finish up normal answer stuff that needs to exist
+            answer.AnswerId = AnswerObjService.GenerateID();
+            answer.QuestionId = int.Parse(id);
+            answer.UserId = 0; // replace later
+            answer.Votes = 0;
+            answer.Created = DateTime.Now;
+            answer.LastUpdated = DateTime.Now;
+            // write out answer
+            AnswerObjService.Write(answer);
+            DatabaseServices.Drivers.GetDefaultDriver().Commit();
+            navman.NavigateTo($"/QuestionView/{id}",true); //navigate to the post page once submitted, and force reload
+        }
+    }
+}
 
