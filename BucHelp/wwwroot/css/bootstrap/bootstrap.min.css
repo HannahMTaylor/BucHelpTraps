@@ -2975,6 +2975,9 @@ textarea.form-control-lg {
         border-color: #01053a
     }
 
+.containerProfile {
+
+}
 
 .containerSearchBar {
     width: 1000px;
@@ -4068,6 +4071,15 @@ legend {
     margin-bottom: 0;
     list-style: none
 }
+
+.nav-link2 {
+    display: block;
+    padding: 50px 100px;
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out
+}
+
 
 .nav-link {
     display: block;

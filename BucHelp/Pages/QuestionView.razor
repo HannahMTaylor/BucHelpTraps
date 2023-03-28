@@ -1,7 +1,9 @@
 ﻿<!--Page to display question along with answers to the question-->
 <!--Parameter view page that will display the question title-->
+
 @page "/QuestionView/{id}" 
 @inject NavigationManager navman
+
 @inject Question question
 @using Data
 
@@ -24,6 +26,9 @@
 
     [Parameter]
     public string? id { get; set; } 
+
+    [Parameter]
+    public int UserID { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -107,7 +112,7 @@
             // finish up normal answer stuff that needs to exist
             answer.AnswerId = AnswerObjService.GenerateID();
             answer.QuestionId = int.Parse(id);
-            answer.UserId = 0; // replace later
+            answer.UserId = UserID;
             answer.Votes = 0;
             answer.Created = DateTime.Now;
             answer.LastUpdated = DateTime.Now;
