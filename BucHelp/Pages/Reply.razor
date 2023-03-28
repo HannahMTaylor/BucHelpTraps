@@ -72,7 +72,7 @@
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
         if (!string.IsNullOrWhiteSpace(answer.Description))
         {
-            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
+            navigationManager.NavigateTo($"/posthome/{idContainer}/1"); //navigate to the post page once submitted
         }
     }
 }
