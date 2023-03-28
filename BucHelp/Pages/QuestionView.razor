@@ -26,14 +26,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        for(int i = 0; i < question.QuestionsList.Count(); ++i)
+        // retrieve question by title
+        List<Question> qlist = QuestionObjService.GetAll();
+        for(int i = 0; i < qlist.Count(); ++i)
         {
             string extraction = title; //extraction string for the title
 
-            if (question.QuestionsList[i].Title == extraction)
+            if (qlist[i].Title.Equals(extraction))
             {
-                selected.Title = extraction;
-                selected.Description = question.QuestionsList[i].Description;
+                selected = qlist[i];
             }
         }
         
