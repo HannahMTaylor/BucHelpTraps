@@ -50,6 +50,15 @@
 <!--End of html code.-->
 
 @code {
+    //stub user to test validation 
+    User Kinser = new User
+        {
+            UserName = "Sir William",
+            Email = "duck@etsu.edu",
+            Password = "Password"
+
+        };
+
     LoginModel login = new LoginModel();
     User newUser = new User();
 
@@ -75,9 +84,17 @@
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
         if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password))
         {
-            AppState.LoggedIn = true;
-            canNavigate = true;
-            navUtil.SetID(newUser.UserId); //Once logged in set the ID
+            if(email.Equals(Kinser.Email) && password.Equals(Kinser.Password))
+            {
+                AppState.LoggedIn = true;
+                canNavigate = true;
+                navUtil.SetID(newUser.UserId); //Once logged in set the ID
+            }
+
+            else
+            {
+                error = true;
+            }
         }
         else if (!login.Credential.isValidEmail())
         {
