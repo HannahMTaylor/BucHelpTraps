@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager navigationManager
 @inject AppState AppState
+@inject NavUtil navUtil
 @using Data
 
 <PageTitle>Login</PageTitle>
@@ -52,6 +53,9 @@
     LoginModel login = new LoginModel();
     User newUser = new User();
 
+  
+
+
     bool error = false;
     bool emailError = false;
     bool canNavigate = false;
@@ -63,7 +67,7 @@
 
 
         newUser.UserId = 012; //STUB
-        int PageNumber = 1;
+
         login.Credential.Email = email;
         login.Credential.Password = password;
         //Logic for adding to storage goes here
@@ -73,6 +77,7 @@
         {
             AppState.LoggedIn = true;
             canNavigate = true;
+            navUtil.SetID(newUser.UserId);
         }
         else if (!login.Credential.isValidEmail())
         {

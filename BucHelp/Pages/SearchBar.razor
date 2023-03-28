@@ -1,6 +1,5 @@
 ﻿<!--URL page name-->
-@page "/searchbar/1" 
-@page "/searchbar/{PageNumber:int}"
+@page "/searchbar/{ID:int}/{PageNumber:int}"
 @inject NavigationManager NavManager
 
 <PageTitle>Search Bar</PageTitle>
@@ -83,7 +82,7 @@
     @if (@FilteredSearch.Count() != OldFilteredCount)
     {
         
-            NavManager.NavigateTo("/searchbar/1");
+            NavManager.NavigateTo($"/searchbar/{idContainer}/1");
       
         OldFilteredCount = @FilteredSearch.Count();
     }
@@ -132,7 +131,7 @@
             <u>@(PageNumber+1)</u>
             @if (@FilteredSearch.Count() > 10)
             {
-            <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+2)"> Next </a>
+            <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber+2)"> Next </a>
             }
         </span>
     }
@@ -141,19 +140,19 @@
         if ((@FilteredSearch.Count / pageSize) >= PageNumber)
         {
             <span style="position: relative; top: 80%; left: 300px;">
-                <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber-1)"> Back </a>
+                <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber-1)"> Back </a>
                 <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
                 <u>@PageNumber</u>
                 @if (@FilteredSearch.Count() > (10*@PageNumber + 1))
                 {
-                    <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> Next </a>
+                    <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber+1)"> Next </a>
                 }
             </span>
         }
         else
         {
             <span style="position: relative; top: 80%; left: 250px;">
-                <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber-1)"> Back </a>
+                <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber-1)"> Back </a>
                 <u>@PageNumber</u>
             </span>
         }
@@ -168,6 +167,9 @@
 
     [Parameter]
     public int PageNumber { get; set; } //allows changes with buttons
+    [Parameter]
+    public int ID { get; set; }
+    public int idContainer;
 
     //creates a new list of SearchItem objects
     List<SearchItem> FilteredSearch2 = new List<SearchItem> { };
@@ -209,7 +211,7 @@
         new SearchItem { Name = "Nursing" },
         new SearchItem { Name = "Culp" },
         new SearchItem { Name = "Dining"},
-    
+
         new SearchItem { Name = "Dorms and Housing" },
         new SearchItem { Name = "Class Schedule" },
         new SearchItem { Name = "Dorm Laundry" },
@@ -235,6 +237,12 @@
         new SearchItem { Name = "Dining" }
     };
 
+    protected override async Task OnInitializedAsync() 
+    {
+        idContainer = ID;
+    }
+
+
     //clears the search bar after clear button is pressed
     private void ClearClick()
     {
@@ -244,7 +252,7 @@
 
     protected void OnChange()
     {
-        NavManager.NavigateTo("/searchbar/1");
+        NavManager.NavigateTo($"/searchbar/{ID}/1");
     }
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object

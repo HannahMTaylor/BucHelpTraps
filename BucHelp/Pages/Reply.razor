@@ -1,4 +1,4 @@
-﻿@page "/Reply"
+﻿@page "/Reply/{ID:int}"
 @inject NavigationManager navigationManager
 @using Data
 
@@ -46,13 +46,22 @@
     public void reply()
     {
         showReply = true;
-        
+
     }
 
     Answer answer = new Answer(); //Making a new answer object when entering the page
 
+    [Parameter]
+    public int ID { get; set; }
+    public int idContainer;
+
     string descriptioninput = "";
     int descMaxCharacters = 5000;
+
+    protected override async Task OnInitializedAsync()
+    {
+        idContainer = ID;
+    }
 
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
