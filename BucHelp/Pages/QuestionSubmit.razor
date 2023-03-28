@@ -1,5 +1,5 @@
 ﻿<!--Page for the question submission form will store into a local list to be used later-->
-@page "/questions"
+@page "/questions/{UserID:int}"
 @inject NavigationManager navigationManager
 @inject Question questions
 @using Data
@@ -51,10 +51,19 @@
 <!--Code for page logic belw-->
 @code{
 
+    [Parameter]
+    public int UserID { get; set; }
+    public int userIdContainer;
+
     Question question = new Question(); //Making a new question object when entering the page
 
     string descriptioninput = "";
     int descMaxCharacters = 5000;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userIdContainer = UserID;
+    }
 
     protected async void OnSubmit(MouseEventArgs mouseEventArgs)
     {
@@ -68,7 +77,7 @@
         if(!string.IsNullOrWhiteSpace(question.Title) && !string.IsNullOrWhiteSpace(question.Description))
         {
             questions.QuestionsList.Add(question);
-            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
+            navigationManager.NavigateTo($"/posthome/{userIdContainer}/1"); //navigate to the post page once submitted
         }   
     }
 
