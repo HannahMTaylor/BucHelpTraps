@@ -44,7 +44,7 @@ else //could make this an else if to display the list of posted questions if the
     //this was in a ul tag
         @if (@FilteredSearch.Count() != OldFilteredCount)
         {
-            firstrender = false;
+            
 
             NavManager.NavigateTo("/posthome/1");
 
@@ -134,8 +134,7 @@ else //could make this an else if to display the list of posted questions if the
 
     private List<Question>? questions;
 
-    bool firstrender = true;
-
+    
     
 
     <!-- keeping this for debugging sake -- from either questionsOnPostpage or answers-page -->
@@ -167,19 +166,6 @@ else //could make this an else if to display the list of posted questions if the
         NavManager.NavigateTo($"/QuestionView/{selected.Title}");
         //navigationManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
 
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender) //this method is called right after each time the page is rendered??
-    {
-        if (firstRender)
-        {
-            //nothing should have to be done right after initial render
-        }
-        else
-        {
-            NavManager.NavigateTo("/posthome/1");
-            
-        }
     }
 
 
