@@ -10,9 +10,6 @@
 <PageTitle>PostHome</PageTitle>
 
 
-
-
-
 <h3>Posts</h3>
 
 
@@ -47,6 +44,7 @@ else //could make this an else if to display the list of posted questions if the
     //this was in a ul tag
         @if (@FilteredSearch.Count() != OldFilteredCount)
         {
+            firstrender = false;
 
             NavManager.NavigateTo("/posthome/1");
 
@@ -109,7 +107,7 @@ else //could make this an else if to display the list of posted questions if the
                     <a class="btn btn-SearchPageBtn" href="posthome/@(PageNumber-1)"> Back </a>
                     <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
                     <u>@PageNumber</u>
-                    @if (@FilteredSearch.Count() > (10 * @PageNumber + 1))
+                    @if (@FilteredSearch.Count() >= (10 * @PageNumber + 1)) //logic fixed for adding new pages based on question submission
                     {
                         <a class="btn btn-SearchPageBtn" href="posthome/@(PageNumber+1)"> Next </a>
                     }
@@ -135,6 +133,8 @@ else //could make this an else if to display the list of posted questions if the
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
 
     private List<Question>? questions;
+
+    bool firstrender = true;
 
     
 
@@ -169,7 +169,18 @@ else //could make this an else if to display the list of posted questions if the
 
     }
 
-
+    protected override async Task OnAfterRenderAsync(bool firstRender) //this method is called right after each time the page is rendered??
+    {
+        if (firstRender)
+        {
+            //nothing should have to be done right after initial render
+        }
+        else
+        {
+            NavManager.NavigateTo("/posthome/1");
+            
+        }
+    }
 
 
 
