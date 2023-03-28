@@ -1,5 +1,5 @@
 ﻿<!--Page for the question submission form will store into a local list to be used later-->
-@page "/questions"
+@page "/questions/{UserID:int}"
 @inject NavigationManager navigationManager
 @inject Question questions
 @using Data
@@ -51,10 +51,19 @@
 <!--Code for page logic belw-->
 @code{
 
+    [Parameter]
+    public int UserID { get; set; }
+    public int userIdContainer;
+
     Question question = new Question(); //Making a new question object when entering the page
 
     string descriptioninput = "";
     int descMaxCharacters = 5000;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userIdContainer = UserID;
+    }
 
     protected async void OnSubmit(MouseEventArgs mouseEventArgs)
     {
@@ -67,10 +76,13 @@
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
         if(!string.IsNullOrWhiteSpace(question.Title) && !string.IsNullOrWhiteSpace(question.Description))
         {
+
             question.QuestionID = QuestionObjService.GenerateID();
             QuestionObjService.Write(question);
             DatabaseServices.Drivers.GetDefaultDriver().Commit();
-            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
+            
+            navigationManager.NavigateTo($"/posthome/{userIdContainer}/1"); //navigate to the post page once submitted
+
         }   
     }
 
