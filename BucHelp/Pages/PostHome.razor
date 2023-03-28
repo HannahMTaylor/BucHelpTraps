@@ -164,8 +164,8 @@ else //could make this an else if to display the list of posted questions if the
     protected async void OnClick(Question question)
     {
         selected = question;
-        NavManager.NavigateTo($"/QuestionView/{selected.Title}");
-        //navigationManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
+        //NavManager.NavigateTo($"/QuestionView/{selected.Title}");
+        NavManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
 
     }
 

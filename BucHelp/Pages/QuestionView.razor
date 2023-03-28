@@ -1,6 +1,6 @@
 ﻿<!--Page to display question along with answers to the question-->
 <!--Parameter view page that will display the question title-->
-@page "/QuestionView/{title}" 
+@page "/QuestionView/{id}" 
 @inject Question question
 @using Data
 
@@ -22,22 +22,23 @@
     Question selected = new Question(); //need question object on page
 
     [Parameter]
-    public string? title { get; set; } 
+    public string? id { get; set; } 
 
     protected override async Task OnInitializedAsync()
     {
-        // retrieve question by title
-        List<Question> qlist = QuestionObjService.GetAll();
-        for(int i = 0; i < qlist.Count(); ++i)
+        // retrieve question by id
+        int idAsInt;
+        bool parse = int.TryParse(id, out idAsInt);
+        if (!parse)
         {
-            string extraction = title; //extraction string for the title
-
-            if (qlist[i].Title.Equals(extraction))
-            {
-                selected = qlist[i];
-            }
+            throw new Exception("cannot parse id as string (replace this with a conditional 404 somehow)");
         }
-        
+        Question q = QuestionObjService.GetForID(idAsInt);
+        if (q == null)
+        {
+            throw new Exception("question does not exist for id (replace this with a conditional 404 somehow)");
+        }
+        selected = q;
     }
 
 }
