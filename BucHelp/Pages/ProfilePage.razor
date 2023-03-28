@@ -13,8 +13,10 @@
 
     .fa {
         font-size: 50px;
-        float: right;
+        right: -900px;
+        top: 150px;
         margin: 0px;
+        position: relative;
     }
 </style>
 
@@ -31,7 +33,7 @@
 
     @if (averageStars < 1 || averageStars > 5 || averageStars == null)
     {
-        <div style="margin-right: 100px;">
+        <div style="margin-right: 100px; position: relative;">
             <span class="fa fa-star"></span>
             <span class="fa fa-star"></span>
             <span class="fa fa-star"></span>
@@ -41,47 +43,47 @@
     }
     @if (averageStars == 1)
     {
-        <div style="margin-right: 100px;">
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked "></span>
             <span class="fa fa-star "></span>
             <span class="fa fa-star "></span>
             <span class="fa fa-star "></span>
             <span class="fa fa-star "></span>
-            <span class="fa fa-star checked"></span>
         </div>
     }
     @if (averageStars == 2)
     {
-        <div style="margin-right: 100px;">
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
+        <div style="margin-right: 100px; position: relative;">
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star "></span>
+            <span class="fa fa-star "></span>
         </div>
     }
     @if (averageStars == 3)
     {
-        <div style="margin-right: 100px;">
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
             <span class="fa fa-star"></span>
             <span class="fa fa-star"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
         </div>
     }
     @if (averageStars == 4)
     {
-        <div style="margin-right: 100px;">
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
             <span class="fa fa-star"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
         </div>
     }
     @if (averageStars == 5)
     {
-        <div style="margin-right: 100px;">
+        <div style="margin-right: 100px; position: relative;">
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
