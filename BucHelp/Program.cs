@@ -12,6 +12,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.TryAddScoped<Question>();
 builder.Services.AddSingleton<AppState>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

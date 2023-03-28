@@ -50,9 +50,11 @@
 
 @code {
     LoginModel login = new LoginModel();
+    User newUser = new User();
 
     bool error = false;
     bool emailError = false;
+    bool canNavigate = false;
     string email;
     string password;
 
@@ -60,6 +62,8 @@
     {
 
 
+        newUser.UserId = 012; //STUB
+        int PageNumber = 1;
         login.Credential.Email = email;
         login.Credential.Password = password;
         //Logic for adding to storage goes here
@@ -68,7 +72,7 @@
         if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password))
         {
             AppState.LoggedIn = true;
-            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
+            canNavigate = true;
         }
         else if (!login.Credential.isValidEmail())
         {
@@ -77,6 +81,13 @@
         else
         {
             error = true;
+        }
+
+        // Navigation logic
+
+        if(canNavigate)
+        {
+            navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //navigate to the post page once submitted
         }
     }
 }

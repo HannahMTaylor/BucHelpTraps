@@ -1,6 +1,6 @@
 ﻿<!--Page to display question along with answers to the question-->
 <!--Parameter view page that will display the question title-->
-@page "/QuestionView/{title}" 
+@page "/QuestionView/{UserID:int}/{title}" 
 @inject Question question
 @using Data
 
@@ -23,6 +23,8 @@
 
     [Parameter]
     public string? title { get; set; } 
+    [Parameter]
+    public int UserID { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
