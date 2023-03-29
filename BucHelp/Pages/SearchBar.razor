@@ -77,15 +77,22 @@
 </ul>
 -->
 
+@code {
+    // called after page rendered, so navigation should be safe now
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (OldFilteredCount != FilteredSearch.Count())
+        {
+            // size changed out from under us, fix page back to 1
+            //Console.WriteLine($"Count mismatch forced redraw: old: {OldFilteredCount}, new: {FilteredSearch.Count()}");
+            NavManager.NavigateTo($"/searchbar/{ID}/1");
+            OldFilteredCount = FilteredSearch.Count();
+        }
+    }
+}
+
 <!--Lists each object name from the FilteredSearch list on the page in a list-->
 <ul>
-    @if (@FilteredSearch.Count() != OldFilteredCount)
-    {
-        
-            NavManager.NavigateTo($"/searchbar/{idContainer}/1");
-      
-        OldFilteredCount = @FilteredSearch.Count();
-    }
 
     @if (PageNumber == 0)
     { 
@@ -171,9 +178,6 @@
     public int ID { get; set; }
     public int idContainer;
 
-    //creates a new list of SearchItem objects
-    List<SearchItem> FilteredSearch2 = new List<SearchItem> { };
-
     //creates a SearchItem object with Name only as of now (update later)
     public class SearchItem
     {
@@ -247,12 +251,6 @@
     private void ClearClick()
     {
         SearchTerm = "";
-        this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
-    }
-
-    protected void OnChange()
-    {
-        NavManager.NavigateTo($"/searchbar/{ID}/1");
     }
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
