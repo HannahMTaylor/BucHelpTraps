@@ -39,16 +39,22 @@ else //could make this an else if to display the list of posted questions if the
     <br>
     <br>
 
+    @code {
+    // called after page rendered, so navigation should be safe now
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (OldFilteredCount != FilteredSearch.Count())
+        {
+            // size changed out from under us, fix page back to 1
+            //Console.WriteLine($"Count mismatch forced redraw: old: {OldFilteredCount}, new: {FilteredSearch.Count()}");
+            NavManager.NavigateTo($"/posthome/{UserIdPageContainer}/{pageNumberContainer}");
+            OldFilteredCount = FilteredSearch.Count();
+        }
+    }
+}
+
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
-        @if (@FilteredSearch.Count() != OldFilteredCount)
-        {
-            
-
-            NavManager.NavigateTo($"/posthome/{UserIdPageContainer}/{pageNumberContainer}");
-
-            OldFilteredCount = @FilteredSearch.Count();
-        }
 
         @if (PageNumber == 0)
         {
