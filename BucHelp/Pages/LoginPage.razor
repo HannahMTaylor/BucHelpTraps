@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager navigationManager
 @inject AppState AppState
+@inject NavUtil navUtil
 @using Data
 
 <PageTitle>Login</PageTitle>
@@ -49,16 +50,32 @@
 <!--End of html code.-->
 
 @code {
+    //stub user to test validation 
+    User Kinser = new User
+        {
+            UserName = "Sir William",
+            Email = "duck@etsu.edu",
+            Password = "Password"
+
+        };
+
     LoginModel login = new LoginModel();
+    User newUser = new User();
+
+  
+
 
     bool error = false;
     bool emailError = false;
+    bool canNavigate = false;
     string email;
     string password;
 
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
 
+
+        newUser.UserId = 012; //STUB Will need to be changed to get the UserId once connected.
 
         login.Credential.Email = email;
         login.Credential.Password = password;
@@ -67,8 +84,17 @@
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
         if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password))
         {
-            AppState.LoggedIn = true;
-            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
+            if(email.Equals(Kinser.Email) && password.Equals(Kinser.Password))
+            {
+                AppState.LoggedIn = true;
+                canNavigate = true;
+                navUtil.SetID(newUser.UserId); //Once logged in set the ID
+            }
+
+            else
+            {
+                error = true;
+            }
         }
         else if (!login.Credential.isValidEmail())
         {
@@ -77,6 +103,13 @@
         else
         {
             error = true;
+        }
+
+        // Navigation logic
+
+        if(canNavigate)
+        {
+            navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //navigate to the post page once submitted
         }
     }
 }

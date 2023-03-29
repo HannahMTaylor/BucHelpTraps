@@ -1,4 +1,4 @@
-﻿@page "/Reply"
+﻿@page "/Reply/{ID:int}"
 @inject NavigationManager navigationManager
 @using Data
 
@@ -46,13 +46,22 @@
     public void reply()
     {
         showReply = true;
-        
+
     }
 
     Answer answer = new Answer(); //Making a new answer object when entering the page
 
+    [Parameter]
+    public int ID { get; set; }
+    public int idContainer;
+
     string descriptioninput = "";
     int descMaxCharacters = 5000;
+
+    protected override async Task OnInitializedAsync()
+    {
+        idContainer = ID;
+    }
 
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
@@ -63,7 +72,7 @@
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
         if (!string.IsNullOrWhiteSpace(answer.Description))
         {
-            navigationManager.NavigateTo("/posthome/1"); //navigate to the post page once submitted
+            navigationManager.NavigateTo($"/posthome/{idContainer}/1"); //navigate to the post page once submitted
         }
     }
 }
