@@ -43,6 +43,23 @@ namespace BucHelp.Data
         {
             return loggedIn;
         }
+
+        public User GetUser(string email)
+        {
+            List<User> users = UserObjService.GetUserList();
+
+            //LoginPractice.CreateUsers();  Leave as comment
+
+            foreach (User user in users)
+            {
+                if (user.Email.Equals(email))
+                {
+                    return user;
+                }
+            }
+
+            return null;
+        }
         
     }
 
@@ -99,15 +116,32 @@ namespace BucHelp.Data
         private void NotifyStateChanged() => OnChange?.Invoke();
     }
 
+    /// <summary>
+    /// Created input for users csv file
+    /// </summary>
     public class LoginPractice
     {
-        public List<User> UsersList = new List<User>();
-        public void CreateUsers()
+        private static List<User> UsersList = new List<User>();
+
+        public static void CreateUsers()
         {
             UsersList.Add(new User("1234", "Duck@yahoo.com", "student"));
             UsersList.Add(new User("password", "YoungDuck@yahoo.com", "student"));
             UsersList.Add(new User("123", "Chick@yahoo.com", "student"));
             UsersList.Add(new User("Leader", "DuckMaster@yahoo.com", "faculty"));
+
+            int i = 0;
+
+            foreach (User user in UsersList)
+            {
+                Console.WriteLine(UsersList[i].UserId);
+                UserObjService.Write(user);
+                i++;
+            }
+
+            DatabaseServices.Drivers.GetDefaultDriver().Commit();
+
+            
         }
     }
 }

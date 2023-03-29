@@ -33,10 +33,9 @@ namespace BucHelp.Data
             return questions;
         }
 
-        private static List<User> GetUserList()
+        public static List<User> GetUserList()
         {
             List<User> users = new List<User>();
-
             IEnumerator<Row> enumerator = GetTable().SelectAll().GetEnumerator();
             while (enumerator.MoveNext())
             {

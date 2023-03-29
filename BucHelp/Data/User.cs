@@ -54,6 +54,7 @@ namespace BucHelp.Data
             Password = password;
             setEmail(email);
             Affiliation = affiliation;
+            UserName = email;
         }
 
         /// <summary>
