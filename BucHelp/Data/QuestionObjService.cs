@@ -16,11 +16,10 @@ namespace BucHelp.Data
 
 
         //method to retrieve posted questions -- should be able to access the persistent storage as is
-        public Task<List<Question>> GetPostedQuestionsAsync()
+        public static Task<List<Question>> GetPostedQuestionsAsync()
         {
-            questions.Add(q1);
-            questions.Add(q2);
-            return Task.FromResult(questions);
+            
+            return Task.FromResult(GetAll());
         }
 
         // return question for ID
@@ -129,7 +128,7 @@ namespace BucHelp.Data
             return question;
         }
 
-        // obj -> row conversion, updates do not use this
+        // obj -> row conversion
         private static Row ToRow(Question question)
         {
             Row row = new Row(GetTable().Header);

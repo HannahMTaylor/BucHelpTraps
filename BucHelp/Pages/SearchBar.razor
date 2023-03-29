@@ -1,6 +1,5 @@
 ﻿<!--URL page name-->
-@page "/searchbar/1" 
-@page "/searchbar/{PageNumber:int}"
+@page "/searchbar/{ID:int}/{PageNumber:int}"
 @inject NavigationManager NavManager
 
 <PageTitle>Search Bar</PageTitle>
@@ -9,7 +8,7 @@
 <br>
 <br>
 <!--Filter for search bar, not well placed because it's just gonna be moved with changes anyway-->
-<form style="width: 15rem; height: 60rem; position: absolute; top: 25%; left: 75%;">
+<form style="width: 15rem; height: 60rem; position: absolute;  left: 75%;">
     <fieldset>
         <legend>Filter</legend>
         <div>
@@ -48,23 +47,25 @@
 <!--Old attempt, ignore but keeping incase I need it later-->
 <!--<input id="txtWord" name="txtWord" placeholder="Search.."  value="@SearchInput" @onchange="onChange" @onkeyup="Enter" /> -->
 
-<!--This is the acutal search box, variable name 'SearchTerm'-->
-<input style="width: 30rem; height: 2.1rem; position: absolute; top: 20%; left: 42.5%; margin: -25px 0 0 -25px;" @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
+<div class="containerSearchBar">
 
-<!--This is the search box clear button, trigger 'ClearClick' method-->
-<button class="btn btn-searchbar" type="button" onclick="@ClearClick" style="position: absolute; top: 20%; left: 74%; margin: -25px 0 0 -25px;">Clear</button>
+    <!--This is the acutal search box, variable name 'SearchTerm'-->
+    <input style="width: 30rem; height: 2.1rem; position: relative; top: -150px; left: 350px; margin: -25px 0 0 -25px;" @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
 
-<br>
+    <!--This is the search box clear button, trigger 'ClearClick' method-->
+    <button class="btn btn-searchbar" type="button" onclick="@ClearClick" style="position: relative; top: -140px; left: 375px; margin: -25px 0 0 -25px;">Clear</button>
+
+    <br>
 
 <!--Shows the total returned number of results by counting the number in the FilteredSearch List-->
-<span class="text-muted ml-5" style=" position: absolute; top: 25%; left: 55%; margin: -25px 0 0 -25px;">
+<span class="text-muted ml-5" style=" position: relative; top: -135px; left: 525px; margin: -25px 0 0 -25px;">
     Total @FilteredSearch.Count Results Returned
 </span>
 
 <br>
 <br>
 <br>
-
+</div>
 
 <!--Lists each object name from the FilteredSearch list on the page in a list
 <ul>
@@ -76,15 +77,22 @@
 </ul>
 -->
 
+@code {
+    // called after page rendered, so navigation should be safe now
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (OldFilteredCount != FilteredSearch.Count())
+        {
+            // size changed out from under us, fix page back to 1
+            //Console.WriteLine($"Count mismatch forced redraw: old: {OldFilteredCount}, new: {FilteredSearch.Count()}");
+            NavManager.NavigateTo($"/searchbar/{ID}/1");
+            OldFilteredCount = FilteredSearch.Count();
+        }
+    }
+}
+
 <!--Lists each object name from the FilteredSearch list on the page in a list-->
 <ul>
-    @if (@FilteredSearch.Count() != OldFilteredCount)
-    {
-        
-            NavManager.NavigateTo("/searchbar/1");
-      
-        OldFilteredCount = @FilteredSearch.Count();
-    }
 
     @if (PageNumber == 0)
     { 
@@ -92,7 +100,7 @@
         {
             @if (j < @FilteredSearch.Count())
             {
-                <li>@FilteredSearch[j].Name</li>
+                <li style="position: relative; top: -115px; left: 150px">@FilteredSearch[j].Name</li>
             }
         }
     }
@@ -102,7 +110,7 @@
         {
             @if (j < @FilteredSearch.Count())
             {
-                <li>@FilteredSearch[j].Name</li>
+                <li style="position: relative; top: -115px; left: 150px">@FilteredSearch[j].Name</li>
             }
         }
     }
@@ -113,7 +121,7 @@
 <!--<div id="buttonstuff">
     @for (int i = 0; i <= (@FilteredSearch.Count / pageSize); i++)
     {
-        <span style="position: relative; top: 90%; left: 50%;">
+        <span style="position: relative; top: 90%; left: 345px;">
             <a class="btn btn-SearchPageBtn" href="searchbar/@(i+1)"> @(i+1) </a>
         </span>
     }
@@ -125,12 +133,12 @@
 <div id="buttonstuff">
     @if (PageNumber == 0 && (@FilteredSearch.Count) > 0)
     {
-        <span style="position: relative; top: 80%; left: 50%;">
+        <span style="position: relative; top: 80%; left: 345px;">
             <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> @(PageNumber + 1) </a> -->
             <u>@(PageNumber+1)</u>
             @if (@FilteredSearch.Count() > 10)
             {
-            <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+2)"> Next </a>
+            <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber+2)"> Next </a>
             }
         </span>
     }
@@ -138,20 +146,20 @@
     {
         if ((@FilteredSearch.Count / pageSize) >= PageNumber)
         {
-            <span style="position: relative; top: 80%; left: 50%;">
-                <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber-1)"> Back </a>
+            <span style="position: relative; top: 80%; left: 300px;">
+                <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber-1)"> Back </a>
                 <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
                 <u>@PageNumber</u>
                 @if (@FilteredSearch.Count() > (10*@PageNumber + 1))
                 {
-                    <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> Next </a>
+                    <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber+1)"> Next </a>
                 }
             </span>
         }
         else
         {
-            <span style="position: relative; top: 80%; left: 50%;">
-                <a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber-1)"> Back </a>
+            <span style="position: relative; top: 80%; left: 250px;">
+                <a class="btn btn-SearchPageBtn" href="searchbar/@idContainer/@(PageNumber-1)"> Back </a>
                 <u>@PageNumber</u>
             </span>
         }
@@ -166,9 +174,9 @@
 
     [Parameter]
     public int PageNumber { get; set; } //allows changes with buttons
-
-    //creates a new list of SearchItem objects
-    List<SearchItem> FilteredSearch2 = new List<SearchItem> { };
+    [Parameter]
+    public int ID { get; set; }
+    public int idContainer;
 
     //creates a SearchItem object with Name only as of now (update later)
     public class SearchItem
@@ -207,7 +215,7 @@
         new SearchItem { Name = "Nursing" },
         new SearchItem { Name = "Culp" },
         new SearchItem { Name = "Dining"},
-    
+
         new SearchItem { Name = "Dorms and Housing" },
         new SearchItem { Name = "Class Schedule" },
         new SearchItem { Name = "Dorm Laundry" },
@@ -233,16 +241,16 @@
         new SearchItem { Name = "Dining" }
     };
 
+    protected override async Task OnInitializedAsync() 
+    {
+        idContainer = ID;
+    }
+
+
     //clears the search bar after clear button is pressed
     private void ClearClick()
     {
         SearchTerm = "";
-        this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
-    }
-
-    protected void OnChange()
-    {
-        NavManager.NavigateTo("/searchbar/1");
     }
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object

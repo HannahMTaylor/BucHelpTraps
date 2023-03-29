@@ -1,17 +1,20 @@
 ﻿<!--Page to display question along with answers to the question-->
 <!--Parameter view page that will display the question title-->
-@page "/QuestionView/{title}" 
+
+@page "/QuestionView/{id}" 
+@inject NavigationManager navman
+
 @inject Question question
 @using Data
 
-<div class="col-10 card card-body">
+<div class="card card-body" style="width: 60rem;">
     <p>@selected.Title</p>
     <p style="margin-left: 25px;">@selected.Description</p>
     <br/>
     <!--Each question will have a list of answers with it so the loop below grabs these-->
-    @foreach(var answer in selected.Answers)
+    @foreach(var answer in selected.GetAnswers())
     {
-        <p style="margin-left: 25px;">@answer.Title</p>
+        @*<p style="margin-left: 25px;">@answer.Title</p>*@
         <p style="margin-left: 25px;">@answer.Description</p>
         <br/>
     }
@@ -22,23 +25,102 @@
     Question selected = new Question(); //need question object on page
 
     [Parameter]
-    public string? title { get; set; } 
+    public string? id { get; set; } 
+
+    [Parameter]
+    public int UserID { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        for(int i = 0; i < question.QuestionsList.Count(); ++i)
+        // retrieve question by id
+        int idAsInt;
+        bool parse = int.TryParse(id, out idAsInt);
+        if (!parse)
         {
-            string extraction = title; //extraction string for the title
-
-            if (question.QuestionsList[i].Title == extraction)
-            {
-                selected.Title = extraction;
-                selected.Description = question.QuestionsList[i].Description;
-            }
+            navman.NavigateTo("/");
+            //throw new Exception("cannot parse id as string (replace this with a conditional 404 somehow)");
         }
-        
+        Question q = QuestionObjService.GetForID(idAsInt);
+        if (q == null)
+        {
+            navman.NavigateTo("/");
+            //throw new Exception("question does not exist for id (replace this with a conditional 404 somehow)");
+        }
+        selected = q;
     }
 
 }
 
+<!-- copy pasted this out from the Reply page -->
+
+@if (!showReply)
+{
+    <div>
+        <button class="btn btn-primary" @onclick="reply" id="btnReply">Reply</button>
+    </div>
+    <br />
+}
+
+@if (showReply)
+{
+    <div>
+        <label for="adescription">
+            <sup class="star" style="color:red">*</sup>
+            Description
+        </label><br>
+        <textarea name="adescription" rows="10" cols="50" maxlength="@descMaxCharacters"
+              @bind-value:event="oninput" @bind-value="answer.Description"></textarea>
+
+        <!--If the string is null auto display 0 until the user starts to type-->
+        @if (answer.Description == null)
+        {
+            <div>
+                Character Count: 0 / @descMaxCharacters
+            </div>
+        }
+        else
+        {
+            <div>
+                Character Count: @answer.Description.Count() / @descMaxCharacters
+            </div>
+        }
+
+
+    </div>
+
+    <button class="btn-primary" @onclick="submit">Post</button>
+
+}
+
+@code {
+    bool showReply = false;
+    public void reply()
+    {
+        showReply = true;
+
+    }
+
+    Answer answer = new Answer(); //Making a new answer object when entering the page
+
+    string descriptioninput = "";
+    int descMaxCharacters = 5000;
+
+    protected async void submit(MouseEventArgs mouseEventArgs)
+    {
+        if (!string.IsNullOrWhiteSpace(answer.Description))
+        {
+            // finish up normal answer stuff that needs to exist
+            answer.AnswerId = AnswerObjService.GenerateID();
+            answer.QuestionId = int.Parse(id);
+            answer.UserId = UserID;
+            answer.Votes = 0;
+            answer.Created = DateTime.Now;
+            answer.LastUpdated = DateTime.Now;
+            // write out answer
+            AnswerObjService.Write(answer);
+            DatabaseServices.Drivers.GetDefaultDriver().Commit();
+            navman.NavigateTo($"/QuestionView/{id}",true); //navigate to the post page once submitted, and force reload
+        }
+    }
+}
 

@@ -1,0 +1,84 @@
+﻿@page "/profilemenu"
+@using BucHelp.Data
+@inject NavigationManager NavManager
+@inject Question question
+@inject User UserMenu
+<h3>ProfileMenu</h3>
+
+<!--Display each user from the list of users as a clickable item-->
+<!--Because the list of Users is a stub (and this menu is for testing), no search method or page management will be included-->
+<!--Also thanks Ethan for the Code -Brandon -->
+@for(int i = 0; i < users.Count; i++)
+{
+    var u = users[i];
+    <div class="col-10 card card-body" @onclick="() =>  OnClick(u)">
+        <p>@users[i].UserName</p>
+    </div>
+}
+
+
+@code {
+
+    //This is a very long stub for profile information to display multiple forms of profile information
+    //
+    private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
+                                             //(One of which does not exist at the moment), the password is being stored here to make a user object possible to make
+                          somewhatFilledName = "WhatsYourFullName",
+                          somewhatFilledMajor = "Math",
+                          somewhatFilledDescription = "This is a test description for the profile.",
+                          somewhatFilledPhone = "123-555-7890",
+                          somewhatFilledSocialMedia = "yogabbagabba",
+                          somewhatFilledAddress = "yofullname@google.com",
+                          freshAddress = "newbie@google.org",
+                          workingName = "TheAnswerer",
+                          workingMajor = "Many",
+                          workingDescription = "This could have been a test description for the profile. It is not.",
+                          workingPhone = "098-555-7321",
+                          workingSocialMedia = "someinstagramidk",
+                          workingAddress = "nongaminglegend@clubpenguin.edu",
+                          affiliation = "Student";//There has to be a more efficient way of creating a Profile, I just don't know it
+    public static int points = 127,
+                      stars = 11,
+                      reviews = 3;
+
+    /*There are 3 Users: somewhatFilledUser, freshUser, and workingUser
+      somewhatFilledUser represents a user who has just filled out their information but has done no posts yet.
+      freshUser represents a user who just made their account
+      workingUser represents a user who has obtained points and gotten stars
+    */
+    private static Profile somewhatFilledProfile = new Profile(somewhatFilledName, somewhatFilledMajor, somewhatFilledDescription, somewhatFilledPhone, somewhatFilledSocialMedia),
+                           freshProfile = new Profile(),
+                           workingProfile = new Profile(workingName, workingMajor, workingDescription, workingPhone, workingSocialMedia, points, stars, reviews);
+    private static User somewhatFilledUser = new User(password, somewhatFilledAddress, affiliation, somewhatFilledProfile),
+                        freshUser = new User(password, freshAddress, affiliation, freshProfile),
+                        workingUser = new User(password, workingAddress, affiliation, workingProfile);
+    //
+    //This is a very long stub for profile information to display multiple forms of profile information
+
+    //This is the list of Users that can be selected from to view their profiles.
+    public List<User>? users = new List<User>();
+
+    <!-- On page initialization asynchronously combine the users into a list of users-->
+    protected override async Task OnInitializedAsync()
+    {
+        users.Add(somewhatFilledUser);
+        users.Add(freshUser);
+        users.Add(workingUser);
+
+        UserMenu.UsersList = users;
+    }
+
+    /// <summary>
+    /// Once card is clicked will take the User object and use its username
+    /// to set the new page, but if two user have the same username they will
+    /// both display.  Once DB connections are made this could would still be the username.
+    /// Thanks Ethan for the code -Brandon
+    /// </summary>
+    /// <param name="user"></param>
+    protected async void OnClick(User user)
+    {
+        User selected = user;
+        NavManager.NavigateTo($"/profile/{selected.UserName}");
+    }
+}
+

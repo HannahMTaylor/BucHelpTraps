@@ -9,12 +9,22 @@
 @code {
 	List<Question> all = QuestionObjService.GetAll();
 	Question template = new Question();
+	Answer atemplate = new Answer();
 
 	protected async void OnSubmit(MouseEventArgs args)
 	{
 		template.QuestionID = QuestionObjService.GenerateID();
 		template.UserName = "lwhitelaw";
 		QuestionObjService.Write(template);
+		Drivers.GetDefaultDriver().Commit();
+	}
+
+	protected async void OnSubmitAnswer(MouseEventArgs args)
+	{
+		atemplate.AnswerId = AnswerObjService.GenerateID();
+		atemplate.UserId = 0;
+		atemplate.Votes = 1;
+		AnswerObjService.Write(atemplate);
 		Drivers.GetDefaultDriver().Commit();
 	}
 }
@@ -27,6 +37,14 @@
 	<p>Desc: @q.Description</p>
 	<p>Answer: @q.Answer</p>
 	<p>Created/Updated: @q.Created / @q.LastUpdated</p>
+	<p>Answers: </p>
+	@foreach (Answer a in q.GetAnswers())
+	{
+		<p>AnswerText: @a.Description</p>
+		<p>userid: @a.UserId</p>
+		<p>questionid: @a.QuestionId</p>
+		<p>Created/Updated: @a.Created / @a.LastUpdated</p>
+	}
 	<br \>
 }
 
@@ -43,5 +61,27 @@
 	<textarea name="qanswer" rows="10" cols="50" maxlength="5000" @bind="template.Answer"></textarea>
 </div>
 
-<button class="btn btn-primary"  @onclick="OnSubmit">Submit</button>
+<button class="btn btn-primary" @onclick="OnSubmit">Submit</button>
 
+<h2>Answer field</h2>
+<div>
+	<label for="aqid">question id</label><br>
+	<textarea name="aqid" rows="10" cols="50" maxlength="5000" @bind="atemplate.QuestionId"></textarea>
+</div>
+<div>
+	<label for="adescription">Description</label><br>
+	<textarea name="adescription" rows="10" cols="50" maxlength="5000" @bind="atemplate.Description"></textarea>
+</div>
+
+<button class="btn btn-primary" @onclick="OnSubmitAnswer">Answer submit</button>
+
+<h2>All answers</h2>
+@foreach (Answer a in AnswerObjService.GetAll())
+{
+	<p>id: @a.AnswerId</p>
+	<p>AnswerText: @a.Description</p>
+	<p>userid: @a.UserId</p>
+	<p>questionid: @a.QuestionId</p>
+	<p>Created/Updated: @a.Created / @a.LastUpdated</p>
+	<br \>
+}

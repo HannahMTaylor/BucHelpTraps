@@ -1,5 +1,7 @@
-﻿@page "/Login"
+﻿@page "/"
 @inject NavigationManager navigationManager
+@inject AppState AppState
+@inject NavUtil navUtil
 @using Data
 
 <PageTitle>Login</PageTitle>
@@ -12,27 +14,35 @@
         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="Credential.Email">Email</label>
+                <label asp-for="Credential.Email"><sup class="star" style="color:red">*</sup>Email</label>
             </div>
             <div class="col-5">
-                <input type="email" pattern="[a-zA-Z0-9._%-+]+@("@")[a-zA-Z]+\.[a-z]{2,3}$" maxlength="100" asp-for="Credential.Email" class="form-control" required/>
-                <span class ="error">Please provide a valid email address</span>
+                <input type="email" pattern="[a-zA-Z0-9._%-+]+@("@")[a-zA-Z]+\.[a-z]{2,3}$" maxlength="100" asp-for="login.Credential.Email" class="form-control" required @bind="email" />
+                @if (emailError)
+                {
+                    <label asp-for="Credential.Password" style="color:red">Error Invalid Email Format</label>
+                }
             </div>
-            <span class="text-danger" asp-validation-for="Credential.UserName"></span>
+            <span class="text-danger" asp-validation-for="login.Credential.UserName"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="Credential.Password">Password</label>
+                <label asp-for="Credential.Password"><sup class="star" style="color:red">*</sup>Password</label>
             </div>
             <div class="col-5">
-                <input type="password" maxlength="100" minlength="8" asp-for="Credential.Password" class="form-control" required @autocomplete="off" />
+                <input type="password" maxlength="100" asp-for="login.Credential.Password" class="form-control" required @bind="password" />
+                @if (error)
+                {
+                    <label asp-for="Credential.Password" style="color:red">Error Incorrect Email or Password</label>
+                }
             </div>
-            <span class="text-danger" asp-validation-for="Credential.UserName"></span>
+            <span class="text-danger" asp-validation-for="login.Credential.Password"></span>
         </div>
+        
         <br />
         <div class="form-group row">
             <div calss="col-2">
-                <input type="Log In" class="btn btn-primary" value="Login" />
+                <input type="Log In" class="btn btn-primary" value="Login" @onclick="submit" />
             </div>
         </div>
     </form>
@@ -40,6 +50,57 @@
 <!--End of html code.-->
 
 @code {
-    
-    
+
+    LoginModel login = new LoginModel();
+    User newUser = new User();
+
+
+
+
+    bool error = false;
+    bool emailError = false;
+    bool canNavigate = false;
+    string email;
+    string password;
+
+    protected async void submit(MouseEventArgs mouseEventArgs)
+    {
+
+        newUser = login.GetUser(email);
+
+        login.Credential.Email = email;
+        login.Credential.Password = password;
+        //Logic for adding to storage goes here
+        //Resource used to do this below
+        //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
+        if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password) && newUser != null)
+        {
+            if(email.ToLower().Equals(newUser.Email.ToLower()) && password.Equals(newUser.Password))
+            {
+                AppState.LoggedIn = true;
+                canNavigate = true;
+                navUtil.SetID(newUser.UserId); //Once logged in set the ID
+            }
+
+            else
+            {
+                error = true;
+            }
+        }
+        else if (!login.Credential.isValidEmail())
+        {
+            emailError = true;
+        }
+        else
+        {
+            error = true;
+        }
+
+        // Navigation logic
+
+        if(canNavigate)
+        {
+            navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //navigate to the post page once submitted
+        }
+    }
 }

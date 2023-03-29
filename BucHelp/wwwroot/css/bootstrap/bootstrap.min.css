@@ -2966,7 +2966,7 @@ textarea.form-control-lg {
     display: inline-block;
     font-size: 16px;
     font-size: 1rem;
-    margin: px;
+    margin: 10px;
 }
 
     .btn-SearchPageBtn:hover {
@@ -2975,9 +2975,13 @@ textarea.form-control-lg {
         border-color: #01053a
     }
 
+.containerProfile {
 
+}
 
-
+.containerSearchBar {
+    width: 1000px;
+}
 
 .btn-searchbar {
     color: #01053a;
@@ -4067,6 +4071,15 @@ legend {
     margin-bottom: 0;
     list-style: none
 }
+
+.nav-link2 {
+    display: block;
+    padding: 50px 100px;
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out
+}
+
 
 .nav-link {
     display: block;

@@ -33,6 +33,19 @@ namespace BucHelp.Data
             return questions;
         }
 
+        public static List<User> GetUserList()
+        {
+            List<User> users = new List<User>();
+            IEnumerator<Row> enumerator = GetTable().SelectAll().GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Row row = enumerator.Current;
+                users.Add(FromRow(row));
+            }
+
+            return users;
+        }
+
         // get next available ID, based on database
         public static int GenerateID()
         {
@@ -99,7 +112,7 @@ namespace BucHelp.Data
             return user;
         }
 
-        // obj -> row conversion, updates do not use this
+        // obj -> row conversion
         private static Row ToRow(User user)
         {
             Row row = new Row(GetTable().Header);

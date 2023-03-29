@@ -1,22 +1,162 @@
-﻿@page "/profile"
+﻿@page "/profile/{username}"
 @using BucHelp.Data
+@inject User UserMenu
+
 
 <h3>Profile</h3>
-<p>@currentUser.UserProfile.Name<br />
-   Email Address: @currentUser.Email<br />
-   Affiliation: @currentUser.Affiliation<br />
-   Major: @currentUser.UserProfile.Major<br />
-   Description: @currentUser.UserProfile.Description</p>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: #FFC72C;
+    }
+
+    .fa {
+        font-size: 50px;
+        right: -900px;
+        top: 150px;
+        margin: 0px;
+        position: relative;
+    }
+</style>
+
+<div class="containerProfile">
+
+    @if(currentUser.UserProfile.Reviews > 0)
+    {
+        averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+    }
+    @if (currentUser.UserProfile.Reviews == 0)
+    {
+        averageStars = 0;
+    }
+
+    @if (averageStars < 1 || averageStars > 5 || averageStars == null)
+    {
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        </div>
+    }
+    @if (averageStars == 1)
+    {
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked "></span>
+            <span class="fa fa-star "></span>
+            <span class="fa fa-star "></span>
+            <span class="fa fa-star "></span>
+            <span class="fa fa-star "></span>
+        </div>
+    }
+    @if (averageStars == 2)
+    {
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star "></span>
+            <span class="fa fa-star "></span>
+        </div>
+    }
+    @if (averageStars == 3)
+    {
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        </div>
+    }
+    @if (averageStars == 4)
+    {
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+        </div>
+    }
+    @if (averageStars == 5)
+    {
+        <div style="margin-right: 100px; position: relative;">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+        </div>
+    }
+
+
+    <img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style=" position: relative; top: 0px; left: 0px; width:200px;height:200px; border-radius: 50%;" />
+    <h4 style="position: relative; top: -150px; left: 975px;">Points: @currentUser.UserProfile.Points</h4>
+
+
+    <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Username</div>
+    <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Major</div>
+
+    <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Name</div>
+    <div style="width: 600px; height: 245px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Description</div>
+
+    <h3 style="position: relative; top: -350px; left: 500px;">Contact</h3>
+
+    <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Email: @currentUser.UserProfile.Email</div>
+    @if (!String.IsNullOrEmpty(currentUser.UserProfile.Phone))
+    {
+        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Phone: @currentUser.UserProfile.Phone</div>
+    }
+    @if (!String.IsNullOrEmpty(currentUser.UserProfile.SocialMedia))
+    {
+        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Social Media: @currentUser.UserProfile.SocialMedia</div>
+    }
+
+</div>
+
+
 
 <!--Brandon: This code is to demonstrate how to store variables, the above shows how to print them-->
 @code {
-    private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
+    [Parameter]
+    public string? username { get; set; }
+
+    /*private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
                                              //(One of which does not exist at the moment), the password is being stored here to make a user object possible to make
-                          address = "yofullname@google.com",
-                          affiliation = "Student",
+                          name = "WhatsYourFullName",
                           major = "Math",
+                          address = "yofullname@google.com",
                           description = "This is a test description for the profile.",
-                          overwrittenName = "Blank"; //There has to be a more efficient way of creating a Profile, I just don't know it
-    private static Profile profileDetails = new Profile(overwrittenName, major, description);
-    private static User currentUser = new User(password, address, affiliation, profileDetails);
+                          phone = "123-555-7890",
+                          socialmedia = "yogabbagabba",
+                          affiliation = "Student";//There has to be a more efficient way of creating a Profile, I just don't know it
+
+    private static Profile profileDetails = new Profile(name, major, description, phone, socialmedia);
+    private static User funnyUser = new User(password, address, affiliation, profileDetails);
+    */
+    private static User currentUser = new User();
+
+    private static int? averageStars = 0;
+
+    //Thanks Ethan for this code
+    protected override async Task OnInitializedAsync()
+    {
+        for (int i = 0; i < UserMenu.UsersList.Count(); ++i)
+        {
+            string extraction = username; //extraction string for the title
+
+            if (UserMenu.UsersList[i].UserName == extraction)
+            {
+                currentUser = UserMenu.UsersList[i];
+            }
+        }
+
+        if(currentUser.UserProfile.Reviews > 0)
+        {
+            averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+        }
+    }
 }
