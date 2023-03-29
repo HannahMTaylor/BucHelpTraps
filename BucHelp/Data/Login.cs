@@ -43,6 +43,7 @@ namespace BucHelp.Data
         {
             return loggedIn;
         }
+        
     }
 
     /// <summary>
@@ -96,5 +97,17 @@ namespace BucHelp.Data
         }
 
         private void NotifyStateChanged() => OnChange?.Invoke();
+    }
+
+    public class LoginPractice
+    {
+        public List<User> UsersList = new List<User>();
+        public void CreateUsers()
+        {
+            UsersList.Add(new User("1234", "Duck@yahoo.com", "student"));
+            UsersList.Add(new User("password", "YoungDuck@yahoo.com", "student"));
+            UsersList.Add(new User("123", "Chick@yahoo.com", "student"));
+            UsersList.Add(new User("Leader", "DuckMaster@yahoo.com", "faculty"));
+        }
     }
 }
