@@ -1,4 +1,6 @@
-﻿namespace BucHelp.Data
+﻿using BucHelp.DatabaseServices;
+
+namespace BucHelp.Data
 {
     /// <summary>
     /// User class 
@@ -52,6 +54,7 @@
             Password = password;
             setEmail(email);
             Affiliation = affiliation;
+            UserName = email;
         }
 
         /// <summary>

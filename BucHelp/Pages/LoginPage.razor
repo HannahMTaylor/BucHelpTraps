@@ -50,19 +50,11 @@
 <!--End of html code.-->
 
 @code {
-    //stub user to test validation 
-    User Kinser = new User
-        {
-            UserName = "Sir William",
-            Email = "duck@etsu.edu",
-            Password = "Password"
-
-        };
 
     LoginModel login = new LoginModel();
     User newUser = new User();
 
-  
+
 
 
     bool error = false;
@@ -74,17 +66,16 @@
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
 
-
-        newUser.UserId = 012; //STUB Will need to be changed to get the UserId once connected.
+        newUser = login.GetUser(email);
 
         login.Credential.Email = email;
         login.Credential.Password = password;
         //Logic for adding to storage goes here
         //Resource used to do this below
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
-        if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password))
+        if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password) && newUser != null)
         {
-            if(email.Equals(Kinser.Email) && password.Equals(Kinser.Password))
+            if(email.ToLower().Equals(newUser.Email.ToLower()) && password.Equals(newUser.Password))
             {
                 AppState.LoggedIn = true;
                 canNavigate = true;

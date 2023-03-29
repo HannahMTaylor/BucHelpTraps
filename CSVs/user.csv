@@ -1,0 +1,6 @@
+id,nulls,username,email,password,affiliation
+INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT
+0,0,Duck@yahoo.com,Duck@yahoo.com,1234,student
+1,0,YoungDuck@yahoo.com,YoungDuck@yahoo.com,password,student
+2,0,Chick@yahoo.com,Chick@yahoo.com,123,student
+3,0,DuckMaster@yahoo.com,DuckMaster@yahoo.com,Leader,faculty
