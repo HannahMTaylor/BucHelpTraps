@@ -75,7 +75,7 @@
         //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
         if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password) && newUser != null)
         {
-            if(email.Equals(newUser.Email) && password.Equals(newUser.Password))
+            if(email.ToLower().Equals(newUser.Email.ToLower()) && password.Equals(newUser.Password))
             {
                 AppState.LoggedIn = true;
                 canNavigate = true;

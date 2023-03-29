@@ -52,7 +52,7 @@ namespace BucHelp.Data
 
             foreach (User user in users)
             {
-                if (user.Email.Equals(email))
+                if (user.Email.ToLower().Equals(email.ToLower()))
                 {
                     return user;
                 }
