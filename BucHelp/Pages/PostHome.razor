@@ -138,8 +138,8 @@ else //could make this an else if to display the list of posted questions if the
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
 
     private List<Question>? questions;
+    private int votes = 0;
 
-    
     
 
     <!-- keeping this for debugging sake -- from either questionsOnPostpage or answers-page -->
@@ -215,6 +215,16 @@ else //could make this an else if to display the list of posted questions if the
     {
         NavManager.NavigateTo($"/posthome/{UserIdPageContainer}/{pageNumberContainer}"); //trying to change the navigation to redirect to the posthome page since we are moving the search bar and list of posted questions pages into a single page
 
+    }
+
+    private void UpDoot()
+    {
+        votes += 1;
+    }
+
+    private void DownDoot()
+    {
+        votes -= 1;
     }
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
