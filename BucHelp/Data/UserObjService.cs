@@ -33,6 +33,12 @@ namespace BucHelp.Data
             return questions;
         }
 
+        public static Task<List<User>> GetUserAsync()
+        {
+            return Task.FromResult(GetAll());
+        }
+
+
         public static List<User> GetUserList()
         {
             List<User> users = new List<User>();

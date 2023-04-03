@@ -49,8 +49,9 @@ namespace BucHelp.Data
         /// <param name="password"></param>
         /// <param name="email"></param>
         /// <param name="affiliation"></param>
-        public User(string password, string email, string affiliation)
+        public User(int id, string password, string email, string affiliation)
         {
+            UserId = id;
             Password = password;
             setEmail(email);
             Affiliation = affiliation;

@@ -125,10 +125,10 @@ namespace BucHelp.Data
 
         public static void CreateUsers()
         {
-            UsersList.Add(new User("1234", "Duck@yahoo.com", "student"));
-            UsersList.Add(new User("password", "YoungDuck@yahoo.com", "student"));
-            UsersList.Add(new User("123", "Chick@yahoo.com", "student"));
-            UsersList.Add(new User("Leader", "DuckMaster@yahoo.com", "faculty"));
+            UsersList.Add(new User(1, "1234", "Duck@yahoo.com", "student"));
+            UsersList.Add(new User(2, "password", "YoungDuck@yahoo.com", "student"));
+            UsersList.Add(new User(3, "123", "Chick@yahoo.com", "student"));
+            UsersList.Add(new User(4, "Leader", "DuckMaster@yahoo.com", "faculty"));
 
             int i = 0;
 
