@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\CSVs\answer.csv" />
+    <None Include="wwwroot\CSVs\question.csv" />
+    <None Include="wwwroot\CSVs\readme" />
+    <None Include="wwwroot\CSVs\user.csv" />
     <None Include="wwwroot\Images\Tina_front_pic.jpg" />
   </ItemGroup>
 
