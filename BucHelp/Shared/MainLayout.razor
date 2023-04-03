@@ -22,7 +22,7 @@
                     URI = _navManager.Uri;
                     username = URI.Split('/').Last();
 
-                    <NavLink class="nav-link2" href='@string.Format("/profile/{0}", username)'>
+                    <NavLink class="nav-link2" href="@($"profile/{ID}")">
                         <p style="float: right; position: relative; top: 25px; padding: 10px; font-size: 20px;">@username</p>
                         <img src="/Images/Tina_front_pic.jpg" style=" position: relative;  margin-top: 10px; width:52px; height:52px; border-radius: 50%;" />
                     </NavLink>
@@ -48,6 +48,11 @@
 @code{
     string username = "";
     string URI = "";
+
+    // href="@($"profile/{ID}")"
+    //href='@string.Format("/profile/{0}", username)'
+
+    public int ID { get; set; }
 }
 
 

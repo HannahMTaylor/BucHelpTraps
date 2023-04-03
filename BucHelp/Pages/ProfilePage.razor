@@ -1,4 +1,4 @@
-﻿@page "/profile/{username}"
+﻿@page "/profile/{ID:int}"
 @using BucHelp.Data
 @inject User UserMenu
 
@@ -122,7 +122,7 @@
 <!--Brandon: This code is to demonstrate how to store variables, the above shows how to print them-->
 @code {
     [Parameter]
-    public string? username { get; set; }
+    public int ID { get; set; }
 
     /*private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
                                              //(One of which does not exist at the moment), the password is being stored here to make a user object possible to make
@@ -146,9 +146,9 @@
     {
         for (int i = 0; i < UserMenu.UsersList.Count(); ++i)
         {
-            string extraction = username; //extraction string for the title
+            int extraction = ID; //extraction string for the title
 
-            if (UserMenu.UsersList[i].UserName == extraction)
+            if (UserMenu.UsersList[i].UserId == extraction)
             {
                 currentUser = UserMenu.UsersList[i];
             }
