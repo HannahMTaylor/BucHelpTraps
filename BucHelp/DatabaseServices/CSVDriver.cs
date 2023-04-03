@@ -27,7 +27,11 @@ namespace BucHelp.DatabaseServices
         public CSVDriver(string folderpath)
         {
             if (folderpath == null) throw new ArgumentNullException("folderpath is null");
-            if (!Directory.Exists(folderpath)) throw new ArgumentException("directory at " + folderpath + " does not exist");
+            if (!Directory.Exists(folderpath))
+            {
+                Console.WriteLine("Warning: directory " + folderpath + " does not exist! Creating it... Absolute path: " + Path.GetFullPath(folderpath));
+                Directory.CreateDirectory(folderpath);
+            }
             this.folderpath = folderpath;
             headers = new Dictionary<string, RowHeader>();
             tables = new Dictionary<string, List<Row>>();
@@ -36,8 +40,30 @@ namespace BucHelp.DatabaseServices
             foreach (string path in Directory.EnumerateFiles(folderpath))
             {
                 if (!path.EndsWith(".csv")) continue;
-                LoadCSV(path);
+                try
+                {
+                    LoadCSV(path);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: exception thrown!");
+                    Console.WriteLine(ex.ToString());
+                    string backupPath = GenerateBackupPath(path);
+                    Console.WriteLine("Error: CSV file " + path + " could not load! Moving this file to " + backupPath + " and loading without it");
+                    File.Move(path, backupPath);
+                }
             }
+        }
+
+        private string GenerateBackupPath(string path)
+        {
+            int i = 1;
+            string backupPath = path + ".bak";
+            while (File.Exists(backupPath)) {
+                backupPath = path + ".bak" + i.ToString();
+                i++;
+            }
+            return backupPath;
         }
 
         public void Commit()
