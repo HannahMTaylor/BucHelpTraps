@@ -5,7 +5,7 @@
     /// </summary>
     public class Drivers
     {
-        private static readonly IDatabaseDriver csvd = new CSVDriver("./../CSVs");
+        private static readonly IDatabaseDriver csvd = new CSVDriver("./wwwroot/CSVs");
 
         /// <summary>
         /// Request the default database driver.
