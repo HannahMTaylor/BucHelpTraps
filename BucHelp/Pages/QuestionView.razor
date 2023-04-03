@@ -8,7 +8,9 @@
 @using Data
 
 <div class="card card-body" style="width: 60rem;">
-    <p>@selected.Title</p>
+    <h1>@selected.Title</h1>
+    <h2>Category:@selected.Category</h2> <!--This category appears before the rest of the text, if there is no category, it displays as Category:-->
+
     <p style="margin-left: 25px;">@selected.Description</p>
     <br/>
     <!--Each question will have a list of answers with it so the loop below grabs these-->
