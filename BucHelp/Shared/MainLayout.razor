@@ -1,5 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager _navManager
+@inject AppState AppState
+@inject NavUtil navUtil
+@using Data
+@implements IDisposable
 
 <PageTitle><h1>BucHelp</h1></PageTitle>
 
@@ -17,22 +21,28 @@
             </div>
             
             <div class="col-2" style="align-content: safe center"> <!-- in order to get this to be actually centered in the div, need to change the display setting in the css file to something other than "block"-->
-                @if (_navManager.Uri.Contains("/profile/"))
-                {
-                    URI = _navManager.Uri;
-                    username = URI.Split('/').Last();
+                
 
-                    <NavLink class="nav-link2" href='@string.Format("/profile/{0}", username)'>
-                        <p style="float: right; position: relative; top: 25px; padding: 10px; font-size: 20px;">@username</p>
-                        <img src="/Images/Tina_front_pic.jpg" style=" position: relative;  margin-top: 10px; width:52px; height:52px; border-radius: 50%;" />
-                    </NavLink>
-                }
-                @if (!_navManager.Uri.Contains("/profile/"))
+                @if (AppState.LoggedIn)
                 {
-                <NavLink class="nav-link" href="profilemenu">
-                    <span class="oi oi-person" aria-hidden="true"></span>
-                </NavLink>
+                    @if (_navManager.Uri.Contains("/profile/"))
+                    {
+                        URI = _navManager.Uri;
+                        username = URI.Split('/').Last();
+
+                            <NavLink class="nav-link2" href='@string.Format("/profile/{0}", username)'>
+                                <p style="float: right; position: relative; top: 25px; padding: 10px; font-size: 20px;">@username</p>
+                                <img src="/Images/Tina_front_pic.jpg" style=" position: relative;  margin-top: 10px; width:52px; height:52px; border-radius: 50%;" />
+                            </NavLink>
+                    }
+                    @if (!_navManager.Uri.Contains("/profile/"))
+                    {
+                        <NavLink class="nav-link" href="profilemenu">
+                            <span class="oi oi-person" aria-hidden="true"></span>
+                        </NavLink>
+                    }
                 }
+
 
              
             </div>
@@ -48,6 +58,20 @@
 @code{
     string username = "";
     string URI = "";
+
+    //This handles the state change of a user logged in.
+    protected override void OnInitialized()
+    {
+        navUtil.OnChange += () => StateHasChanged();
+        AppState.OnChange += StateHasChanged;
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged;
+    }
 }
 
 
