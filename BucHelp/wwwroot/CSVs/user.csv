@@ -4,3 +4,4 @@ INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT
 1,0,YoungDuck@yahoo.com,YoungDuck@yahoo.com,password,student
 2,0,Chick@yahoo.com,Chick@yahoo.com,123,student
 3,0,DuckMaster@yahoo.com,DuckMaster@yahoo.com,Leader,faculty
+4,0,Something@etsu.edu,Something@etsu.edu,SomePassword,student
