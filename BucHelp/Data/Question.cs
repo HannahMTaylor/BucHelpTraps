@@ -47,9 +47,13 @@ namespace BucHelp.Data
         public enum Categories
         {
             UNCATEGORIZED,
-            CSCI,
-            MATH,
-            ENGL,
+            ARTSANDSCIENCES,
+            BUSINESSANDTECHNOLOGY,
+            CLINICALANDREHABILITATIVE,
+            NURSING,
+            PUBLICHEALTH,
+            HONORS,
+            GRADUATE,
             DORM,
             CAMPUS
         }
