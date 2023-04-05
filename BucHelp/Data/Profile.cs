@@ -8,6 +8,8 @@ namespace BucHelp.Data
     /// </summary>
     public class Profile
     {
+        public int ProfileID { get; set; }
+        public int UserID { get; set; }
         public string? Username { get; set; }//The user name of the account. Required to display
         public string? Name { get; set; } //The name the user wants to display, preferably their real name. Optional, section is empty when not filled
         public string? Major { get; set; } //May become an enum with a dropdown list later. Optional, section is empty when not filled
