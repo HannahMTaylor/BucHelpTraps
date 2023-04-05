@@ -67,6 +67,7 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
+    //This handles the state change of a user logged in.
     protected override void OnInitialized()
     {
         navUtil.OnChange += () => StateHasChanged();
