@@ -33,6 +33,10 @@ namespace BucHelp.Data
             return questions;
         }
 
+        /// <summary>
+        /// Used to get the list of Users in the database
+        /// </summary>
+        /// <returns></returns>
         public static Task<List<User>> GetUserAsync()
         {
             return Task.FromResult(GetUserList());

@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager _navManager
+@using Data
+@inject NavUtil navUtil
+
 
 <PageTitle><h1>BucHelp</h1></PageTitle>
 
@@ -17,7 +20,7 @@
             </div>
             
             <div class="col-2" style="align-content: safe center"> <!-- in order to get this to be actually centered in the div, need to change the display setting in the css file to something other than "block"-->
-                @if (_navManager.Uri.Contains("/profile/"))
+                @if (_navManager.Uri.Contains($"/profile/{ID}"))
                 {
                     URI = _navManager.Uri;
                     username = URI.Split('/').Last();
@@ -27,7 +30,7 @@
                         <img src="/Images/Tina_front_pic.jpg" style=" position: relative;  margin-top: 10px; width:52px; height:52px; border-radius: 50%;" />
                     </NavLink>
                 }
-                @if (!_navManager.Uri.Contains("/profile/"))
+                @if (!_navManager.Uri.Contains($"/profile/{ID}"))
                 {
                 <NavLink class="nav-link" href="profilemenu">
                     <span class="oi oi-person" aria-hidden="true"></span>
@@ -49,11 +52,13 @@
     string username = "";
     string URI = "";
 
-    // href="@($"profile/{ID}")"
-    //href='@string.Format("/profile/{0}", username)'
-
     public int ID { get; set; }
 
+    
+    protected override async Task OnInitializedAsync()
+    {
+        navUtil.OnChange += () => StateHasChanged();
+    }
    
 }
 

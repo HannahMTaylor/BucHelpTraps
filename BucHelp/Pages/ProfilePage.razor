@@ -21,100 +21,103 @@
 </style>
 
 <div class="containerProfile">
+    <!-- Check to see if user has a profile: This is an error check -->
+    @if(currentUser.UserProfile != null)
+    {
+        @if (currentUser.UserProfile.Reviews > 0)
+        {
+            averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+        }
+        @if (currentUser.UserProfile.Reviews == 0)
+        {
+            averageStars = 0;
+        }
 
-    @if(currentUser.UserProfile.Reviews > 0)
-    {
-        averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
-    }
-    @if (currentUser.UserProfile.Reviews == 0)
-    {
-        averageStars = 0;
-    }
-
-    @if (averageStars < 1 || averageStars > 5 || averageStars == null)
-    {
-        <div style="margin-right: 100px; position: relative;">
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-        </div>
-    }
-    @if (averageStars == 1)
-    {
-        <div style="margin-right: 100px; position: relative;">
-            <span class="fa fa-star checked "></span>
-            <span class="fa fa-star "></span>
-            <span class="fa fa-star "></span>
-            <span class="fa fa-star "></span>
-            <span class="fa fa-star "></span>
-        </div>
-    }
-    @if (averageStars == 2)
-    {
-        <div style="margin-right: 100px; position: relative;">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star "></span>
-            <span class="fa fa-star "></span>
-        </div>
-    }
-    @if (averageStars == 3)
-    {
-        <div style="margin-right: 100px; position: relative;">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-        </div>
-    }
-    @if (averageStars == 4)
-    {
-        <div style="margin-right: 100px; position: relative;">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-        </div>
-    }
-    @if (averageStars == 5)
-    {
-        <div style="margin-right: 100px; position: relative;">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-        </div>
-    }
-
-
-    <img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style=" position: relative; top: 0px; left: 0px; width:200px;height:200px; border-radius: 50%;" />
-    <h4 style="position: relative; top: -150px; left: 975px;">Points: @currentUser.UserProfile.Points</h4>
+        @if (averageStars < 1 || averageStars > 5 || averageStars == null)
+        {
+            <div style="margin-right: 100px; position: relative;">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+        }
+        @if (averageStars == 1)
+        {
+            <div style="margin-right: 100px; position: relative;">
+                <span class="fa fa-star checked "></span>
+                <span class="fa fa-star "></span>
+                <span class="fa fa-star "></span>
+                <span class="fa fa-star "></span>
+                <span class="fa fa-star "></span>
+            </div>
+        }
+        @if (averageStars == 2)
+        {
+            <div style="margin-right: 100px; position: relative;">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star "></span>
+                <span class="fa fa-star "></span>
+            </div>
+        }
+        @if (averageStars == 3)
+        {
+            <div style="margin-right: 100px; position: relative;">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+        }
+        @if (averageStars == 4)
+        {
+            <div style="margin-right: 100px; position: relative;">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+            </div>
+        }
+        @if (averageStars == 5)
+        {
+            <div style="margin-right: 100px; position: relative;">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+            </div>
+        }
 
 
-    <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Username</div>
-    <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Major</div>
+        <img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style=" position: relative; top: 0px; left: 0px; width:200px;height:200px; border-radius: 50%;" />
+        <h4 style="position: relative; top: -150px; left: 975px;">Points: @currentUser.UserProfile.Points</h4>
 
-    <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Name</div>
-    <div style="width: 600px; height: 245px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Description</div>
 
-    <h3 style="position: relative; top: -350px; left: 500px;">Contact</h3>
+        <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Username</div>
+        <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Major</div>
 
-    <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Email: @currentUser.UserProfile.Email</div>
-    @if (!String.IsNullOrEmpty(currentUser.UserProfile.Phone))
-    {
-        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Phone: @currentUser.UserProfile.Phone</div>
+        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Name</div>
+        <div style="width: 600px; height: 245px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Description</div>
+
+        <h3 style="position: relative; top: -350px; left: 500px;">Contact</h3>
+
+        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Email: @currentUser.UserProfile.Email</div>
+        @if (!String.IsNullOrEmpty(currentUser.UserProfile.Phone))
+        {
+            <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Phone: @currentUser.UserProfile.Phone</div>
+        }
+        @if (!String.IsNullOrEmpty(currentUser.UserProfile.SocialMedia))
+        {
+            <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Social Media: @currentUser.UserProfile.SocialMedia</div>
+        }
     }
-    @if (!String.IsNullOrEmpty(currentUser.UserProfile.SocialMedia))
-    {
-        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Social Media: @currentUser.UserProfile.SocialMedia</div>
-    }
-
+    
 </div>
 
 
@@ -154,9 +157,14 @@
             }
         }
 
-        if(currentUser.UserProfile.Reviews > 0)
+        // Error Check
+        if(currentUser.UserProfile != null)
         {
-            averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+            if (currentUser.UserProfile.Reviews > 0)
+            {
+                averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+            }
         }
+        
     }
 }
