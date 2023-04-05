@@ -58,6 +58,22 @@ namespace BucHelp.Data
         }
 
         /// <summary>
+        /// Constructor for User
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <param name="affiliation"></param>
+        /// /// <param name="userid"></param>
+        public User(string password, string email, string affiliation, int userid)
+        {
+            Password = password;
+            setEmail(email);
+            Affiliation = affiliation;
+            UserName = email;
+            UserId = userid;
+        }
+
+        /// <summary>
         /// Base constructor for User
         /// </summary>
         public User()
