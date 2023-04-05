@@ -1,0 +1,76 @@
+﻿@page "/updowntest"
+
+<h3>UpDownTest</h3>
+
+@if (upVoted)
+{
+    <button class="btn btn-primary" @onclick="OnUpVote" disabled = "true">Up</button>
+}
+else
+{
+    <button class="btn btn-primary" @onclick="OnUpVote">Up</button>
+}
+
+@if (downVoted)
+{
+    <button class="btn btn-primary" @onclick="OnDownVote" disabled = "true">Down</button>
+}
+else
+{
+    <button class="btn btn-primary" @onclick="OnDownVote">Down</button>
+}
+
+
+@code {
+    int votes = 0;
+    bool upVoted;
+    bool downVoted;
+    string voteType;
+
+    private void PageLoad()
+    {
+
+
+        if (votes == 0)
+        {
+            upVoted = true;
+        }
+        else
+        {
+            upVoted = false;
+        }
+
+        if (votes == 0)
+        {
+            downVoted = true;
+        }
+        else
+        {
+            downVoted = false;
+        }
+    }
+
+    private void VoteTypeQuestion()
+    {
+        voteType = "question";   
+    }
+
+    private void VoteTypeReply()
+    {
+        voteType = "reply";   
+    }
+
+    private void OnUpVote()
+    {
+        upVoted = true;
+        downVoted = false;
+        //PageLoad();
+    }
+
+    private void OnDownVote()
+    {
+        downVoted = true;
+        upVoted = false;
+        //PageLoad();
+    }
+}
