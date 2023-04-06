@@ -13,5 +13,5 @@ RUN mv $(ls target/*.jar) target/bucoverflow-databaseapi.jar
 FROM eclipse-temurin:19 AS runtime-env
 WORKDIR /cat-runtime
 COPY --from=build-env /build/target/bucoverflow-databaseapi.jar bucoverflow-databaseapi.jar
-EXPOSE 80,443
+EXPOSE 80 443
 ENTRYPOINT ["java","-jar","bucoverflow-databaseapi.jar"]
