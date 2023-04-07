@@ -4,6 +4,8 @@ RUN apt-get update
 RUN apt-get install -y maven
 # copy in source and build it
 WORKDIR /build
+COPY ./bucoverflow-databaseapi/pom.xml ./pom.xml
+RUN mvn dependency:resolve
 COPY ./bucoverflow-databaseapi/ .
 RUN mvn package
 RUN rm target/original-*.jar
