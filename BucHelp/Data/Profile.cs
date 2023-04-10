@@ -8,18 +8,18 @@ namespace BucHelp.Data
     /// </summary>
     public class Profile
     {
-        public int ProfileID { get; set; }
-        public int UserID { get; set; }
-        public string? Username { get; set; }//The user name of the account. Required to display
-        public string? Name { get; set; } //The name the user wants to display, preferably their real name. Optional, section is empty when not filled
-        public string? Major { get; set; } //May become an enum with a dropdown list later. Optional, section is empty when not filled
-        public string? Email { get; set; } //The users email, defaults to their own email. Optional, section is empty when not filled
-        public string? Description { get; set; } //The profile Description. Optional, section is empty when not filled
-        public string? Phone { get; set; } //The users phone number. Optional, section is invisible when not filled.
-        public string? SocialMedia { get; set; } //One social media the user has. Optional, section is invisible when not filled.
-        public int? Points { get; set; } //Points the user can accumulate. Always displays as 0 on user initiate.
-        public int? Stars { get; set; } //These do not publicly display. Instead, they are an amount of stars awarded by other users. Starts at 0, shows as 2.5 when empty.
-        public int? Reviews { get; set; } //The number of reviews the user has had by other users. This will divide stars to get the average number of stars they have. Internal only
+        public int ProfileId { get; set; }
+        public int UserId { get; set; }
+        public string Username { get; set; }//The user name of the account. Required to display
+        public string Name { get; set; } //The name the user wants to display, preferably their real name. Optional, section is empty when not filled
+        public string Major { get; set; } //May become an enum with a dropdown list later. Optional, section is empty when not filled
+        public string Email { get; set; } //The users email, defaults to their own email. Optional, section is empty when not filled
+        public string Description { get; set; } //The profile Description. Optional, section is empty when not filled
+        public string Phone { get; set; } //The users phone number. Optional, section is invisible when not filled.
+        public string SocialMedia { get; set; } //One social media the user has. Optional, section is invisible when not filled.
+        public int Points { get; set; } //Points the user can accumulate. Always displays as 0 on user initiate.
+        public int Stars { get; set; } //These do not publicly display. Instead, they are an amount of stars awarded by other users. Starts at 0, shows as 2.5 when empty.
+        public int Reviews { get; set; } //The number of reviews the user has had by other users. This will divide stars to get the average number of stars they have. Internal only
 
 
         //****
