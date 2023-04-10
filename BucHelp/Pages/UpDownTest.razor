@@ -1,40 +1,40 @@
 ﻿@page "/updowntest"
-@inject Question questions
-@inject Vote vote
-@using data
+@using Data
 
 <h3>UpDownTest</h3>
 
-@if (upVoted)
+@if (vote.GetVote() == 1)
 {
-    <button class="btn btn-primary" @onclick="OnUpVote" disabled = "true">Up</button>
+    <button class="btn btn-primary" @onclick="OnUpDoot" disabled = "true">Up</button>
 }
 else
 {
-    <button class="btn btn-primary" @onclick="OnUpVote">Up</button>
+    <button class="btn btn-primary" @onclick="OnUpDoot">Up</button>
 }
 
-@if (downVoted)
+@if (vote.GetVote() == -1)
 {
-    <button class="btn btn-primary" @onclick="OnDownVote" disabled = "true">Down</button>
+    <button class="btn btn-primary" @onclick="OnDownDoot" disabled = "true">Down</button>
 }
 else
 {
-    <button class="btn btn-primary" @onclick="OnDownVote">Down</button>
+    <button class="btn btn-primary" @onclick="OnDownDoot">Down</button>
 }
+
+<label for="qnumber">   votes</label>
 
 
 @code {
     int votes = 0;
-    int vote = 0;
     string voteType;
+    Vote vote = new Vote();
 
 
     private void PageLoad()
     {
 
 
-      
+
 
 
 
@@ -50,16 +50,16 @@ else
         voteType = "reply";   
     }
 
-    private void OnUpVote()
+    private void OnUpDoot()
     {
-        vote = 1;
+        vote.SelectVote(1, voteType);
         votes++;
         //PageLoad();
     }
 
-    private void OnDownVote()
+    private void OnDownDoot()
     {
-        vote = -1;
+        vote.SelectVote(-1, voteType);
         votes--;
         //PageLoad();
     }
