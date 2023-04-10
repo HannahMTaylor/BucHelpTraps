@@ -2,10 +2,14 @@
 {
     public class Vote
     {
-        bool vote;
+        int vote;
         string voteType;
 
-        public Vote(bool vote, string voteType)
+        public Vote()
+        {
+            
+        }
+        public Vote(int vote, string voteType)
         {
             this.vote = vote;
             this.voteType = voteType;

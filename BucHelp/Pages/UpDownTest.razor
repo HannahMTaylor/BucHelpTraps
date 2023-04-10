@@ -1,4 +1,7 @@
 ﻿@page "/updowntest"
+@inject Question questions
+@inject Vote vote
+@using data
 
 <h3>UpDownTest</h3>
 
@@ -23,31 +26,18 @@ else
 
 @code {
     int votes = 0;
-    bool upVoted;
-    bool downVoted;
+    int vote = 0;
     string voteType;
+
 
     private void PageLoad()
     {
 
 
-        if (votes == 0)
-        {
-            upVoted = true;
-        }
-        else
-        {
-            upVoted = false;
-        }
+      
 
-        if (votes == 0)
-        {
-            downVoted = true;
-        }
-        else
-        {
-            downVoted = false;
-        }
+
+
     }
 
     private void VoteTypeQuestion()
@@ -62,16 +52,14 @@ else
 
     private void OnUpVote()
     {
-        upVoted = true;
-        downVoted = false;
+        vote = 1;
         votes++;
         //PageLoad();
     }
 
     private void OnDownVote()
     {
-        downVoted = true;
-        upVoted = false;
+        vote = -1;
         votes--;
         //PageLoad();
     }
