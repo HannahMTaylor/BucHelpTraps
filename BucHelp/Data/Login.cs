@@ -48,7 +48,7 @@ namespace BucHelp.Data
         {
             List<User> users = UserObjService.GetUserList();
 
-            //LoginPractice.CreateUsers();  Leave as comment
+            LoginPractice.CreateUsers();
 
             foreach (User user in users)
             {
@@ -125,18 +125,15 @@ namespace BucHelp.Data
 
         public static void CreateUsers()
         {
-            UsersList.Add(new User(1, "1234", "Duck@yahoo.com", "student"));
-            UsersList.Add(new User(2, "password", "YoungDuck@yahoo.com", "student"));
-            UsersList.Add(new User(3, "123", "Chick@yahoo.com", "student"));
-            UsersList.Add(new User(4, "Leader", "DuckMaster@yahoo.com", "faculty"));
+            UsersList.Add(new User("1234", "Duck@yahoo.com", "student", 0));
+            UsersList.Add(new User("password", "YoungDuck@yahoo.com", "student", 1));
+            UsersList.Add(new User("123", "Chick@yahoo.com", "student", 2));
+            UsersList.Add(new User("Leader", "DuckMaster@yahoo.com", "faculty", 3));
+            UsersList.Add(new User("SomePassword", "Something@etsu.edu", "student", 4));
 
-            int i = 0;
-
-            foreach (User user in UsersList)
+            for (int i = 0; i < UsersList.Count; i++)
             {
-                Console.WriteLine(UsersList[i].UserId);
-                UserObjService.Write(user);
-                i++;
+                UserObjService.Write(UsersList[i]);
             }
 
             DatabaseServices.Drivers.GetDefaultDriver().Commit();
