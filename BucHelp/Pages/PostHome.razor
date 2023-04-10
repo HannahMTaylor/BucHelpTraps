@@ -11,7 +11,6 @@
 
 <h3>Posts</h3>
 
-
 @if (questions == null) //is this really needed???? -Hannah
 {
     <p>No questions posted yet... </p>
@@ -54,7 +53,6 @@ else //could make this an else if to display the list of posted questions if the
 }
 
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
-    //this was in a ul tag
 
         @if (PageNumber == 0)
         {
@@ -90,7 +88,6 @@ else //could make this an else if to display the list of posted questions if the
         }
 
     
-
     <!--numbered page buttons at the end of the page-->
     <div id="buttonstuff">
         @if (PageNumber == 0 && (@FilteredSearch.Count) > 0)
@@ -131,16 +128,10 @@ else //could make this an else if to display the list of posted questions if the
 
 }
 
-    
-
-
 @code {
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
 
     private List<Question>? questions;
-
-    
-    
 
     <!-- keeping this for debugging sake -- from either questionsOnPostpage or answers-page -->
     //private static  List<Question>? questions;
@@ -162,7 +153,6 @@ else //could make this an else if to display the list of posted questions if the
         pageNumberContainer = PageNumber;
 
         questions = await QuestionObjService.GetPostedQuestionsAsync(); // Gets the question list and sets the questionslist on that page to this list for now.    
-
     }
 
     /// <summary>
@@ -176,9 +166,6 @@ else //could make this an else if to display the list of posted questions if the
         selected = question;
         NavManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
     }
-
-
-
 
     //SearchBar code
 
