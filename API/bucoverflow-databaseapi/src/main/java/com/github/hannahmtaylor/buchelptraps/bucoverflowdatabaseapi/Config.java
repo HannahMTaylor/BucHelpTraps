@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Configuration
 public class Config {
 	
@@ -16,4 +18,5 @@ public class Config {
 		datasrc.setUrl("sqlite://./database.sqlite3");
 		return datasrc;
 	}
+	
 }
