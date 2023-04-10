@@ -1,19 +1,24 @@
-﻿@page "/posthome/{UserId:int}/{PageNumber:int}"
+@page "/posthome/{UserId:int}/{PageNumber:int}"
 @using BucHelp.Data
 @using System.Web
+
 @using Microsoft.JSInterop
+
 @using System.Text.RegularExpressions;
 <!--Need to inject the Question singleton-->
 @inject Question question
 @using BucHelp.Pages
+
 @inject IJSRuntime JSRuntime
 @using Microsoft.JSInterop
 @inject IJSRuntime JS;
+
 @inject NavigationManager NavManager
 <PageTitle>PostHome</PageTitle>
 
 
 <h3>Posts</h3>
+
 
 @if (questions == null) //is this really needed???? -Hannah
 {
@@ -55,6 +60,10 @@ else //could make this an else if to display the list of posted questions if the
         }
     }
 }
+
+    <!--Lists each object name from the FilteredSearch list on the page in a list-->
+    //this was in a ul tag
+
 
 
     <!--Filter for search bar, not well placed because it's just gonna be moved with changes anyway-->
@@ -116,6 +125,7 @@ else //could make this an else if to display the list of posted questions if the
                 @if (j < @FilteredSearch.Count())
                 {
                     var q = FilteredSearch[j];
+
                 <div class="card card-body" style="width: 50rem; position: relative; left: 50px;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
@@ -132,6 +142,7 @@ else //could make this an else if to display the list of posted questions if the
                 @if (j < @FilteredSearch.Count())
                 {
                     var q = FilteredSearch[j];
+
                 <div class="col-10 card card-body" style=" width: 50rem; top: -900px; position: relative; left: 50px;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
@@ -140,10 +151,12 @@ else //could make this an else if to display the list of posted questions if the
                 }
             }
         }
+
     
 
     <!--numbered page buttons at the end of the page-->
     <div id="buttonstuff">
+
         @if (PageNumber == 1 && (@FilteredSearch.Count) > 0)
         {
             <span style="position: relative; top: -900px; left: 300px;">
@@ -152,6 +165,7 @@ else //could make this an else if to display the list of posted questions if the
                 @if (@FilteredSearch.Count() > 10)
                 {
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber+1)"> Next </a>
+
                 }
             </span>
         }
@@ -159,6 +173,7 @@ else //could make this an else if to display the list of posted questions if the
         {
             if ((@FilteredSearch.Count / pageSize) >= PageNumber)
             {
+
                 <span style="position: relative; top: -900px; left: 250px;">
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
                     <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
@@ -171,7 +186,9 @@ else //could make this an else if to display the list of posted questions if the
             }
             else
             {
+
                 <span style="position: relative; top: -900px; left: 250px;">
+
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
                     <u>@PageNumber</u>
                 </span>
@@ -182,10 +199,12 @@ else //could make this an else if to display the list of posted questions if the
 
 }
 
+
 @code {
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
 
     private List<Question>? questions;
+
 
     <!-- keeping this for debugging sake -- from either questionsOnPostpage or answers-page -->
     //private static  List<Question>? questions;
@@ -207,6 +226,7 @@ else //could make this an else if to display the list of posted questions if the
         pageNumberContainer = PageNumber;
 
         questions = await QuestionObjService.GetPostedQuestionsAsync(); // Gets the question list and sets the questionslist on that page to this list for now.    
+
     }
 
     /// <summary>
@@ -220,6 +240,7 @@ else //could make this an else if to display the list of posted questions if the
         selected = question;
         NavManager.NavigateTo($"/QuestionView/{selected.QuestionID}");
     }
+
 
     //SearchBar code
 
@@ -244,9 +265,11 @@ else //could make this an else if to display the list of posted questions if the
     // Initialize SearchTerm to "" to prevent null's
     private string SearchTerm { get; set; } = "";
 
+
     private string test { get; set; } = "uncategorized";
 
     public string[] returnValues { get; set; } = new string[10];
+
 
 
     //clears the search bar after clear button is pressed
@@ -255,6 +278,7 @@ else //could make this an else if to display the list of posted questions if the
         SearchTerm = "";
         this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
     }
+
 
     public async void SubmitFilter()
     {
@@ -271,6 +295,7 @@ else //could make this an else if to display the list of posted questions if the
     }
 
 
+
     protected void OnChange()
     {
         NavManager.NavigateTo($"/posthome/{UserIdPageContainer}/{pageNumberContainer}"); //trying to change the navigation to redirect to the posthome page since we are moving the search bar and list of posted questions pages into a single page
@@ -279,6 +304,7 @@ else //could make this an else if to display the list of posted questions if the
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
     //changed this to search on the list of posted questions -- hannah
+
 
     List<Question> FilteredSearch0 => questions.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
     List<Question> FilteredSearch1 => FilteredSearch0.Where(i => i.Category != null).ToList();
@@ -291,5 +317,5 @@ else //could make this an else if to display the list of posted questions if the
 
 
 
-   
+
 } <!-- end code section -->
