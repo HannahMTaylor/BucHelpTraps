@@ -68,7 +68,7 @@ namespace BucHelp.Data
         public User(string password, string email, string affiliation, int userid)
         {
             Password = password;
-            setEmail(email);
+            setUserName(email);
             Affiliation = affiliation;
             UserName = email;
             UserId = userid;
