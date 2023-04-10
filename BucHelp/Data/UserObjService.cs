@@ -33,6 +33,16 @@ namespace BucHelp.Data
             return questions;
         }
 
+        /// <summary>
+        /// Used to get the list of Users in the database
+        /// </summary>
+        /// <returns></returns>
+        public static Task<List<User>> GetUserAsync()
+        {
+            return Task.FromResult(GetUserList());
+        }
+
+
         public static List<User> GetUserList()
         {
             List<User> users = new List<User>();
@@ -101,12 +111,12 @@ namespace BucHelp.Data
         private static User FromRow(Row row)
         {
             User user = new User();
-            int uid = row.GetAsInt("id");
+            user.UserId = row.GetAsInt("id"); //Changed to set the UserID was originally "int uid"
             // get nulls
             int nulls = row.GetAsInt("nulls");
             // if null bit is zero, then field is present- get it
             if ((nulls & NULL_AFFILIATION) == 0) user.Affiliation = row.GetAsString("affiliation");
-            user.UserName = row.GetAsString("username");
+            user.setUserName(row.GetAsString("username")); //Changed to set the user name to correct format.
             user.Email = row.GetAsString("email");
             user.Password = row.GetAsString("password");
             return user;
