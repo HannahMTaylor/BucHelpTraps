@@ -96,7 +96,7 @@ namespace BucHelp.DatabaseServices
             // else contact the microservice
             using (HttpClient client = new HttpClient())
             {
-                return (FAQ[]) await client.GetFromJsonAsync(await GetAPILocation("/getfaq"), typeof(FAQ[]));
+                return (FAQ[]) await client.GetFromJsonAsync(await GetAPILocation("/faqs"), typeof(FAQ[]));
             }
         }
     }
