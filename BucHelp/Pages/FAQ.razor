@@ -4,6 +4,27 @@
 
 <h3>Frequently Asked Questions</h3>
 
+@code {
+    Data.FAQ[] list;
+    protected override async Task OnInitializedAsync()
+    {
+        list = await DatabaseServices.MicroserviceServices.GetFAQAsync();
+    }
+}
+
+@if (list != null) {
+    foreach (Data.FAQ f in list)
+    {
+        <b>Q: @f.Question</b><br />
+        <p>A: @f.Answer</p>
+        <br /><br />
+    }
+}
+else
+{
+    <p>Please wait...</p>
+}
+
 
 <p>
 <b>Q: How do I pay for college if I am an in-state, dependent student?</b><br>
