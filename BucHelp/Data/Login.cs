@@ -131,7 +131,6 @@ namespace BucHelp.Data
             UsersList.Add(new User("Leader", "DuckMaster@yahoo.com", "faculty", 3));
             UsersList.Add(new User("SomePassword", "Something@etsu.edu", "student", 4));
 
-
             for (int i = 0; i < UsersList.Count; i++)
             {
                 UserObjService.Write(UsersList[i]);
