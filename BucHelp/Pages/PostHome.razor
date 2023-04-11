@@ -3,7 +3,7 @@
 @using System.Web
 
 @using Microsoft.JSInterop
-
+@using System.Threading;
 @using System.Text.RegularExpressions;
 <!--Need to inject the Question singleton-->
 @inject Question question
@@ -79,8 +79,8 @@ else //could make this an else if to display the list of posted questions if the
                 <label for="businessandtechnology">Business and Technology</label>
             </div>
             <div>
-                <input type="checkbox" style="margin-left: 10px;" id="clinicalandrehab" name="interest" value="clinicalandrehab" />
-                <label for="clinicalandrehab">Clinical and Rehabilitative Health Services</label>
+                <input type="checkbox" style="margin-left: 10px;" id="clinicalandrehabilitativehealthsciences" name="interest" value="clinicalandrehabilitativehealthsciences" />
+                <label for="clinicalandrehabilitativehealthsciences">Clinical and Rehabilitative Health Services</label>
             </div>
             <div>
                 <input type="checkbox" style="margin-left: 10px;" id="nursing" name="interest" value="nursing" />
@@ -266,7 +266,7 @@ else //could make this an else if to display the list of posted questions if the
     private string SearchTerm { get; set; } = "";
 
 
-    private string test { get; set; } = "uncategorized";
+    private string test { get; set; } = "uncategorized artsandsciences businessandtechnology clinicalandrehabilitativehealthsciences nursing publichealth honors graduate dorm campus";
 
     public string[] returnValues { get; set; } = new string[10];
 
@@ -279,22 +279,24 @@ else //could make this an else if to display the list of posted questions if the
         this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
     }
 
-
+    //bug in this, the submit button has to be hit twice to work
     public async void SubmitFilter()
     {
         returnValues = await JS.InvokeAsync<string[]>("filter");
         this.returnValues = returnValues;
 
-        this.test = returnValues[0] + " " + returnValues[1] + " " + returnValues[2];
-        if (this.test == "  ")
+        this.test = returnValues[0] + " " + returnValues[1] + " " + returnValues[2] + " " + returnValues[3] + " " + returnValues[4] + " " + returnValues[5] + " " + returnValues[6] + " " + returnValues[7] + " " + returnValues[8];
+        
+        if (this.test == "        ")
         {
             this.test = "uncategorized";
         }
 
-        Console.WriteLine(this.test.ToLower());
+        ClearClick();
+
+        //for testing
+        Console.WriteLine(this.test);
     }
-
-
 
     protected void OnChange()
     {
@@ -306,8 +308,9 @@ else //could make this an else if to display the list of posted questions if the
 
     List<Question> FilteredSearch0 => questions.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
     List<Question> FilteredSearch1 => FilteredSearch0.Where(i => i.Category != null).ToList();
+  
+    //List<Question> FilteredSearch => FilteredSearch1.Where(i => this.test.ToLower().Contains(i.Category.ToLower())).ToList();
+    List<Question> FilteredSearch => FilteredSearch1.Where(i => this.test.Contains(i.Category.ToLower())).ToList();
 
-    List<Question> FilteredSearch => FilteredSearch1.Where(i => this.test.ToLower().Contains(i.Category.ToLower())).ToList();
 
-    
 } <!-- end code section -->

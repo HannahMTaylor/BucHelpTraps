@@ -8,11 +8,11 @@ function JSAlert() {
     alert("Hello");
 }
 
-function filter() {
+async function filter() {
 
     const artsandsciencesCheckbox = document.querySelector('#artsandsciences');
     const businessandtechnologyCheckBox = document.querySelector('#businessandtechnology');
-    const clinicalandrehabCheckbox = document.querySelector('#clinicalandrehab');
+    const clinicalandrehabCheckbox = document.querySelector('#clinicalandrehabilitativehealthsciences');
     const nursingCheckbox = document.querySelector('#nursing');
     const publichealthCheckBox = document.querySelector('#publichealth');
     const honorsCheckbox = document.querySelector('#honors');
@@ -31,7 +31,7 @@ function filter() {
     else
         returnValues[1] = "";
     if (clinicalandrehabCheckbox.checked)
-        returnValues[2] = "clinicalandrehab";
+        returnValues[2] = "clinicalandrehabilitativehealthsciences";
     else
         returnValues[2] = "";
     if (nursingCheckbox.checked)
@@ -58,7 +58,7 @@ function filter() {
         returnValues[8] = "campus";
     else
         returnValues[8] = "";
-    alert(returnValues);
+    //alert(returnValues);
 
     return returnValues;
 }
