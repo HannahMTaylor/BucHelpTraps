@@ -4,9 +4,9 @@ namespace BucHelp.DatabaseServices
 {
     class MicroserviceServices
     {
-        private static string location = DetermineLocation();
+        private static Task<string> location = DetermineLocation();
 
-        private static string DetermineLocation()
+        private static async Task<string> DetermineLocation()
         {
             // Check if the appropriate environment variable is set
             // Whoever runs Docker should set this to the appropriate value
@@ -29,12 +29,13 @@ namespace BucHelp.DatabaseServices
             {
                 // .NET is running elsewhere, probably Windows in Visual Studio
                 // Bind to localhost:8080, but test it first
-                Task<bool> test = TestHelloWorld("http://localhost:8080");
-                if (!test.Result)
+                bool test = await TestHelloWorld("http://localhost:8080");
+                if (!test)
                 {
-                    // not running, so fail so the server isn't held up
+                    // not running, so fail
                     return null;
                 }
+                // success
                 return "http://localhost:8080";
             }
         }
@@ -44,9 +45,9 @@ namespace BucHelp.DatabaseServices
             return File.Exists("/usr/share/dotnet/dotnet");
         }
 
-        public static string GetAPILocation(string what)
+        public static async Task<string> GetAPILocation(string what)
         {
-            return location + what;
+            return (await location) + what;
         }
         public static async Task<bool> TestHelloWorld(string location)
         {
@@ -72,30 +73,30 @@ namespace BucHelp.DatabaseServices
         public static async Task<FAQ[]> GetFAQAsync()
         {
             // if there's no known client, return an error FAQ
-            if (location == null)
+            if (await location == null)
             {
                 FAQ faq = new FAQ();
                 faq.Question = "How do I set up the microservice API to load FAQs?";
                 faq.Answer = "To set up the microservice API, make sure the API is running on a known location. " +
                     "Set the APILOCATION to an HTTP address such as \"http://172.17.0.1:80\" being sure not to add a trailing slash. " +
-                    "Restart the BucHelp application, as the location is determined on startup.\n\n" +
+                    "Restart the BucHelp application, as the location is determined on startup. " +
                     "If you are not running BucHelp in Docker, the API will try to be found at http://localhost:8080 so make sure the port is mapped " +
                     "to that. If you are running BucHelp in Docker, you must specify APILOCATION explicitly." +
                     "Since you are seeing this message, autodetection did not work. Fix it!";
                 if (IsDockerDotNetExecutableExists())
                 {
-                    faq.Answer += "\n\nThe Docker .NET runtime was found, so BucHelp is running in Docker.";
+                    faq.Answer += " The Docker .NET runtime was found, so BucHelp is running in Docker.";
                 }
                 else
                 {
-                    faq.Answer += "\n\nThe Docker .NET runtime was not found, so BucHelp is probably running in Windows.";
+                    faq.Answer += " The Docker .NET runtime was not found, so BucHelp is probably running in Windows.";
                 }
                 return new FAQ[] { faq };
             }
             // else contact the microservice
             using (HttpClient client = new HttpClient())
             {
-                return (FAQ[]) await client.GetFromJsonAsync(GetAPILocation("/getfaq"), typeof(FAQ[]));
+                return (FAQ[]) await client.GetFromJsonAsync(await GetAPILocation("/getfaq"), typeof(FAQ[]));
             }
         }
     }
