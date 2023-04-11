@@ -1,4 +1,5 @@
-﻿namespace BucHelp.Data
+﻿//Vote Code built by Stephen with a ph
+namespace BucHelp.Data
 {
     public class Vote
     {

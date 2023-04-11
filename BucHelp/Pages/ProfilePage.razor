@@ -121,6 +121,26 @@
 </div>
 
 
+<!-- If statments for the up and down vote buttons. -->
+@if (vote.GetVote() == 1)
+{
+    // <button class="btn btn-primary" @onclick="OnUpDoot" disabled = "true">Up</button>
+}
+else
+{
+    // <button class="btn btn-primary" @onclick="OnUpDoot">Up</button>
+}
+
+@if (vote.GetVote() == -1)
+{
+    // <button class="btn btn-primary" @onclick="OnDownDoot" disabled = "true">Down</button>
+}
+else
+{
+    // <button class="btn btn-primary" @onclick="OnDownDoot">Down</button>
+}
+
+
 
 <!--Brandon: This code is to demonstrate how to store variables, the above shows how to print them-->
 @code {
@@ -166,5 +186,45 @@
             }
         }
         
+    }
+
+    //Start of upvote and downvote code
+    int votes = 0;
+    string voteType;
+    Vote vote = new Vote();
+
+
+    private void PageLoad()
+    {
+
+
+
+
+
+
+    }
+
+    private void VoteTypeQuestion()
+    {
+        voteType = "question";
+    }
+
+    private void VoteTypeReply()
+    {
+        voteType = "reply";
+    }
+
+    private void OnUpDoot()
+    {
+        vote.SelectVote(1, voteType);
+        votes++;
+        //PageLoad();
+    }
+
+    private void OnDownDoot()
+    {
+        vote.SelectVote(-1, voteType);
+        votes--;
+        //PageLoad();
     }
 }
