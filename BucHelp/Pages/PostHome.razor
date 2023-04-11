@@ -1,10 +1,18 @@
-﻿@page "/posthome/{UserId:int}/{PageNumber:int}"
+@page "/posthome/{UserId:int}/{PageNumber:int}"
 @using BucHelp.Data
 @using System.Web
+
+@using Microsoft.JSInterop
+@using System.Threading;
 @using System.Text.RegularExpressions;
 <!--Need to inject the Question singleton-->
 @inject Question question
 @using BucHelp.Pages
+
+@inject IJSRuntime JSRuntime
+@using Microsoft.JSInterop
+@inject IJSRuntime JS;
+
 @inject NavigationManager NavManager
 <PageTitle>PostHome</PageTitle>
 
@@ -56,6 +64,59 @@ else //could make this an else if to display the list of posted questions if the
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
     //this was in a ul tag
 
+
+
+    <!--Filter for search bar, not well placed because it's just gonna be moved with changes anyway-->
+    <form style="width: 22rem; height: 60rem; position: relative; top:10px; left: 900px; margin: -25px 0 0 -25px;">
+        <fieldset>
+            <legend>Filter</legend>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="artsandsciences" name="interest" value="artsandsciences" />
+                <label for="artsandsciences">Arts and Sciences</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="businessandtechnology" name="interest" value="businessandtechnology" />
+                <label for="businessandtechnology">Business and Technology</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="clinicalandrehabilitativehealthsciences" name="interest" value="clinicalandrehabilitativehealthsciences" />
+                <label for="clinicalandrehabilitativehealthsciences">Clinical and Rehabilitative Health Services</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="nursing" name="interest" value="nursing" />
+                <label for="nursing">Nursing</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="publichealth" name="interest" value="publichealth" />
+                <label for="publichealth">Public Health</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="honors" name="interest" value="honors" />
+                <label for="honors">Honors</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="graduate" name="interest" value="graduate" />
+                <label for="graduate">Graduate</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="dorm" name="interest" value="dorm" />
+                <label for="dorm">Dorm</label>
+            </div>
+            <div>
+                <input type="checkbox" style="margin-left: 10px;" id="campus" name="interest" value="campus" />
+                <label for="campus">Campus</label>
+            </div>
+            <div style="justify-content: center; align-items: center; display: flex;">
+                <button class="btn btn-searchbar" type="button" onclick="@SubmitFilter">Submit</button>
+                <!--<button type="submit">Submit</button>-->
+            </div>
+        </fieldset>
+    </form>
+
+
+
+
+    <!--Lists each object name from the FilteredSearch list on the page in a list-->
         @if (PageNumber == 0)
         {
             @for (int j = 0; j < PageNumber + pageSize; j++) //displays a specific number of objects per page
@@ -64,7 +125,8 @@ else //could make this an else if to display the list of posted questions if the
                 @if (j < @FilteredSearch.Count())
                 {
                     var q = FilteredSearch[j];
-                <div class="card card-body" style="width: 60rem;" @onclick="() =>  OnClick(q)">
+
+                <div class="card card-body" style="width: 50rem; position: relative; left: 50px;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
@@ -80,7 +142,8 @@ else //could make this an else if to display the list of posted questions if the
                 @if (j < @FilteredSearch.Count())
                 {
                     var q = FilteredSearch[j];
-                    <div class="col-10 card card-body" @onclick="() =>  OnClick(q)">
+
+                <div class="col-10 card card-body" style=" width: 50rem; top: -900px; position: relative; left: 50px;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
@@ -93,14 +156,16 @@ else //could make this an else if to display the list of posted questions if the
 
     <!--numbered page buttons at the end of the page-->
     <div id="buttonstuff">
-        @if (PageNumber == 0 && (@FilteredSearch.Count) > 0)
+
+        @if (PageNumber == 1 && (@FilteredSearch.Count) > 0)
         {
-            <span style="position: relative; top: 80%; left: 300px;">
+            <span style="position: relative; top: -900px; left: 300px;">
                 <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> @(PageNumber + 1) </a> -->
-                <u>@(PageNumber + 1)</u>
+                <u>@(PageNumber)</u>
                 @if (@FilteredSearch.Count() > 10)
                 {
-                    <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber+2)"> Next </a>
+                    <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber+1)"> Next </a>
+
                 }
             </span>
         }
@@ -108,7 +173,8 @@ else //could make this an else if to display the list of posted questions if the
         {
             if ((@FilteredSearch.Count / pageSize) >= PageNumber)
             {
-                <span style="position: relative; top: 80%; left: 250px;">
+
+                <span style="position: relative; top: -900px; left: 250px;">
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
                     <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
                     <u>@PageNumber</u>
@@ -120,7 +186,9 @@ else //could make this an else if to display the list of posted questions if the
             }
             else
             {
-                <span style="position: relative; top: 80%; left: 250px;">
+
+                <span style="position: relative; top: -900px; left: 250px;">
+
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
                     <u>@PageNumber</u>
                 </span>
@@ -131,16 +199,12 @@ else //could make this an else if to display the list of posted questions if the
 
 }
 
-    
-
 
 @code {
     <!-- Need an object to hold questions in the data folder, possibly referenced here for manipulation in the html-->
 
     private List<Question>? questions;
 
-    
-    
 
     <!-- keeping this for debugging sake -- from either questionsOnPostpage or answers-page -->
     //private static  List<Question>? questions;
@@ -178,8 +242,6 @@ else //could make this an else if to display the list of posted questions if the
     }
 
 
-
-
     //SearchBar code
 
     private int pageSize = 10; //can change number of objects on page
@@ -204,11 +266,36 @@ else //could make this an else if to display the list of posted questions if the
     private string SearchTerm { get; set; } = "";
 
 
+    private string test { get; set; } = "uncategorized artsandsciences businessandtechnology clinicalandrehabilitativehealthsciences nursing publichealth honors graduate dorm campus";
+
+    public string[] returnValues { get; set; } = new string[10];
+
+
+
     //clears the search bar after clear button is pressed
     private void ClearClick()
     {
         SearchTerm = "";
         this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
+    }
+
+    //bug in this, the submit button has to be hit twice to work
+    public async void SubmitFilter()
+    {
+        returnValues = await JS.InvokeAsync<string[]>("filter");
+        this.returnValues = returnValues;
+
+        this.test = returnValues[0] + " " + returnValues[1] + " " + returnValues[2] + " " + returnValues[3] + " " + returnValues[4] + " " + returnValues[5] + " " + returnValues[6] + " " + returnValues[7] + " " + returnValues[8];
+        
+        if (this.test == "        ")
+        {
+            this.test = "uncategorized artsandsciences businessandtechnology clinicalandrehabilitativehealthsciences nursing publichealth honors graduate dorm campus";
+        }
+
+        ClearClick();
+
+        //for testing
+        Console.WriteLine(this.test);
     }
 
     protected void OnChange()
@@ -218,6 +305,12 @@ else //could make this an else if to display the list of posted questions if the
     }
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
-    //changed this to search on the list of posted questions -- hannah
-    List<Question> FilteredSearch => questions.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
+
+    List<Question> FilteredSearch0 => questions.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
+    List<Question> FilteredSearch1 => FilteredSearch0.Where(i => i.Category != null).ToList();
+  
+    //List<Question> FilteredSearch => FilteredSearch1.Where(i => this.test.ToLower().Contains(i.Category.ToLower())).ToList();
+    List<Question> FilteredSearch => FilteredSearch1.Where(i => this.test.Contains(i.Category.ToLower())).ToList();
+
+
 } <!-- end code section -->
