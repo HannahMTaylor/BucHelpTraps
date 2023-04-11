@@ -303,8 +303,6 @@ else //could make this an else if to display the list of posted questions if the
     }
 
     //filtering stored in new FilteredSearch variable where SearchItem is in listed object
-    //changed this to search on the list of posted questions -- hannah
-
 
     List<Question> FilteredSearch0 => questions.Where(i => i.Title.ToLower().Contains(SearchTerm.ToLower())).ToList();
     List<Question> FilteredSearch1 => FilteredSearch0.Where(i => i.Category != null).ToList();
@@ -312,10 +310,4 @@ else //could make this an else if to display the list of posted questions if the
     List<Question> FilteredSearch => FilteredSearch1.Where(i => this.test.ToLower().Contains(i.Category.ToLower())).ToList();
 
     
-
-    //List<Question> FilteredSearch => FilteredSearch1.Where(i => i.Category.ToLower().Contains("csci")).ToList();
-
-
-
-
 } <!-- end code section -->
