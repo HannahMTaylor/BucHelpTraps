@@ -1,0 +1,1 @@
+sudo docker run --expose 80 --expose 443 --network host --rm buchelp-dbapi:latest
