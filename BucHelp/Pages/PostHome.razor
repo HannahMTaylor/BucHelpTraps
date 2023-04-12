@@ -60,11 +60,11 @@ else //could make this an else if to display the list of posted questions if the
         {
             @for (int j = 0; j < PageNumber + pageSize; j++) //displays a specific number of objects per page
             {
-                //var q = FilteredSearch[j]; //out of bounds exception being thrown
+                
                 @if (j < @FilteredSearch.Count())
                 {
                     var q = FilteredSearch[j];
-                <div class="card card-body" style="width: 60rem;" @onclick="() =>  OnClick(q)">
+                    <div class="card card-body" style="width: 60rem;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>

@@ -65,42 +65,42 @@
 
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
+        navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //revert these changes and comments before pushing!!!!
+    //    newUser = login.GetUser(email);
 
-        newUser = login.GetUser(email);
+    //    login.Credential.Email = email;
+    //    login.Credential.Password = password;
+    //    //Logic for adding to storage goes here
+    //    //Resource used to do this below
+    //    //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
+    //    if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password) && newUser != null)
+    //    {
+    //        if(email.ToLower().Equals(newUser.Email.ToLower()) && password.Equals(newUser.Password))
+    //        {
+    //            AppState.LoggedIn = true;
+    //            canNavigate = true;
+    //            navUtil.SetID(newUser.UserId); //Once logged in set the ID
+    //        }
 
-        login.Credential.Email = email;
-        login.Credential.Password = password;
-        //Logic for adding to storage goes here
-        //Resource used to do this below
-        //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
-        if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password) && newUser != null)
-        {
-            if(email.ToLower().Equals(newUser.Email.ToLower()) && password.Equals(newUser.Password))
-            {
-                AppState.LoggedIn = true;
-                canNavigate = true;
-                navUtil.SetID(newUser.UserId); //Once logged in set the ID
-            }
+    //        else
+    //        {
+    //            error = true;
+    //        }
+    //    }
+    //    else if (!login.Credential.isValidEmail())
+    //    {
+    //        emailError = true;
+    //    }
+    //    else
+    //    {
+    //        error = true;
+    //    }
 
-            else
-            {
-                error = true;
-            }
-        }
-        else if (!login.Credential.isValidEmail())
-        {
-            emailError = true;
-        }
-        else
-        {
-            error = true;
-        }
+    //    // Navigation logic
 
-        // Navigation logic
-
-        if(canNavigate)
-        {
-            navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //navigate to the post page once submitted
-        }
+    //    if(canNavigate)
+    //    {
+    //        navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //navigate to the post page once submitted
+    //    }
     }
 }
