@@ -26,7 +26,7 @@ echo $imageLocation
 #if there is a container, shut down the running instance, and run the new image.
 if [[ -z $(docker ps | grep "0.0.0.0:80->80") ]];
   then
-		docker run -p80:80-restart unless-stopped $imageLocation 
+		docker run -d -p80:80 --restart unless-stopped $imageLocation 
        
 	else
 		#cut the container ID from the docker ps command. 

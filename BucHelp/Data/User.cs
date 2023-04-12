@@ -19,10 +19,10 @@ namespace BucHelp.Data
         /// Set the user email and will also generate the user's display name
         /// </summary>
         /// <param name="email"></param>
-        public void setEmail(string email)
+        public void setUserName(string email)
         {
             Email = email;
-            //Set the username here as well
+            //Set the username here
             string username = email.Substring(0, email.IndexOf("@")); //Removed the @xxx.xxx
             UserName = username;
         }
@@ -36,7 +36,7 @@ namespace BucHelp.Data
         public User(string password, string email, string affiliation, Profile userProfile)
         {
             Password = password;
-            setEmail(email);
+            setUserName(email);
             Affiliation = affiliation;
             UserProfile = userProfile;
             UserProfile.Username = UserName;
@@ -49,12 +49,29 @@ namespace BucHelp.Data
         /// <param name="password"></param>
         /// <param name="email"></param>
         /// <param name="affiliation"></param>
-        public User(string password, string email, string affiliation)
+        public User(int id, string password, string email, string affiliation)
         {
+            UserId = id;
             Password = password;
-            setEmail(email);
+            setUserName(email);
             Affiliation = affiliation;
             UserName = email;
+        }
+
+        /// <summary>
+        /// Constructor for User
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <param name="affiliation"></param>
+        /// /// <param name="userid"></param>
+        public User(string password, string email, string affiliation, int userid)
+        {
+            Password = password;
+            setUserName(email);
+            Affiliation = affiliation;
+            UserName = email;
+            UserId = userid;
         }
 
         /// <summary>

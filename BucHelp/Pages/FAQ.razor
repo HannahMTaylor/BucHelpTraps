@@ -4,7 +4,28 @@
 
 <h3>Frequently Asked Questions</h3>
 
+@code {
+    Data.FAQ[] list;
+    protected override async Task OnInitializedAsync()
+    {
+        list = await DatabaseServices.MicroserviceServices.GetFAQAsync();
+    }
+}
 
+@if (list != null) {
+    foreach (Data.FAQ f in list)
+    {
+        <b>Q: @f.Question</b><br />
+        <p>A: @f.Answer</p>
+        <br /><br />
+    }
+}
+else
+{
+    <p>Please wait...</p>
+}
+
+<!--
 <p>
 <b>Q: How do I pay for college if I am an in-state, dependent student?</b><br>
     A: You can pay for college through a variety of grants, scholarships, loans or student work programs. Additionally, you may be eligible for veteran’s & disability benefits or for fee discounts.<br><br />
@@ -47,4 +68,4 @@ A: As a graduate student your first stop in seeking financial aid should be the 
 <b>Q: What happens to my loans if I take a leave of absence?</b><br>
     A: If you take a Leave of Absence, your loans may enter repayment. Contact the Financial Aid Office so that we may discuss your educational debt and help prepare you for repayment.<br><br />
 </p>
-
+-->

@@ -19,6 +19,10 @@
 
 @code {
 
+    [Parameter]
+    public int ID { get; set; }
+
+
     //This is a very long stub for profile information to display multiple forms of profile information
     //
     private static string password = "dang", //Because we are probably not going to have the User data stored directly here and call from a database instead
@@ -61,10 +65,13 @@
     <!-- On page initialization asynchronously combine the users into a list of users-->
     protected override async Task OnInitializedAsync()
     {
-        users.Add(somewhatFilledUser);
-        users.Add(freshUser);
-        users.Add(workingUser);
-
+        /*
+         * users.Add(somewhatFilledUser);
+         * users.Add(freshUser);
+         * users.Add(workingUser);
+         */
+        
+        users = await UserObjService.GetUserAsync(); // Gets the user list and sets the userlist on that page to this list for now.
         UserMenu.UsersList = users;
     }
 
@@ -78,7 +85,7 @@
     protected async void OnClick(User user)
     {
         User selected = user;
-        NavManager.NavigateTo($"/profile/{selected.UserName}");
+        NavManager.NavigateTo($"/profile/{selected.UserId}");
     }
 }
 

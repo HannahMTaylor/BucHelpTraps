@@ -1,0 +1,27 @@
+id,nulls,title,description,username,answer,category,created,lastupdated
+INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT
+0,12,Graduate Programs,What graduate programs are offered at ETSU?,<null>,<null>,GRADUATE,4/5/2023 9:13:22 PM,1/1/0001 12:00:00 AM
+1,12,Graduate School,How do I apply to a graduate program at ETSU? ,<null>,<null>,GRADUATE,4/10/2023 11:44:12 AM,1/1/0001 12:00:00 AM
+2,12,Honors College,What programs are offered within the Honors College? ,<null>,<null>,HONORS,4/10/2023 11:44:54 AM,1/1/0001 12:00:00 AM
+3,12,Honors College,How do I apply to the Honors College at ETSU? ,<null>,<null>,HONORS,4/10/2023 11:46:00 AM,1/1/0001 12:00:00 AM
+4,12,Honors College,What are the requirements to be considered for the Honors College? ,<null>,<null>,HONORS,4/10/2023 11:46:49 AM,1/1/0001 12:00:00 AM
+5,12,Honors College,How many credits are required to complete an honors program at ETSU? ,<null>,<null>,HONORS,4/10/2023 11:47:32 AM,1/1/0001 12:00:00 AM
+6,12,Nursing Programs,What undergraduate nursing programs are offered within the College of Nursing? ,<null>,<null>,NURSING,4/10/2023 11:48:17 AM,1/1/0001 12:00:00 AM
+7,12,Graduate Nursing,What graduate nursing programs are available within the College of Nursing? ,<null>,<null>,NURSING,4/10/2023 11:49:10 AM,1/1/0001 12:00:00 AM
+8,12,College of Nursing,Is the College of Nursing accredited? ,<null>,<null>,NURSING,4/10/2023 11:49:52 AM,1/1/0001 12:00:00 AM
+9,12,Arts & Sciences,What undergraduate programs are offered within the College of Arts and Sciences? ,<null>,<null>,ARTSANDSCIENCES,4/10/2023 11:50:47 AM,1/1/0001 12:00:00 AM
+10,12,Arts & Sciences,What graduate programs are available within the College of Arts and Sciences? ,<null>,<null>,ARTSANDSCIENCES,4/10/2023 11:51:24 AM,1/1/0001 12:00:00 AM
+11,12,Arts & Sciences,Are there any interdisciplinary programs within the College of Arts and Sciences? ,<null>,<null>,ARTSANDSCIENCES,4/10/2023 11:52:04 AM,1/1/0001 12:00:00 AM
+12,12,Facilities,What facilities are available within the College of Arts and Sciences? ,<null>,<null>,ARTSANDSCIENCES,4/10/2023 11:52:44 AM,1/1/0001 12:00:00 AM
+13,12,Undergrad Programs,What undergraduate programs are offered within the College of Business and Technology? ,<null>,<null>,BUSINESSANDTECHNOLOGY,4/10/2023 11:53:41 AM,1/1/0001 12:00:00 AM
+14,12,Graduate Programs,What graduate programs are available within the College of Business and Technology? ,<null>,<null>,BUSINESSANDTECHNOLOGY,4/10/2023 11:54:18 AM,1/1/0001 12:00:00 AM
+15,12,Student Organization,What student organizations are associated with the College of Business and Technology? ,<null>,<null>,BUSINESSANDTECHNOLOGY,4/10/2023 11:55:19 AM,1/1/0001 12:00:00 AM
+16,12,Local Partnerships,Does the College of Business and Technology have any partnerships with local businesses or organizations? ,<null>,<null>,BUSINESSANDTECHNOLOGY,4/10/2023 11:56:13 AM,1/1/0001 12:00:00 AM
+17,12,ETSU,What is East Tennessee State University (ETSU) known for? ,<null>,<null>,UNCATEGORIZED,4/10/2023 11:57:09 AM,1/1/0001 12:00:00 AM
+18,12,ETSU  Location,Where is ETSU located?,<null>,<null>,UNCATEGORIZED,4/10/2023 11:57:46 AM,1/1/0001 12:00:00 AM
+19,12,Student Population,How many students attend ETSU? ,<null>,<null>,UNCATEGORIZED,4/10/2023 11:58:47 AM,1/1/0001 12:00:00 AM
+20,12,Housing Options,What housing options are available for students at ETSU? ,<null>,<null>,DORM,4/10/2023 12:00:00 PM,1/1/0001 12:00:00 AM
+21,12,Popular Majors,What are the most popular majors at ETSU? ,<null>,<null>,UNCATEGORIZED,4/10/2023 12:00:36 PM,1/1/0001 12:00:00 AM
+22,12,Financial Aid,Is financial aid available at ETSU? ,<null>,<null>,UNCATEGORIZED,4/10/2023 12:01:31 PM,1/1/0001 12:00:00 AM
+23,12,Tuition Cost,What is the tuition cost at ETSU? ,<null>,<null>,UNCATEGORIZED,4/10/2023 12:02:06 PM,1/1/0001 12:00:00 AM
+24,12,Online Degrees,Does ETSU offer online degree programs? ,<null>,<null>,UNCATEGORIZED,4/10/2023 12:02:40 PM,1/1/0001 12:00:00 AM
