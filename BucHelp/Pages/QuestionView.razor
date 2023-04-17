@@ -8,7 +8,7 @@
 @using Data
 
 <div class="card card-body" style="width: 60rem;">
-    <h1>@selected.Title</h1>
+    <h1>@selected.Title,@selectedUser.UserName</h1>
     <h2>Category:@selected.Category</h2> <!--This category appears before the rest of the text, if there is no category, it displays as Category:-->
 
     <p style="margin-left: 25px;">@selected.Description</p>
@@ -25,6 +25,7 @@
 
 @code{
     Question selected = new Question(); //need question object on page
+    User selectedUser = new User();     //need user object on page (Brandon)
 
     [Parameter]
     public string? id { get; set; } 
@@ -49,6 +50,13 @@
             //throw new Exception("question does not exist for id (replace this with a conditional 404 somehow)");
         }
         selected = q;
+        User u = UserObjService.GetForID(selected.UserID);
+        if (u == null)
+        {
+            navman.NavigateTo("/");
+            //Brandon here, just emulating the past
+        }
+        selectedUser = u;
     }
 
 }

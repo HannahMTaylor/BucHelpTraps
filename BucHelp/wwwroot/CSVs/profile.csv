@@ -1,0 +1,2 @@
+id,nulls,userid,username,name,major,email,description,phone,socialmedia,points,stars,reviews
+INTEGER,INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,INTEGER,INTEGER,INTEGER

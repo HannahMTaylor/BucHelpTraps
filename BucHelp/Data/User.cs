@@ -12,7 +12,7 @@ namespace BucHelp.Data
         public string? Password { get; set; }
         public string? Email { get; set; }
         public string? Affiliation { get; set; } //Student or Faculty
-        public Profile? UserProfile { get; set; }
+        public Profile? UserProfile { get; set; } //We no longer need this
         public List<User> UsersList = new List<User>(); //Temp list for users until DB connections are created
 
         /// <summary>
@@ -28,6 +28,7 @@ namespace BucHelp.Data
         }
         /// <summary>
         /// (Brandon) The only way I figured out on how to generate a Profile with the current User in a Razor component
+        /// (Brandon 2.0) We no longer need this, we are databasing a connection between profile and user
         /// </summary>
         /// <param name="password"></param>
         /// <param name="email"></param>
