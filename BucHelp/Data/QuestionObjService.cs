@@ -94,6 +94,7 @@ namespace BucHelp.Data
             RowHeader rowHeader = new RowHeader(
                 new Column("id", Column.Type.Integer),
                 new Column("nulls", Column.Type.Integer),
+                new Column("userid", Column.Type.Integer),
                 // nullable
                 new Column("title", Column.Type.Text),
                 new Column("description", Column.Type.Text),
@@ -114,6 +115,7 @@ namespace BucHelp.Data
         {
             Question question = new Question();
             question.QuestionID = row.GetAsInt("id");
+            question.UserID = row.GetAsInt("userid");
             // get nulls
             int nulls = row.GetAsInt("nulls");
             // if null bit is zero, then field is present- get it
@@ -133,6 +135,7 @@ namespace BucHelp.Data
         {
             Row row = new Row(GetTable().Header);
             row.SetAsInt("id", question.QuestionID);
+            row.SetAsInt("userid", question.UserID);
             // build nulls
             int nulls = 0;
             SetAsStringNullable(row, "title", question.Title, NULL_TITLE, ref nulls);

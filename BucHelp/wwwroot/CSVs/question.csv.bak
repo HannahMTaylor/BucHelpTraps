@@ -1,5 +1,5 @@
 id,nulls,userid,title,description,username,answer,category,created,lastupdated
-INTEGER,INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT
+INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT
 0,12,0,Graduate Programs,What graduate programs are offered at ETSU?,<null>,<null>,GRADUATE,4/5/2023 9:13:22 PM,1/1/0001 12:00:00 AM
 1,12,1,Graduate School,How do I apply to a graduate program at ETSU? ,<null>,<null>,GRADUATE,4/10/2023 11:44:12 AM,1/1/0001 12:00:00 AM
 2,12,2,Honors College,What programs are offered within the Honors College? ,<null>,<null>,HONORS,4/10/2023 11:44:54 AM,1/1/0001 12:00:00 AM
