@@ -64,7 +64,7 @@
 
     bool error = false;
     bool emailError = false;
-    bool errorTest = false;
+    bool errorMessageSaved = false;
     bool canNavigate = false;
     string email;
     string password;
@@ -72,6 +72,8 @@
 
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
+
+        Console.WriteLine("Test");
 
         foreach(User u in users)
         {
@@ -123,8 +125,9 @@
                     navigationManager.NavigateTo($"/posthome/{u.UserId}/1"); //navigate to the post page once submitted
                 }
             }          
-            else
+            else if(!errorMessageSaved)
             {
+                login.Credential.Email = email;
                 error = true;
                 if (!login.Credential.isValidEmail())
                 {
@@ -132,10 +135,12 @@
                 }
                 else
                 {
-                    emailError = false;  
+                    emailError = false;
+                    errorMessageSaved = true;
                 }
             }
         }
+        errorMessageSaved = false;
     }
 
        
