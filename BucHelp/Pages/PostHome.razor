@@ -31,15 +31,15 @@ else if (questions.Count() == 0)
 else //could make this an else if to display the list of posted questions if the search bar isn't active or use a while active loop inside else to display the search bar items?? -Hannah's brainstorming for later
 {
     <!--This is the acutal search box, variable name 'SearchTerm'-->
-    <input style="width: 30rem; height: 2.1rem; position: relative; top: 20px; left: 375px; margin: -25px 0 0 -25px;" @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
+    <input style="width: 30rem; height: 2.1rem; position: relative; top: 0%; left: 30%; margin: -25px 0 0 -25px;" @bind="SearchTerm" @bind:event="oninput" placeholder="Search.." />
 
     <!--This is the search box clear button, trigger 'ClearClick' method-->
-    <button class="btn btn-searchbar" type="button" onclick="@ClearClick" style="position: relative; top: 31px; left: 410px; margin: -25px 0 0 -25px;">Clear</button>
+    <button class="btn btn-searchbar" type="button" onclick="@ClearClick" style="position: relative; top: 10px; left: 33%; margin: -25px 0 0 -25px;">Clear</button>
 
     <br>
 
     <!--Shows the total returned number of results by counting the number in the FilteredSearch List-->
-    <span class="text-muted ml-5" style=" position: relative; top: 35px; left: 550px; margin: -25px 0 0 -25px;">
+    <span class="text-muted ml-5" style=" position: relative; top: 3.5%; left: 43%; margin: -25px 0 0 -25px;">
         Total @FilteredSearch.Count Results Returned
     </span>
 
@@ -67,7 +67,7 @@ else //could make this an else if to display the list of posted questions if the
 
 
     <!--Filter for search bar, not well placed because it's just gonna be moved with changes anyway-->
-    <form style="width: 22rem; height: 60rem; position: relative; top:10px; left: 900px; margin: -25px 0 0 -25px;">
+    <form style="width: 19rem; height: 60rem; position: relative; top:5%; left: 72%; margin: -25px 0 0 -25px;">
         <fieldset>
             <legend>Filter</legend>
             <div>
@@ -80,7 +80,7 @@ else //could make this an else if to display the list of posted questions if the
             </div>
             <div>
                 <input type="checkbox" style="margin-left: 10px;" id="clinicalandrehabilitativehealthsciences" name="interest" value="clinicalandrehabilitativehealthsciences" />
-                <label for="clinicalandrehabilitativehealthsciences">Clinical and Rehabilitative Health Services</label>
+                <label for="clinicalandrehabilitativehealthsciences">Clinical and Rehab Health Services</label>
             </div>
             <div>
                 <input type="checkbox" style="margin-left: 10px;" id="nursing" name="interest" value="nursing" />
@@ -124,7 +124,7 @@ else //could make this an else if to display the list of posted questions if the
                 {
                     var q = FilteredSearch[j];
 
-                <div class="card card-body" style="width: 50rem; position: relative; left: 50px;" @onclick="() =>  OnClick(q)">
+                <div class="card card-body" style="width: 50rem; position: relative; top: -952px; left: 50px;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
@@ -141,7 +141,7 @@ else //could make this an else if to display the list of posted questions if the
                 {
                     var q = FilteredSearch[j];
 
-                <div class="col-10 card card-body" style=" width: 50rem; top: -900px; position: relative; left: 50px;" @onclick="() =>  OnClick(q)">
+                <div class="col-10 card card-body" style=" width: 50rem; top: -952px; position: relative; left: 50px;" @onclick="() =>  OnClick(q)">
                         <p>@FilteredSearch[j].Title</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Description</p>
                         <p style="margin-left: 25px;">@FilteredSearch[j].Answer</p>
@@ -157,7 +157,7 @@ else //could make this an else if to display the list of posted questions if the
 
         @if (PageNumber == 1 && (@FilteredSearch.Count) > 0)
         {
-            <span style="position: relative; top: -900px; left: 300px;">
+            <span style="position: relative; top: -952px; left: 300px;">
                 <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> @(PageNumber + 1) </a> -->
                 <u>@(PageNumber)</u>
                 @if (@FilteredSearch.Count() > 10)
@@ -172,7 +172,7 @@ else //could make this an else if to display the list of posted questions if the
             if ((@FilteredSearch.Count / pageSize) >= PageNumber)
             {
 
-                <span style="position: relative; top: -900px; left: 250px;">
+                <span style="position: relative; top: -952px; left: 250px;">
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
                     <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
                     <u>@PageNumber</u>
@@ -185,7 +185,7 @@ else //could make this an else if to display the list of posted questions if the
             else
             {
 
-                <span style="position: relative; top: -900px; left: 250px;">
+                <span style="position: relative; top: -952px; left: 250px;">
 
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
                     <u>@PageNumber</u>
