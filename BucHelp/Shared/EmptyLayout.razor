@@ -1,0 +1,93 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager _navManager
+@inject AppState AppState
+@inject NavUtil navUtil
+@using Data
+@implements IDisposable
+
+<PageTitle><h1>BucHelp</h1></PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+
+        <div class="ps-3 navbar navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="">BucHelp</a>
+@*                <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>*@
+        </div>
+    </div>
+     
+</div>
+
+
+    <main>
+        <div class="top-row px-4">
+
+           
+            <div class="col-10">
+                <!--this will be used for the search bar integration-->
+
+
+            </div>
+
+            <div class="col-2" style="align-content: safe center">
+                <!-- in order to get this to be actually centered in the div, need to change the display setting in the css file to something other than "block"-->
+              @*  @if (AppState.LoggedIn)
+                {
+
+                    @if (_navManager.Uri.Contains($"/profile/{ID}"))
+                    {
+                        URI = _navManager.Uri;
+                        username = URI.Split('/').Last();
+                        <!--This is a stub-->
+                        /*<NavLink class="nav-link2" href="@($"profile/{ID}")">
+                        <p style="float: right; position: relative; top: 25px; padding: 10px; font-size: 20px;">@username</p>
+                        <img src="/Images/Tina_front_pic.jpg" style=" position: relative;  margin-top: 10px; width:52px; height:52px; border-radius: 50%;" />
+                        </NavLink>*/
+                        <NavLink class="nav-link" href="profilemenu">
+                            <span class="oi oi-person" aria-hidden="true"></span>
+                        </NavLink>
+                    }
+                    @if (!_navManager.Uri.Contains($"/profile/{ID}"))
+                    {
+                        <NavLink class="nav-link" href="profilemenu">
+                            <span class="oi oi-person" aria-hidden="true"></span>
+                        </NavLink>
+                    }
+                    
+                    }*@
+                
+            </div>
+
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    string username = "";
+    string URI = "";
+
+    public int ID { get; set; }
+
+    //This handles the state change of a user logged in.
+    //protected override void OnInitialized()
+    //{
+    //    navUtil.OnChange += () => StateHasChanged();
+    //    AppState.OnChange += StateHasChanged;
+
+    //    base.OnInitialized();
+    //}
+
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged;
+    }
+}
+
+

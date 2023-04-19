@@ -1,5 +1,5 @@
 id,nulls,userid,title,description,username,answer,category,created,lastupdated
-INTEGER,INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT
+INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT
 0,12,0,Graduate Programs,What graduate programs are offered at ETSU?,<null>,<null>,GRADUATE,4/5/2023 9:13:22 PM,1/1/0001 12:00:00 AM
 1,12,1,Graduate School,How do I apply to a graduate program at ETSU? ,<null>,<null>,GRADUATE,4/10/2023 11:44:12 AM,1/1/0001 12:00:00 AM
 2,12,2,Honors College,What programs are offered within the Honors College? ,<null>,<null>,HONORS,4/10/2023 11:44:54 AM,1/1/0001 12:00:00 AM
@@ -25,5 +25,3 @@ INTEGER,INTEGER,INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,TEXT
 22,12,2,Financial Aid,Is financial aid available at ETSU? ,<null>,<null>,UNCATEGORIZED,4/10/2023 12:01:31 PM,1/1/0001 12:00:00 AM
 23,12,3,Tuition Cost,What is the tuition cost at ETSU? ,<null>,<null>,UNCATEGORIZED,4/10/2023 12:02:06 PM,1/1/0001 12:00:00 AM
 24,12,4,Online Degrees,Does ETSU offer online degree programs? ,<null>,<null>,UNCATEGORIZED,4/10/2023 12:02:40 PM,1/1/0001 12:00:00 AM
-25,12,0,d,d,<null>,<null>,UNCATEGORIZED,4/17/2023 8:44:23 PM,1/1/0001 12:00:00 AM
-

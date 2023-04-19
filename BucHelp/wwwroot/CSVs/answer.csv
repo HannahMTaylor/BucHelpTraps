@@ -1,12 +1,29 @@
 id,nulls,questionid,userid,description,votes,created,lastupdated
 INTEGER,INTEGER,INTEGER,INTEGER,TEXT,INTEGER,TEXT,TEXT
-0,0,1,0,itworks,1,1/1/0001 12:00:00 AM,1/1/0001 12:00:00 AM
-1,0,1,0,itworks2,1,1/1/0001 12:00:00 AM,1/1/0001 12:00:00 AM
-2,0,1,0,bob,0,3/29/2023 9:25:30 AM,3/29/2023 9:25:30 AM
-3,0,1,0,this works,0,3/29/2023 9:25:38 AM,3/29/2023 9:25:38 AM
-4,0,0,0,bob,0,3/29/2023 5:26:32 PM,3/29/2023 5:26:32 PM
-5,0,0,0,osie\
-,0,4/5/2023 3:06:28 PM,4/5/2023 3:06:28 PM
-6,0,7,0,Answer one\, from noone,0,4/11/2023 5:54:00 PM,4/11/2023 5:54:00 PM
-7,0,7,0,test new answer card body,0,4/12/2023 3:33:56 PM,4/12/2023 3:33:56 PM
-8,0,7,0,answer number 3,0,4/12/2023 3:34:09 PM,4/12/2023 3:34:09 PM
+
+0,0,0,0,ETSU offers a wide variety of in-person and online graduate programs in fields such as education\, business\, public health\, nursing\, arts and sciences\, and more. For a complete list of programs\, visit the ETSU Graduate School website.,0,4/5/2023 5:13:35 PM,4/5/2023 5:13:35 PM
+1,0,1,0,To apply for a graduate program\, submit an online application through the ETSU Graduate School website. Application requirements may include official transcripts\, letters of recommendation\, standardized test scores\, a statement of purpose\, and a resume or CV.,0,4/10/2023 7:44:28 AM,4/10/2023 7:44:28 AM
+2,0,2,0,The Honors College offers four distinct programs: the University Honors Scholars Program\, the Fine and Performing Arts Scholars Program\, the Midway Honors Scholars Program\, and the Honors-in-Discipline Scholars Program.,0,4/10/2023 7:45:06 AM,4/10/2023 7:45:06 AM
+3,0,3,0,Students interested in the Honors College must first apply for admission to ETSU. Afterward\, they should submit a separate application to the Honors College\, which may include additional essays\, letters of recommendation\, and an interview.,0,4/10/2023 7:46:16 AM,4/10/2023 7:46:16 AM
+4,0,4,0,Admission requirements vary depending on the specific program within the Honors College\, but generally include a strong high school GPA\, excellent standardized test scores (ACT or SAT)\, and a demonstrated commitment to academic excellence and extracurricular involvement.,0,4/10/2023 7:47:04 AM,4/10/2023 7:47:04 AM
+5,0,5,0,The credit requirements vary depending on the specific honors program\, but generally range from 18 to 30 credits in addition to the student's major requirements.,0,4/10/2023 7:47:44 AM,4/10/2023 7:47:44 AM
+6,0,6,0,The college offers a Bachelor of Science in Nursing (BSN)\, an RN-BSN program for registered nurses seeking a BSN degree\, and a dual-degree program with a Bachelor of Science in Radiologic Science.,0,4/10/2023 7:48:32 AM,4/10/2023 7:48:32 AM
+7,0,7,0,Graduate programs include a Master of Science in Nursing (MSN) with various concentration options\, a Doctor of Nursing Practice (DNP)\, and a Doctor of Philosophy (Ph.D.) in Nursing.,0,4/10/2023 7:49:23 AM,4/10/2023 7:49:23 AM
+8,0,8,0,Yes\, the college's programs are accredited by the Commission on Collegiate Nursing Education (CCNE) and approved by the Tennessee Board of Nursing.,0,4/10/2023 7:50:11 AM,4/10/2023 7:50:11 AM
+9,0,9,0,The college offers numerous programs such as Biology\, Chemistry\, English\, History\, Mathematics\, Psychology\, Sociology\, Political Science\, Studio Art\, Theatre\, and Music\, among others.,0,4/10/2023 7:50:59 AM,4/10/2023 7:50:59 AM
+10,0,10,0,Graduate programs include Master of Arts in various disciplines\, Master of Science in various disciplines\, and Master of Fine Arts (MFA) in select fields.,0,4/10/2023 7:51:38 AM,4/10/2023 7:51:38 AM
+11,0,11,0,Yes\, the college offers interdisciplinary programs like Environmental Studies\, Women's Studies\, and Appalachian Studies.,0,4/10/2023 7:52:19 AM,4/10/2023 7:52:19 AM
+12,0,12,0,The college has numerous facilities\, including state-of-the-art laboratories\, studios\, performance spaces\, and classrooms.,0,4/10/2023 7:53:00 AM,4/10/2023 7:53:00 AM
+13,0,13,0,The college offers programs such as Accounting\, Economics\, Finance\, Management\, Marketing\, Digital Media\, Engineering Technology\, Surveying and Mapping Science\, and Computer Science.,0,4/10/2023 7:53:54 AM,4/10/2023 7:53:54 AM
+14,0,14,0,Graduate programs include Master of Business Administration (MBA)\, Master of Accountancy (MAcc)\, Master of Science in Digital Marketing (MSDM)\, and Master of Science in Technology (MST).,0,4/10/2023 7:54:49 AM,4/10/2023 7:54:49 AM
+15,0,15,0,Several student organizations are available\, such as the American Marketing Association (AMA)\, Beta Alpha Psi\, the Association for Computing Machinery (ACM)\, and the Society for Human Resource Management (SHRM).,0,4/10/2023 7:55:34 AM,4/10/2023 7:55:34 AM
+16,0,16,0,Yes\, the college has established partnerships with various businesses and organizations\, providing students with internship opportunities\, networking events\, and other resources.,0,4/10/2023 7:56:29 AM,4/10/2023 7:56:29 AM
+17,0,17,0,ETSU is known for its strong academic programs\, particularly in health sciences\, education\, and arts. The university also boasts a beautiful campus and a supportive community atmosphere.,0,4/10/2023 7:57:27 AM,4/10/2023 7:57:27 AM
+18,0,18,0,ETSU is located in Johnson City\, Tennessee\, within the Appalachian Mountains.,0,4/10/2023 7:58:03 AM,4/10/2023 7:58:03 AM
+19,0,19,0,ETSU has a student population of approximately 14\,500\, including undergraduate and graduate students.,0,4/10/2023 7:59:21 AM,4/10/2023 7:59:21 AM
+20,0,20,0,ETSU offers a variety of on-campus housing options\, including residence halls and apartment-style living. Off-campus housing is also available in the surrounding area.,0,4/10/2023 8:00:16 AM,4/10/2023 8:00:16 AM
+21,0,21,0,Some of the most popular majors at ETSU include nursing\, education\, business\, and health sciences.,0,4/10/2023 8:00:57 AM,4/10/2023 8:00:57 AM
+22,0,22,0,Yes\, ETSU offers financial aid in the form of scholarships\, grants\, loans\, and work-study opportunities. Students must complete the Free Application for Federal Student Aid (FAFSA) to be considered.,0,4/10/2023 8:01:45 AM,4/10/2023 8:01:45 AM
+23,0,23,0,Tuition varies depending on residency status and level of study. For the most current tuition and fee information\, visit the ETSU website.,0,4/10/2023 8:02:23 AM,4/10/2023 8:02:23 AM
+24,0,24,0,Yes\, ETSU offers a variety of online undergraduate and graduate degree programs across various disciplines.,0,4/10/2023 8:02:54 AM,4/10/2023 8:02:54 AM
+

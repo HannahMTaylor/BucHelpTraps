@@ -68,6 +68,7 @@
 </style>
 
 <div class="card card-body" style="width: 60rem;">
+
     <div class="cardHeader">
         @*<img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style="width:38px;height:38px; border-radius: 50%;" />*@
         <h4 class="CreatorName">@selected.UserName</h4>
@@ -89,6 +90,7 @@
     
 </div>
 
+
 <br />
 <!--Each question will have a list of answers with it so the loop below grabs these-->
 @foreach (var answer in selected.GetAnswers())
@@ -104,6 +106,7 @@
 
 @code{
     Question selected = new Question(); //need question object on page
+    User selectedUser = new User();     //need user object on page (Brandon)
 
     [Parameter]
     public string? id { get; set; } 
@@ -128,6 +131,13 @@
             //throw new Exception("question does not exist for id (replace this with a conditional 404 somehow)");
         }
         selected = q;
+        User u = UserObjService.GetForID(selected.UserID);
+        if (u == null)
+        {
+            navman.NavigateTo("/");
+            //Brandon here, just emulating the past
+        }
+        selectedUser = u;
     }
 
 }

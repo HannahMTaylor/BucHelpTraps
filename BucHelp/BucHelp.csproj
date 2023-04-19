@@ -10,8 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\CSVs\answer.csv" />
-    <None Include="wwwroot\CSVs\question.csv" />
+    <None Remove="Shared\EmptyLayout.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Shared\EmptyLayout.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\CSVs\readme" />
     <None Include="wwwroot\CSVs\user.csv" />
     <None Include="wwwroot\Images\Tina_front_pic.jpg" />
