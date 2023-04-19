@@ -114,8 +114,6 @@ else //could make this an else if to display the list of posted questions if the
     </form>
 
 
-
-
     <!--Lists each object name from the FilteredSearch list on the page in a list-->
         @if (PageNumber == 0)
         {
@@ -270,15 +268,12 @@ else //could make this an else if to display the list of posted questions if the
 
     public string[] returnValues { get; set; } = new string[10];
 
-
-
     //clears the search bar after clear button is pressed
     private void ClearClick()
     {
         SearchTerm = "";
         this.FilteredSearch2 = new List<SearchItem> { }; //clears object list
     }
-
     //bug in this, the submit button has to be hit twice to work
     public async void SubmitFilter()
     {
@@ -291,9 +286,7 @@ else //could make this an else if to display the list of posted questions if the
         {
             this.test = "uncategorized artsandsciences businessandtechnology clinicalandrehabilitativehealthsciences nursing publichealth honors graduate dorm campus";
         }
-
         ClearClick();
-
         //for testing
         Console.WriteLine(this.test);
     }
