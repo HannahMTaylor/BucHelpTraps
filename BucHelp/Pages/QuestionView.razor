@@ -13,10 +13,12 @@
         height: 25px;
     }
     .questionBody {
+        display: inline-block;
+        float: right;
         border: 1px black dotted;
         position: relative;
         width:75%;
-        right: -25%;
+        /*right: -25%;*/
     }
     .CreatorName {
         float: left;
@@ -37,16 +39,32 @@
         padding-top: 15px;
         padding-right: 15px;
     }
+    /*.bottomLayer {
+        display: inline-block;
+    }*/
     .questionDescription {
         padding-top: 15%;
         padding-left: 5%;
+        padding-right: 5%;
     }
     .upDown {
+        display: inline-block;
         border: 1px black dotted;
+        float: left;
         position: relative;
+        text-align: center;
         width: 20%;
         right: 0%;
     }
+    .upCarat, .downCarat {
+        border: none;
+        background: none;
+        font-size: xx-large;
+        color: #041e42;
+        padding-top: 5px;
+        padding-bottom: 15px;
+    }
+
 </style>
 
 <div class="card card-body" style="width: 60rem;">
@@ -63,9 +81,9 @@
 
         </div>
         <div class="upDown">
-            <button class="upCarat">UpCarat</button>
+            <button class="oi oi-chevron-top upCarat"></button>
             <h3>num</h3>
-            <button class="downCarat">DownCarat</button>
+            <button class="oi oi-chevron-bottom downCarat"></button>
         </div>
     </div>
     
