@@ -1,7 +1,8 @@
 ﻿<!--Page to display question along with answers to the question-->
 <!--Parameter view page that will display the question title-->
 
-@page "/QuestionView/{id}" 
+@page "/QuestionView/{id:int}" 
+@page "/QuestionView/{UserID:int}/{id:int}"
 @inject NavigationManager navman
 
 @inject Question question
@@ -28,22 +29,34 @@
     User selectedUser = new User();     //need user object on page (Brandon)
 
     [Parameter]
-    public string? id { get; set; } 
+    public int id { get; set; } //Chnaged from a string to an int
 
     [Parameter]
     public int UserID { get; set; }
 
+    public int userIdContainer { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        // retrieve question by id
-        int idAsInt;
-        bool parse = int.TryParse(id, out idAsInt);
-        if (!parse)
-        {
-            navman.NavigateTo("/");
-            //throw new Exception("cannot parse id as string (replace this with a conditional 404 somehow)");
-        }
-        Question q = QuestionObjService.GetForID(idAsInt);
+        userIdContainer = UserID;
+
+        /*
+         *  Commented out this code because the question id is already read as an int so no need to parse here.
+         *
+         *  // retrieve question by id
+         *   int idAsInt;
+         *   bool parse = .TryParse(id, out idAsInt);
+         *   if (!parse)
+         *   {
+         *       navman.NavigateTo("/");
+         *       //throw new Exception("cannot parse id as string (replace this with a conditional 404 somehow)");
+         *   }
+         *
+         *
+         */
+
+        
+        Question q = QuestionObjService.GetForID(id);
         if (q == null)
         {
             navman.NavigateTo("/");
@@ -121,7 +134,7 @@
         {
             // finish up normal answer stuff that needs to exist
             answer.AnswerId = AnswerObjService.GenerateID();
-            answer.QuestionId = int.Parse(id);
+            answer.QuestionId = id;
             answer.UserId = UserID;
             answer.Votes = 0;
             answer.Created = DateTime.Now;
@@ -129,7 +142,7 @@
             // write out answer
             AnswerObjService.Write(answer);
             DatabaseServices.Drivers.GetDefaultDriver().Commit();
-            navman.NavigateTo($"/QuestionView/{id}",true); //navigate to the post page once submitted, and force reload
+            navman.NavigateTo($"/QuestionView/{userIdContainer}/{id}",true); //navigate to the post page once submitted, and force reload
         }
     }
 }
