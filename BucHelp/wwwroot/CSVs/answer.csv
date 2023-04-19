@@ -1,5 +1,6 @@
 id,nulls,questionid,userid,description,votes,created,lastupdated
 INTEGER,INTEGER,INTEGER,INTEGER,TEXT,INTEGER,TEXT,TEXT
+
 0,0,0,0,ETSU offers a wide variety of in-person and online graduate programs in fields such as education\, business\, public health\, nursing\, arts and sciences\, and more. For a complete list of programs\, visit the ETSU Graduate School website.,0,4/5/2023 5:13:35 PM,4/5/2023 5:13:35 PM
 1,0,1,0,To apply for a graduate program\, submit an online application through the ETSU Graduate School website. Application requirements may include official transcripts\, letters of recommendation\, standardized test scores\, a statement of purpose\, and a resume or CV.,0,4/10/2023 7:44:28 AM,4/10/2023 7:44:28 AM
 2,0,2,0,The Honors College offers four distinct programs: the University Honors Scholars Program\, the Fine and Performing Arts Scholars Program\, the Midway Honors Scholars Program\, and the Honors-in-Discipline Scholars Program.,0,4/10/2023 7:45:06 AM,4/10/2023 7:45:06 AM
@@ -25,3 +26,4 @@ INTEGER,INTEGER,INTEGER,INTEGER,TEXT,INTEGER,TEXT,TEXT
 22,0,22,0,Yes\, ETSU offers financial aid in the form of scholarships\, grants\, loans\, and work-study opportunities. Students must complete the Free Application for Federal Student Aid (FAFSA) to be considered.,0,4/10/2023 8:01:45 AM,4/10/2023 8:01:45 AM
 23,0,23,0,Tuition varies depending on residency status and level of study. For the most current tuition and fee information\, visit the ETSU website.,0,4/10/2023 8:02:23 AM,4/10/2023 8:02:23 AM
 24,0,24,0,Yes\, ETSU offers a variety of online undergraduate and graduate degree programs across various disciplines.,0,4/10/2023 8:02:54 AM,4/10/2023 8:02:54 AM
+
