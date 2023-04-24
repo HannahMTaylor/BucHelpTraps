@@ -1,6 +1,9 @@
 ﻿//Vote Code built by Stephen with a ph
 namespace BucHelp.Data
 {
+    /// <summary>
+    /// Beginning work for Vote tracking system.  Will most likely need more work or a refactor.
+    /// </summary>
     public class Vote
     {
         int vote;
