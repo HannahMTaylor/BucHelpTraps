@@ -8,14 +8,14 @@
 @using Data
 <style>
     .cardHeader {
-        border: 1px black dotted;
+        border-bottom: 1px black solid;
         top: 25px;
         height: 25px;
     }
     .questionBody {
         display: inline-block;
         float: right;
-        border: 1px black dotted;
+        /*border: 1px black dotted;*/
         position: relative;
         width:75%;
         /*right: -25%;*/
@@ -32,7 +32,7 @@
     .questionTitle {
         padding-top: 15px;
         float: left;
-        padding-left: 15px;
+        padding-left: 25px;
     }
     .questionCat {
         float: right;
@@ -44,12 +44,12 @@
     }*/
     .questionDescription {
         padding-top: 15%;
-        padding-left: 5%;
+        padding-left: 0%;
         padding-right: 5%;
     }
     .upDown {
         display: inline-block;
-        border: 1px black dotted;
+        /*border: 1px black dotted;*/
         float: left;
         position: relative;
         text-align: center;
@@ -64,14 +64,16 @@
         padding-top: 5px;
         padding-bottom: 15px;
     }
+    #AnswerCards{
 
+    }
 </style>
 
 <div class="card card-body" style="width: 60rem;">
 
     <div class="cardHeader">
         @*<img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style="width:38px;height:38px; border-radius: 50%;" />*@
-        <h4 class="CreatorName">@selected.UserName</h4>
+        <h4 class="CreatorName">@selectedUser.UserName</h4>
         <h4 class="dateCreated">@selected.Created</h4>
     </div>
     <div class="bottomLayer">
@@ -96,6 +98,11 @@
 @foreach (var answer in selected.GetAnswers())
 {
     <div class="card card-body" id="AnswerCards" style="width: 60rem;">
+        <div class="cardHeader">
+            @*<img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style="width:38px;height:38px; border-radius: 50%;" />*@
+            <h4 class="CreatorName">@selectedUser.UserName</h4>
+            <h4 class="dateCreated">@selected.Created</h4>
+        </div>
         @*<p style="margin-left: 25px;">@answer.Title</p>*@
         <p style="margin-left: 25px;">@answer.Description</p>
     </div>
