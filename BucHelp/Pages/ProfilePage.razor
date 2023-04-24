@@ -1,7 +1,7 @@
 ﻿@page "/profile/{ID:int}"
-@using BucHelp.Data
+@inject NavigationManager navman
 @inject User UserMenu
-
+@using Data
 
 <h3>Profile</h3>
 
@@ -22,13 +22,13 @@
 
 <div class="containerProfile">
     <!-- Check to see if user has a profile: This is an error check -->
-    @if(currentUser.UserProfile != null)
+    @if(currentProfile != null)
     {
-        @if (currentUser.UserProfile.Reviews > 0)
+        @if (currentProfile.Reviews > 0)
         {
-            averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+            averageStars = currentProfile.Stars / currentProfile.Reviews;
         }
-        @if (currentUser.UserProfile.Reviews == 0)
+        @if (currentProfile.Reviews == 0)
         {
             averageStars = 0;
         }
@@ -96,25 +96,25 @@
 
 
         <img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style=" position: relative; top: 0px; left: 0px; width:200px;height:200px; border-radius: 50%;" />
-        <h4 style="position: relative; top: -150px; left: 975px;">Points: @currentUser.UserProfile.Points</h4>
+        <h4 style="position: relative; top: -150px; left: 975px;">Points: @currentProfile.Points</h4>
 
 
-        <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Username</div>
-        <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentUser.UserProfile.Major</div>
+        <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentProfile.Username</div>
+        <div style="width: 200px;  padding: 10px; border: 5px solid gray; position: relative; top: -10px; left: 0px;">@currentProfile.Major</div>
 
-        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Name</div>
-        <div style="width: 600px; height: 245px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentUser.UserProfile.Description</div>
+        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentProfile.Name</div>
+        <div style="width: 600px; height: 245px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">@currentProfile.Description</div>
 
         <h3 style="position: relative; top: -350px; left: 500px;">Contact</h3>
 
-        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Email: @currentUser.UserProfile.Email</div>
-        @if (!String.IsNullOrEmpty(currentUser.UserProfile.Phone))
+        <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Email: @currentProfile.Email</div>
+        @if (!String.IsNullOrEmpty(currentProfile.Phone))
         {
-            <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Phone: @currentUser.UserProfile.Phone</div>
+            <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Phone: @currentProfile.Phone</div>
         }
-        @if (!String.IsNullOrEmpty(currentUser.UserProfile.SocialMedia))
+        @if (!String.IsNullOrEmpty(currentProfile.SocialMedia))
         {
-            <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Social Media: @currentUser.UserProfile.SocialMedia</div>
+            <div style="width: 600px; padding: 10px; border: 5px solid gray; position: relative; top: -350px; left: 250px;">Social Media: @currentProfile.SocialMedia</div>
         }
     }
     
@@ -161,12 +161,28 @@ else
     private static User funnyUser = new User(password, address, affiliation, profileDetails);
     */
     private static User currentUser = new User();
+    private static Profile currentProfile = new Profile();
 
     private static int? averageStars = 0;
 
     //Thanks Ethan for this code
     protected override async Task OnInitializedAsync()
     {
+        User u = UserObjService.GetForID(ID);
+        if (u == null)
+        {
+            navman.NavigateTo("/");
+            //Brandon here, just emulating the past
+        }
+        currentUser = u;
+
+        Profile p = ProfileObjService.GetForID(ID);
+        if(p == null)
+        {
+            navman.NavigateTo("/");
+        }
+        currentProfile = p;
+
         for (int i = 0; i < UserMenu.UsersList.Count(); ++i)
         {
             int extraction = ID; //extraction string for the title
@@ -178,11 +194,11 @@ else
         }
 
         // Error Check
-        if(currentUser.UserProfile != null)
+        if(currentProfile != null)
         {
-            if (currentUser.UserProfile.Reviews > 0)
+            if (currentProfile.Reviews > 0)
             {
-                averageStars = currentUser.UserProfile.Stars / currentUser.UserProfile.Reviews;
+                averageStars = currentProfile.Stars / currentProfile.Reviews;
             }
         }
         
