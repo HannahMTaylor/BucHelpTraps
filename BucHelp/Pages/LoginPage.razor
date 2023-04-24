@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @layout EmptyLayout
 @inject NavigationManager navigationManager
 @inject AppState AppState
@@ -75,7 +75,9 @@
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
 
-        Console.WriteLine("Test");
+        navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //revert these changes and comments before pushing!!!!
+        newUser = login.GetUser(email);
+
 
         foreach(User u in users)
         {
