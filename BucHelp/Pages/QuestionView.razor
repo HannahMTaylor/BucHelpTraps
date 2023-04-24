@@ -7,21 +7,109 @@
 
 @inject Question question
 @using Data
+<style>
+    .cardHeader {
+        border-bottom: 1px black solid;
+        top: 25px;
+        height: 25px;
+    }
+    .questionBody {
+        display: inline-block;
+        float: right;
+        /*border: 1px black dotted;*/
+        position: relative;
+        width:75%;
+        /*right: -25%;*/
+    }
+    .CreatorName {
+        float: left;
+        font-size: large;
+    }
+    .dateCreated {
+        float: right;
+        font-size: medium;
+        
+    }
+    .questionTitle {
+        padding-top: 15px;
+        float: left;
+        padding-left: 25px;
+    }
+    .questionCat {
+        float: right;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+    /*.bottomLayer {
+        display: inline-block;
+    }*/
+    .questionDescription {
+        padding-top: 15%;
+        padding-left: 0%;
+        padding-right: 5%;
+    }
+    .upDown {
+        display: inline-block;
+        /*border: 1px black dotted;*/
+        float: left;
+        position: relative;
+        text-align: center;
+        width: 20%;
+        right: 0%;
+    }
+    .upCarat, .downCarat {
+        border: none;
+        background: none;
+        font-size: xx-large;
+        color: #041e42;
+        padding-top: 5px;
+        padding-bottom: 15px;
+    }
+    #AnswerCards{
+
+    }
+</style>
 
 <div class="card card-body" style="width: 60rem;">
-    <h1>@selected.Title,@selectedUser.UserName</h1>
-    <h2>Category:@selected.Category</h2> <!--This category appears before the rest of the text, if there is no category, it displays as Category:-->
 
-    <p style="margin-left: 25px;">@selected.Description</p>
-    <br/>
-    <!--Each question will have a list of answers with it so the loop below grabs these-->
-    @foreach(var answer in selected.GetAnswers())
-    {
+    <div class="cardHeader">
+        @*<img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style="width:38px;height:38px; border-radius: 50%;" />*@
+        <h4 class="CreatorName">@selectedUser.UserName</h4>
+        <h4 class="dateCreated">@selected.Created</h4>
+    </div>
+    <div class="bottomLayer">
+        <div class="questionBody">
+            <h2 class="questionTitle">@selected.Title</h2>
+            <p class="questionCat">Category: @selected.Category</p> <!--This category appears before the rest of the text, if there is no category, it displays as Category:-->
+            <p class="questionDescription" style="margin-left: 25px;">@selected.Description</p>
+
+        </div>
+        <div class="upDown">
+            <button class="oi oi-chevron-top upCarat"></button>
+            <h3>num</h3>
+            <button class="oi oi-chevron-bottom downCarat"></button>
+        </div>
+    </div>
+    
+</div>
+
+
+<br />
+<!--Each question will have a list of answers with it so the loop below grabs these-->
+@foreach (var answer in selected.GetAnswers())
+{
+    <div class="card card-body" id="AnswerCards" style="width: 60rem;">
+        <div class="cardHeader">
+            @*<img src="/Images/Tina_front_pic.jpg" alt="Tina is adorable" style="width:38px;height:38px; border-radius: 50%;" />*@
+            <h4 class="CreatorName">@selectedUser.UserName</h4>
+            <h4 class="dateCreated">@selected.Created</h4>
+        </div>
         @*<p style="margin-left: 25px;">@answer.Title</p>*@
         <p style="margin-left: 25px;">@answer.Description</p>
-        <br/>
-    }
-</div>
+    </div>
+}
+
+
 
 
 @code{
