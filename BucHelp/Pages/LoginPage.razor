@@ -1,8 +1,14 @@
-﻿@page "/"
+@page "/"
+@layout EmptyLayout
 @inject NavigationManager navigationManager
 @inject AppState AppState
 @inject NavUtil navUtil
+
 @using Data
+
+@*@{
+    Layout = null;
+}*@
 
 <PageTitle>Login</PageTitle>
 
@@ -60,6 +66,7 @@
 
     bool error = false;
     bool emailError = false;
+    bool errorMessageSaved = false;
     bool canNavigate = false;
     string email;
     string password;
@@ -68,37 +75,51 @@
     protected async void submit(MouseEventArgs mouseEventArgs)
     {
 
+        navigationManager.NavigateTo($"/posthome/{newUser.UserId}/1"); //revert these changes and comments before pushing!!!!
+        newUser = login.GetUser(email);
+
+
         foreach(User u in users)
         {
-            if(u.Password == password)
+            if (u.Password == password)
             {
-                newUser = login.GetUser(email);
 
                 login.Credential.Email = email;
                 login.Credential.Password = password;
+
                 //Logic for adding to storage goes here
                 //Resource used to do this below
                 //https://stackoverflow.com/questions/67938642/blazor-server-how-to-persist-data-across-multiple-tabs-and-refreshes
                 if (login.Credential.isValidEmail() && !string.IsNullOrWhiteSpace(login.Credential.Password) && u != null)
                 {
+                    newUser = login.GetUser(email);
+
+
+                    emailError = false;
+
                     if (email.ToLower().Equals(u.Email.ToLower()) && password.Equals(u.Password))
                     {
                         AppState.LoggedIn = true;
                         canNavigate = true;
                         navUtil.SetID(u.UserId); //Once logged in set the ID
+                        error = false;
                     }
                     else
                     {
                         error = true;
                     }
                 }
-                else if (!login.Credential.isValidEmail())
-                {
-                    emailError = true;
-                }
                 else
                 {
                     error = true;
+                    if (!login.Credential.isValidEmail())
+                    {
+                        emailError = true;
+                    }
+                    else
+                    {
+                        emailError = false;  
+                    }
                 }
 
                 // Navigation logic
@@ -107,9 +128,24 @@
                 {
                     navigationManager.NavigateTo($"/posthome/{u.UserId}/1"); //navigate to the post page once submitted
                 }
-            }
+            }          
+            else if(!errorMessageSaved)
+            {
+                login.Credential.Email = email;
+                error = true;
+                if (!login.Credential.isValidEmail())
+                {
+                    emailError = true;
+                }
+                else
+                {
+                    emailError = false;
+                    errorMessageSaved = true;
+                }
             }
         }
+        errorMessageSaved = false;
+    }
 
        
 

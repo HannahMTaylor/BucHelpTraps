@@ -6,7 +6,7 @@ namespace BucHelp.Data
     {
         public int QuestionID { get; set; }
         //Feature/Question_Submit_Button
-
+        public int UserID { get; set; }
         [Required]
         public string? Title { get; set; }
 
