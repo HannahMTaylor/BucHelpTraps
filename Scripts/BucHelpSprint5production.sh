@@ -21,13 +21,14 @@ read -rp "Enter the full address (i.e. drdotson14/buchelp:5.0) of the docker ima
 echo ""
 
 
-
+#find external IP:
+#source: https://stackoverflow.com/questions/8529181/which-terminal-command-to-get-just-ip-address-and-nothing-else
 ipaddr=$(dig @ns1-1.akamaitech.net ANY whoami.akamai.net +short)
 
 
 
 #Check to see if the API is running at port 8080:
-if [[ -z $(docker ps | grep "0.0.0.0:8088->80") ]]
+if [[ -z $(docker ps | grep "0.0.0.0:8080->80") ]]
 	then
 		echo "No service is runing at port 8080; Your application may not connect to the FAQ API..."
 		echo ""
