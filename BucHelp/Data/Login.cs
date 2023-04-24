@@ -44,6 +44,11 @@ namespace BucHelp.Data
             return loggedIn;
         }
 
+        /// <summary>
+        /// Retrieves User object based on the email given.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>User object</returns>
         public User GetUser(string email)
         {
             List<User> users = UserObjService.GetUserList();
@@ -81,6 +86,10 @@ namespace BucHelp.Data
             Password = "";
         }
 
+        /// <summary>
+        /// Returns if the email is valid or not
+        /// </summary>
+        /// <returns>bool value</returns>
         public bool isValidEmail()
         {
             try
@@ -96,10 +105,17 @@ namespace BucHelp.Data
         }
     }
 
+    /// <summary>
+    /// Appstate for the login
+    /// </summary>
     public class AppState
     {
         private bool _loggedIn;
         public event Action OnChange;
+        
+        /// <summary>
+        /// Returns logged in state.
+        /// </summary>
         public bool LoggedIn
         {
             get { return _loggedIn; }
