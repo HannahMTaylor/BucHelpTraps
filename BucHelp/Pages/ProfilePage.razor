@@ -1,5 +1,6 @@
 ﻿@page "/profile/{ID:int}"
-@using BucHelp.Data
+@using Data
+@inject NavigationManager navman
 @inject User UserMenu
 
 
@@ -161,12 +162,24 @@ else
     private static User funnyUser = new User(password, address, affiliation, profileDetails);
     */
     private static User currentUser = new User();
+    private static Profile currentProfile = new Profile();
 
     private static int? averageStars = 0;
 
     //Thanks Ethan for this code
     protected override async Task OnInitializedAsync()
     {
+        User u = UserObjService.GetForID(ID);
+        if (u == null)
+        {
+            navman.NavigateTo("/");
+            //Brandon here, just emulating the past
+        }
+
+        Profile p = ProfileObjSerivce.GetForID(ID);
+        {
+            
+        }
         for (int i = 0; i < UserMenu.UsersList.Count(); ++i)
         {
             int extraction = ID; //extraction string for the title
