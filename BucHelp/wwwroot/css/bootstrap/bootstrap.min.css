@@ -79,7 +79,7 @@ body {
     background-color: var(--bs-body-bg);
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
-    overflow-x:hidden;
+    /*overflow-x:hidden;*/
 }
 
 hr {
@@ -2968,6 +2968,8 @@ textarea.form-control-lg {
     font-size: 16px;
     font-size: 1rem;
     margin: 10px;
+    top: -58rem;
+    left: 15rem;
 }
 
     .btn-SearchPageBtn:hover {
