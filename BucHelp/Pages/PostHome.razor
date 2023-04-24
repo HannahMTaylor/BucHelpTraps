@@ -157,7 +157,7 @@ else //could make this an else if to display the list of posted questions if the
 
         @if (PageNumber == 1 && (@FilteredSearch.Count) > 0)
         {
-            <span style="position: relative; top: -57rem; left: 20rem;">
+            <span style="position: relative; top: -58rem; left: 20rem;">
                 <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber+1)"> @(PageNumber + 1) </a> -->
                 <u>@(PageNumber)</u>
                 @if (@FilteredSearch.Count() > 10)
@@ -172,23 +172,23 @@ else //could make this an else if to display the list of posted questions if the
             if ((@FilteredSearch.Count / pageSize) >= PageNumber)
             {
 
-                <span style="position: relative; top: -57rem; left: 17rem;">
+                <span style="position: relative; top: -58rem; left: 17rem;">
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
                     <!--<a class="btn btn-SearchPageBtn" href="searchbar/@(PageNumber)"> @(PageNumber) </a> -->
-                    <u>@PageNumber</u>
+                    <u style="position: relative; top: -1rem; left: -4rem;">@PageNumber</u>
                     @if (@FilteredSearch.Count() >= (10 * @PageNumber + 1)) //logic fixed for adding new pages based on question submission
                     {
-                        <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber+1)"> Next </a>
+                        <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber+1)" > Next </a>
                     }
                 </span>
             }
             else
             {
 
-                <span style="position: relative; top: -57rem; left: 15rem;">
+                <span style="position: relative; top: -58rem; left: 15rem;">
 
                     <a class="btn btn-SearchPageBtn" href="posthome/@UserIdPageContainer/@(PageNumber-1)"> Back </a>
-                    <u>@PageNumber</u>
+                    <u style="position: relative; top: -1rem; left: -4rem;">@PageNumber</u>
                 </span>
             }
         }
