@@ -19,6 +19,8 @@
 read -rp "Enter the full address (i.e. drdotson14/buchelp:5.0) of the docker image (use lowercase): " imageLocation
 echo ""
 
+#find external IP:
+#source: https://stackoverflow.com/questions/8529181/which-terminal-command-to-get-just-ip-address-and-nothing-else
 ipaddr=$(dig @ns1-1.akamaitech.net ANY whoami.akamai.net +short)
 
 # TODO Error checking here
