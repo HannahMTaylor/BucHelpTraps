@@ -40,11 +40,12 @@ fi
 
 #if there is no container running at port x, start up the new instance. x = 80.
 #if there is a container, shut down the running instance, and run the new image.
+#this image will restart if the host VM is rebooted.
 if [[ -z $(docker ps | grep "0.0.0.0:80->80") ]];
   then
 		echo ""
 		echo "Staring $imageLocation at port 80..."
-		docker run -d -e APILOCATION=http://$ipaddr:8080 -p80:80 --rm $imageLocation 
+		docker run --restart unless-stopped -d -e APILOCATION=http://$ipaddr:8080 -p80:80 $imageLocation 
        
 	else
 		#cut the container ID from the docker ps command. 
@@ -58,5 +59,5 @@ if [[ -z $(docker ps | grep "0.0.0.0:80->80") ]];
 		#run the container specified by the user.
 		echo ""
 		echo "Staring $imageLocation at port 80..."
-		docker run -p80:80 -d --rm $imageLocation 
+		docker run --restart unless-stopped -d -e APILOCATION=http://$ipaddr:8080 -p80:80 $imageLocation
 fi

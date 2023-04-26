@@ -38,6 +38,7 @@ fi
 
 #if there is no container running at port x, start up the new instance. x = 5000.
 #if there is a container, shut down the running instance, and run the new image.
+#this container will not restart if the host VM is rebooted (--rm).
 if [[ -z $(docker ps | grep "0.0.0.0:5000->80") ]];
   then
 		echo ""
@@ -56,5 +57,5 @@ if [[ -z $(docker ps | grep "0.0.0.0:5000->80") ]];
 		#run the container specified by the user.
 		echo ""
 		echo "Staring $imageLocation at port 5000..."
-		docker run -p5000:80 -d --rm $imageLocation 
+		docker run -d -e APILOCATION=http://$ipaddr:8080 -p5000:80 --rm $imageLocation
 fi
